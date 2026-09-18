@@ -1,0 +1,24 @@
+Bu projeye başka bir konuşmada hazırlanan dosyaları aktar ve çalışan proje geliştirmesini devral.
+
+Mümkünse read_thread ile şu konuşmayı oku:
+01a080e3-2820-7be1-baab-e50ac3ddd6a3
+
+Kaynak:
+C:\Users\Lenovo\Documents\Codex\2026-09-08\ben-science-tokyo-niversitesi-takeshi-hatanaka\outputs
+
+Hedef:
+C:\Users\Lenovo\Desktop\GP Attainability
+
+Önce kaynaktaki AKTIF_ONCELIK_PROJE.md dosyasını oku. Bu benim en son kararımdır: Şimdilik research proposal, yeni geniş literatür taraması ve yeni teori/kanıt geliştirme istemiyorum. Önce profesöre gösterebileceğim güçlü, çalışan bir proje yapacağız. Research proposal daha sonra bunun üzerinden hazırlanacak.
+
+1. Mevcut masterplan, README, docs ve kodu incele. Yeni belgeleri docs/handoffs/2026-09-08 altına, GP_Attainability_Diagnostic klasörünü experiments/exact_gp_diagnostic altına kopyala. Kaynakları silme, mevcut dosyaların üzerine körlemesine yazma. Aktif önceliği proje README’si ve devam notlarına işle.
+2. Diagnostic testlerini çalıştır. Bu küçük deney makale yeniden üretimi veya tamamlanmış ana proje değildir.
+3. Sonra doğrudan uygulamaya başla: 2–4 robotlu GP çevre haritalama; gerçek alan, gürültülü ölçümler, posterior mean/uncertainty/error haritaları; basit tarama, greedy ve yürütmeye göre yeniden planlama karşılaştırmaları.
+4. Ölçüm kaybı, rota/takip sapması, hız ve çarpışma kısıtlarını görünür ve tekrarlanabilir senaryolara dönüştür. Planlanan ve gerçekleşen ölçümleri ayır. Aynı koşullarda harita hatası, belirsizlik, yol, örnek sayısı ve runtime ölç.
+5. Anlaşılır bir demo arayüzü, çalıştırma talimatları ve kısa video hazırla. Ana sistem tamamlanınca dönüş sınırı olan USV doğrulamasına geç.
+
+Sabah akşam çalışabilirim; projeyi yalnız zaman nedeniyle küçültme. Asıl kısıt uzun compute/eğitim koşuları. Büyük koşulardan önce runtime ölç; projeye gereksiz neural-network veya MARL eğitimi ekleme.
+
+ECC2025 tam metninin projede bulunup bulunmadığını kontrol et. Yoksa bağımsız uygulama modunda ilerle; makaleye özgü denklemleri tahmin edip reproduction diye sunma. Güvenlik ve performans iddialarını gerçekten ölçülen veya kanıtlanan kapsamla sınırla.
+
+Yalnız yeni bir plan yazıp durma. Önce aktarımı tamamla, sonra en küçük uçtan uca çalışan sürümü kur ve doğrulayarak ilerle. Mevcut çalışmaları koru; teknik kararları ve sonuçları kısa ilerleme notlarıyla açıkla.

@@ -1,0 +1,37 @@
+schema_version: 1
+config_id: ecc2025-paper-aligned
+status: implemented_qualitative_comparison
+audited_on: 2026-09-15
+audit_decision_log_entry: D033
+implemented_on: 2026-09-16
+implementation_decision_log_entries: [D039, D040, D041, D042, D043, D044, D045, D046]
+# The profile runs from attain_sampling.sim.ecc2025 and scripts/validate_m5.py. A
+# numerical reproduction stays out of reach because the paper does not publish these:
+numerical_reproduction_blocked_by:
+  - unpublished_random_seeds
+  - unpublished_ground_truth_parameters
+  - unpublished_initial_positions
+source:
+  citation_key: suenaga2025hierarchical
+  doi: 10.23919/ECC65951.2025.11187026
+verified_public_values:
+  robot_count:
+    value: 3
+    provenance: AUTHOR_PAGE
+  workspace_m:
+    value: [120.0, 120.0]
+    provenance: AUTHOR_PAGE
+  sampling_period_s:
+    value: 10.0
+    provenance: AUTHOR_PAGE
+  evaluation_grid:
+    value: [30, 30]
+    provenance: AUTHOR_PAGE
+# Audited paper values live in attain_sampling.sources.ecc2025 with their page
+# citations, so they cannot drift from docs/equation_map.md. Settings the paper does
+# not state are recorded there as source gaps, never filled in here.
+paper_values_pending: null
+audited_values_module: attain_sampling.sources.ecc2025
+execution_guard:
+  allow_unverified_values: false
+  unlock_decision_log_entry: D033

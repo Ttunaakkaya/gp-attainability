@@ -1,0 +1,567 @@
+{
+  "scope": "Paper-independent, deterministic finite-model diagnostic; not an ECC paper reproduction, SOGP implementation, novelty claim, or continuous-time safety certificate.",
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5"
+  },
+  "initial_integrated_latent_variance": 0.7366817303447337,
+  "exhaustive_optimum": {
+    "route": [
+      [
+        0,
+        4
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        1,
+        6
+      ],
+      [
+        2,
+        6
+      ]
+    ],
+    "terminal_variance": 0.12017136789112937,
+    "enumerated_routes": 3211
+  },
+  "greedy": {
+    "route": [
+      [
+        1,
+        5
+      ],
+      [
+        0,
+        6
+      ],
+      [
+        1,
+        5
+      ],
+      [
+        2,
+        4
+      ]
+    ],
+    "terminal_variance": 0.12363891623256582
+  },
+  "greedy_minus_optimum": 0.0034675483414364494,
+  "finite_set_robust_optimum": {
+    "route": [
+      [
+        0,
+        4
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        1,
+        6
+      ],
+      [
+        2,
+        6
+      ]
+    ],
+    "worst_terminal_variance": 0.15010564470612175,
+    "nominal_terminal_variance": 0.12017136789112937,
+    "enumerated_routes": 3211,
+    "masks_per_route": 9,
+    "route_mask_pairs": 28899
+  },
+  "matched_dropout_audits": {
+    "nominal_optimum": {
+      "worst_terminal_variance": 0.15010564470612175,
+      "prefix_envelope": [
+        0.7366817303447337,
+        0.6038591866405999,
+        0.4024180573507034,
+        0.23309398652963845,
+        0.15010564470612175
+      ],
+      "scenarios": [
+        {
+          "mask": "none",
+          "missing": null,
+          "prefix_variance": [
+            0.7366817303447337,
+            0.4226466308213274,
+            0.2908806362471026,
+            0.16105592277815012,
+            0.12017136789112937
+          ]
+        },
+        {
+          "mask": "step1_robot0",
+          "missing": [
+            0,
+            0
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.6038591866405999,
+            0.3111083883131567,
+            0.1720712685942504,
+            0.1311128159171019
+          ]
+        },
+        {
+          "mask": "step1_robot1",
+          "missing": [
+            0,
+            1
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.5541593541108876,
+            0.3250237571724442,
+            0.1912414388572605,
+            0.15010564470612175
+          ]
+        },
+        {
+          "mask": "step2_robot0",
+          "missing": [
+            1,
+            0
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.4226466308213274,
+            0.3111083883131567,
+            0.1720712685942504,
+            0.1311128159171019
+          ]
+        },
+        {
+          "mask": "step2_robot1",
+          "missing": [
+            1,
+            1
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.4226466308213274,
+            0.4024180573507034,
+            0.1911967966763092,
+            0.14405932259332052
+          ]
+        },
+        {
+          "mask": "step3_robot0",
+          "missing": [
+            2,
+            0
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.4226466308213274,
+            0.2908806362471026,
+            0.23309398652963845,
+            0.14405932259332052
+          ]
+        },
+        {
+          "mask": "step3_robot1",
+          "missing": [
+            2,
+            1
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.4226466308213274,
+            0.2908806362471026,
+            0.21875700970503895,
+            0.13111281591710186
+          ]
+        },
+        {
+          "mask": "step4_robot0",
+          "missing": [
+            3,
+            0
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.4226466308213274,
+            0.2908806362471026,
+            0.16105592277815012,
+            0.15010564470612175
+          ]
+        },
+        {
+          "mask": "step4_robot1",
+          "missing": [
+            3,
+            1
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.4226466308213274,
+            0.2908806362471026,
+            0.16105592277815012,
+            0.13111281591710186
+          ]
+        }
+      ]
+    },
+    "greedy": {
+      "worst_terminal_variance": 0.1693076481595,
+      "prefix_envelope": [
+        0.7366817303447337,
+        0.5275174578619717,
+        0.28585253484220197,
+        0.22000240665923942,
+        0.1693076481595
+      ],
+      "scenarios": [
+        {
+          "mask": "none",
+          "missing": null,
+          "prefix_variance": [
+            0.7366817303447337,
+            0.32071944324403395,
+            0.2022725268447276,
+            0.16877828569701422,
+            0.12363891623256582
+          ]
+        },
+        {
+          "mask": "step1_robot0",
+          "missing": [
+            0,
+            0
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.5275174578619717,
+            0.28585253484220197,
+            0.1854972999475175,
+            0.13284673924644036
+          ]
+        },
+        {
+          "mask": "step1_robot1",
+          "missing": [
+            0,
+            1
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.5275174578619716,
+            0.28585253484220197,
+            0.1854972999475175,
+            0.13284673924644028
+          ]
+        },
+        {
+          "mask": "step2_robot0",
+          "missing": [
+            1,
+            0
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.32071944324403395,
+            0.26148035254816243,
+            0.22000240665923942,
+            0.1693076481595
+          ]
+        },
+        {
+          "mask": "step2_robot1",
+          "missing": [
+            1,
+            1
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.32071944324403395,
+            0.26148035254816243,
+            0.2200024066592394,
+            0.16930764815949997
+          ]
+        },
+        {
+          "mask": "step3_robot0",
+          "missing": [
+            2,
+            0
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.32071944324403395,
+            0.2022725268447276,
+            0.1854972999475175,
+            0.13284673924644036
+          ]
+        },
+        {
+          "mask": "step3_robot1",
+          "missing": [
+            2,
+            1
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.32071944324403395,
+            0.2022725268447276,
+            0.1854972999475175,
+            0.13284673924644028
+          ]
+        },
+        {
+          "mask": "step4_robot0",
+          "missing": [
+            3,
+            0
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.32071944324403395,
+            0.2022725268447276,
+            0.16877828569701422,
+            0.1462593021013284
+          ]
+        },
+        {
+          "mask": "step4_robot1",
+          "missing": [
+            3,
+            1
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.32071944324403395,
+            0.2022725268447276,
+            0.16877828569701422,
+            0.1462593021013283
+          ]
+        }
+      ]
+    },
+    "robust_optimum": {
+      "worst_terminal_variance": 0.15010564470612175,
+      "prefix_envelope": [
+        0.7366817303447337,
+        0.6038591866405999,
+        0.4024180573507034,
+        0.23309398652963845,
+        0.15010564470612175
+      ],
+      "scenarios": [
+        {
+          "mask": "none",
+          "missing": null,
+          "prefix_variance": [
+            0.7366817303447337,
+            0.4226466308213274,
+            0.2908806362471026,
+            0.16105592277815012,
+            0.12017136789112937
+          ]
+        },
+        {
+          "mask": "step1_robot0",
+          "missing": [
+            0,
+            0
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.6038591866405999,
+            0.3111083883131567,
+            0.1720712685942504,
+            0.1311128159171019
+          ]
+        },
+        {
+          "mask": "step1_robot1",
+          "missing": [
+            0,
+            1
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.5541593541108876,
+            0.3250237571724442,
+            0.1912414388572605,
+            0.15010564470612175
+          ]
+        },
+        {
+          "mask": "step2_robot0",
+          "missing": [
+            1,
+            0
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.4226466308213274,
+            0.3111083883131567,
+            0.1720712685942504,
+            0.1311128159171019
+          ]
+        },
+        {
+          "mask": "step2_robot1",
+          "missing": [
+            1,
+            1
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.4226466308213274,
+            0.4024180573507034,
+            0.1911967966763092,
+            0.14405932259332052
+          ]
+        },
+        {
+          "mask": "step3_robot0",
+          "missing": [
+            2,
+            0
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.4226466308213274,
+            0.2908806362471026,
+            0.23309398652963845,
+            0.14405932259332052
+          ]
+        },
+        {
+          "mask": "step3_robot1",
+          "missing": [
+            2,
+            1
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.4226466308213274,
+            0.2908806362471026,
+            0.21875700970503895,
+            0.13111281591710186
+          ]
+        },
+        {
+          "mask": "step4_robot0",
+          "missing": [
+            3,
+            0
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.4226466308213274,
+            0.2908806362471026,
+            0.16105592277815012,
+            0.15010564470612175
+          ]
+        },
+        {
+          "mask": "step4_robot1",
+          "missing": [
+            3,
+            1
+          ],
+          "prefix_variance": [
+            0.7366817303447337,
+            0.4226466308213274,
+            0.2908806362471026,
+            0.16105592277815012,
+            0.13111281591710186
+          ]
+        }
+      ]
+    }
+  },
+  "nominal_route_worst_minus_robust_route_worst": 0.0,
+  "missed_sample_stress": {
+    "missed_step": 1,
+    "missed_robot": 0,
+    "missed_node": 0,
+    "physical_positions_after_miss": [
+      0,
+      4
+    ],
+    "actual_observations_after_miss": [
+      3,
+      4
+    ],
+    "planned_prefix_variance": 0.4226466308213274,
+    "actual_prefix_variance": 0.6038591866405999,
+    "prefix_gap": 0.18121255581927248,
+    "original_terminal_target": 0.12017136789112937,
+    "best_remaining_terminal_variance": 0.1311128159171019,
+    "terminal_gap": 0.010941448025972522,
+    "old_target_unattainable_in_this_finite_model": true,
+    "remaining_enumerated_routes": 308,
+    "replanned_remaining_route": [
+      [
+        0,
+        5
+      ],
+      [
+        1,
+        6
+      ],
+      [
+        2,
+        6
+      ]
+    ],
+    "planned_curve": [
+      0.7366817303447337,
+      0.4226466308213274,
+      0.2908806362471026,
+      0.16105592277815012,
+      0.12017136789112937
+    ],
+    "continue_original_route_after_miss_curve": [
+      0.7366817303447337,
+      0.6038591866405999,
+      0.3111083883131567,
+      0.1720712685942504,
+      0.1311128159171019
+    ],
+    "replanned_curve": [
+      0.7366817303447337,
+      0.6038591866405999,
+      0.3111083883131567,
+      0.1720712685942504,
+      0.1311128159171019
+    ],
+    "remaining_steps": 3,
+    "scheduled_total_new_samples": 8,
+    "actual_total_new_samples": 7,
+    "remaining_samples_after_miss": 6
+  },
+  "repeated_sample_limit_demo": {
+    "observations": 10000,
+    "latent_variance": 2.499937501562461e-05,
+    "predictive_variance": 0.2500249993750156,
+    "sequential_latent_variance": 2.4999375015624588e-05
+  },
+  "fixed_noise_variance": 0.25,
+  "covariance_cache": {
+    "hits": 31353,
+    "misses": 1256,
+    "maxsize": null,
+    "currsize": 1256
+  },
+  "elapsed_seconds": 0.18155450000267592,
+  "interpretation": [
+    "A feasible route gives an achievable candidate upper bound on the best terminal objective; it is not a lower uncertainty floor.",
+    "Exhaustive enumeration identifies the exact minimum only in this finite graph, finite horizon and fixed GP model.",
+    "A missed first-step sample leaves the same remaining schedule but one fewer total observation. Revised target acknowledges lost information; it does not prove improved mapping.",
+    "Latent variance at a repeatedly observed point can approach zero despite independent measurement noise; predictive variance includes the noise variance.",
+    "No y-values or field-error metric are used. There is no claimed reconstruction accuracy or physical safety guarantee.",
+    "The min-max comparison is over fixed open-loop routes and all nine no/one-miss identity masks, using the same scheduled eight samples. A mask removes one sample for every method. It is not a stochastic dropout model or feedback-policy optimality theorem."
+  ]
+}

@@ -1,0 +1,21 @@
+# Motion assumptions: ECC source and first-study scope
+
+Inspected 18 September 2026. Primary source: Suenaga, Hanif, Uto and Hatanaka, *Hierarchical Multi-Robot Data Sampling for Environmental State Estimation through Online Gaussian Process*, ECC 2025, pp. 304-311. All eight pages of the licensed local PDF were rendered and visually read; page numbers below are printed numbers. No simulations were run. Existing equation-map commentary was not treated as evidence. Private intermediate files remain under `references/private/q14-audit/`.
+
+## What the paper actually assumes
+
+**Explicit motion model, not learned dynamics.** Section III assumes planar positions and single-integrator dynamics `p_dot_i = u_i`, with velocity input in a set `U` (p. 305, Eq. 2). No vehicle-dynamics identification, learned transition model, acceleration, heading, current or actuator state is introduced. Robot positions enter the Voronoi partition, collision constraint and feedback law directly (pp. 306-307; p. 309, nominal feedback preceding Eq. 17). Fig. 5 also supplies positions directly to the planner/controller (p. 310). This supports treating positions as available state; the paper does not specify a localization-error estimator or error distribution.
+
+**The learned unknown is the environmental field.** The scalar field is a function of position, assumed to belong to an RKHS. Robots sample its value at their current positions every `t_s`, with additive zero-mean Gaussian sensor noise (p. 306, Eq. 3). SOGP estimates that field and its uncertainty (Eq. 4), centrally updated from all robots at sampling times. This is sensing uncertainty, not uncertainty learned about robot motion. The simulations use a fixed Gaussian-mixture field (p. 308, Section IV-B).
+
+**Planning transitions are deterministic in this scene.** The generic MDP transition function is introduced on p. 308, but p. 309 explicitly sets the commanded cell transition probability to one. Rewards combine representative-cell variance and inter-cell distance; Bellman planning supplies waypoint guidance (Eq. 16). Continuous nominal position feedback and the QP then determine velocity (Eq. 17). A probabilistic MDP definition therefore does not establish a stochastic motion model.
+
+**Timing and omissions.** Sampling is periodic, with `t_s = 10 s` in the simulation (p. 310, Table I). The prose describes posterior/path updates at sampling instants (p. 309); Algorithm 1 gives an operational loop (p. 310). These specify neither measured computational latency nor robot motion during planner execution. The paper introduces no sample-dropout, delivery-delay, uncertain-current or tracking-disturbance process. These are unmodeled effects, not demonstrated robustness. Numerical control/integration period, effective bounds defining `U`, exact starting coordinates and disturbance distributions are not supplied; they must not be silently attributed to the source.
+
+## Recommendation and benchmark bridge
+
+Start with **explicit known kinematics and observed robot poses; learn the field, not the vehicle dynamics**. Use the holonomic case to check alignment, then a declared turn-constrained kinematic model for the first USV-oriented Python study. The latter is an extension of ECC Eq. 2.
+
+The [pinned benchmark inspection](</C:/Users/Lenovo/Desktop/GP Attainability/docs/research/benchmark_transfer_scope_2026-09-18.md>) supports that extension: the inspected `IdealAgent` uses position/yaw and velocity/yaw-rate commands with a minimum-turning-radius restriction. Its native importance grid is not GP variance. Retaining the motion stack while adding explicit GP sampling/delivery semantics is a plausible bridge, not yet verified integration.
+
+Keep the agreed uncertainty target, deadline, sensing and safety limits fixed. First isolate deterministic turning/path-following effects. Add missed samples and explicitly specified execution deviations as separate stress tests, labeled **new study assumptions**. Planning latency needs its own measured/modelled experiment in which mission time continues; it is not equivalent to reducing vehicle speed. Unknown-dynamics learning would expand the research question beyond either inspected source and is unnecessary for this starting scope.

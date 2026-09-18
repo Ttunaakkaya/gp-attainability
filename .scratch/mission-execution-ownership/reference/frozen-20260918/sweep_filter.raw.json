@@ -1,0 +1,3667 @@
+{
+  "config": {
+    "controller": "filter",
+    "domain": [
+      60.0,
+      40.0
+    ],
+    "dp_grid_shape": [
+      4,
+      3
+    ],
+    "dp_horizon_steps": 2,
+    "dp_motion_primitives": true,
+    "dp_travel_weight": 0.01,
+    "drift_strength": 0.0,
+    "dropout_prob": 0.0,
+    "dt": 0.5,
+    "duration_s": 10.0,
+    "gp_backend": "exact",
+    "grid_shape": [
+      6,
+      4
+    ],
+    "length_scale": 8.0,
+    "max_speed": 2.0,
+    "max_turn_rate": 0.45,
+    "min_separation": 2.0,
+    "model": "holonomic",
+    "noise_std": 0.15,
+    "p_controller_rollout": true,
+    "p_deviation_trigger_m": 1.5,
+    "p_event_triggers": true,
+    "p_intervention_trigger_mps": 0.25,
+    "p_max_rollout_candidates": 6,
+    "p_retain_plan": true,
+    "p_switch_margin": 0.01,
+    "qp_acceptance_tol": 1e-07,
+    "qp_alpha": 1.0,
+    "qp_max_iter": 10000,
+    "qp_polygon_sides": 16,
+    "robot_count": 2,
+    "sample_period_s": 5.0,
+    "seed": 7,
+    "signal_variance": 1.0,
+    "sogp_max_basis": 64,
+    "sogp_novelty_tolerance": 1e-06,
+    "target_mean_variance": null
+  },
+  "controls": [
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "preview",
+      "plan_id": null,
+      "positions_before": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 1,
+      "time_s": 0.5,
+      "tracking_time_s": null,
+      "wall_s": 8.240000170189887e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "preview",
+      "plan_id": null,
+      "positions_before": [
+        [
+          4.0,
+          7.0
+        ],
+        [
+          4.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 2,
+      "time_s": 1.0,
+      "tracking_time_s": null,
+      "wall_s": 5.1399998483248055e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "preview",
+      "plan_id": null,
+      "positions_before": [
+        [
+          5.0,
+          7.0
+        ],
+        [
+          5.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 3,
+      "time_s": 1.5,
+      "tracking_time_s": null,
+      "wall_s": 4.239999907440506e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "preview",
+      "plan_id": null,
+      "positions_before": [
+        [
+          6.0,
+          7.0
+        ],
+        [
+          6.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 4,
+      "time_s": 2.0,
+      "tracking_time_s": null,
+      "wall_s": 3.9200000173877925e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "preview",
+      "plan_id": null,
+      "positions_before": [
+        [
+          7.0,
+          7.0
+        ],
+        [
+          7.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 5,
+      "time_s": 2.5,
+      "tracking_time_s": null,
+      "wall_s": 3.8300000596791506e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "preview",
+      "plan_id": null,
+      "positions_before": [
+        [
+          8.0,
+          7.0
+        ],
+        [
+          8.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 6,
+      "time_s": 3.0,
+      "tracking_time_s": null,
+      "wall_s": 3.769999966607429e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "preview",
+      "plan_id": null,
+      "positions_before": [
+        [
+          9.0,
+          7.0
+        ],
+        [
+          9.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 7,
+      "time_s": 3.5,
+      "tracking_time_s": null,
+      "wall_s": 3.6699999327538535e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "preview",
+      "plan_id": null,
+      "positions_before": [
+        [
+          10.0,
+          7.0
+        ],
+        [
+          10.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 8,
+      "time_s": 4.0,
+      "tracking_time_s": null,
+      "wall_s": 4.3799998820759356e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "preview",
+      "plan_id": null,
+      "positions_before": [
+        [
+          11.0,
+          7.0
+        ],
+        [
+          11.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 9,
+      "time_s": 4.5,
+      "tracking_time_s": null,
+      "wall_s": 4.0000002627493814e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "preview",
+      "plan_id": null,
+      "positions_before": [
+        [
+          12.0,
+          7.0
+        ],
+        [
+          12.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 10,
+      "time_s": 5.0,
+      "tracking_time_s": null,
+      "wall_s": 3.819999983534217e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "preview",
+      "plan_id": null,
+      "positions_before": [
+        [
+          13.0,
+          7.0
+        ],
+        [
+          13.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 11,
+      "time_s": 5.5,
+      "tracking_time_s": null,
+      "wall_s": 5.020000025979243e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "preview",
+      "plan_id": null,
+      "positions_before": [
+        [
+          14.0,
+          7.0
+        ],
+        [
+          14.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 12,
+      "time_s": 6.0,
+      "tracking_time_s": null,
+      "wall_s": 3.9500002458225936e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "preview",
+      "plan_id": null,
+      "positions_before": [
+        [
+          15.0,
+          7.0
+        ],
+        [
+          15.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 13,
+      "time_s": 6.5,
+      "tracking_time_s": null,
+      "wall_s": 3.9500002458225936e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "preview",
+      "plan_id": null,
+      "positions_before": [
+        [
+          16.0,
+          7.0
+        ],
+        [
+          16.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 14,
+      "time_s": 7.0,
+      "tracking_time_s": null,
+      "wall_s": 3.649999780463986e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "preview",
+      "plan_id": null,
+      "positions_before": [
+        [
+          17.0,
+          7.0
+        ],
+        [
+          17.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 15,
+      "time_s": 7.5,
+      "tracking_time_s": null,
+      "wall_s": 3.569999898900278e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "preview",
+      "plan_id": null,
+      "positions_before": [
+        [
+          18.0,
+          7.0
+        ],
+        [
+          18.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 16,
+      "time_s": 8.0,
+      "tracking_time_s": null,
+      "wall_s": 3.49000001733657e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "preview",
+      "plan_id": null,
+      "positions_before": [
+        [
+          19.0,
+          7.0
+        ],
+        [
+          19.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 17,
+      "time_s": 8.5,
+      "tracking_time_s": null,
+      "wall_s": 3.470000228844583e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "preview",
+      "plan_id": null,
+      "positions_before": [
+        [
+          20.0,
+          7.0
+        ],
+        [
+          20.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 18,
+      "time_s": 9.0,
+      "tracking_time_s": null,
+      "wall_s": 3.49000001733657e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "preview",
+      "plan_id": null,
+      "positions_before": [
+        [
+          21.0,
+          7.0
+        ],
+        [
+          21.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 19,
+      "time_s": 9.5,
+      "tracking_time_s": null,
+      "wall_s": 3.7099998735357076e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "preview",
+      "plan_id": null,
+      "positions_before": [
+        [
+          22.0,
+          7.0
+        ],
+        [
+          22.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 20,
+      "time_s": 10.0,
+      "tracking_time_s": null,
+      "wall_s": 3.619999915827066e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": null,
+      "positions_before": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 1,
+      "time_s": 0.5,
+      "tracking_time_s": null,
+      "wall_s": 5.990000136080198e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": null,
+      "positions_before": [
+        [
+          4.0,
+          7.0
+        ],
+        [
+          4.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 2,
+      "time_s": 1.0,
+      "tracking_time_s": null,
+      "wall_s": 4.0099999750964344e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": null,
+      "positions_before": [
+        [
+          5.0,
+          7.0
+        ],
+        [
+          5.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 3,
+      "time_s": 1.5,
+      "tracking_time_s": null,
+      "wall_s": 3.4500000765547156e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": null,
+      "positions_before": [
+        [
+          6.0,
+          7.0
+        ],
+        [
+          6.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 4,
+      "time_s": 2.0,
+      "tracking_time_s": null,
+      "wall_s": 3.4100001357728615e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": null,
+      "positions_before": [
+        [
+          7.0,
+          7.0
+        ],
+        [
+          7.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 5,
+      "time_s": 2.5,
+      "tracking_time_s": null,
+      "wall_s": 3.360000118846074e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": null,
+      "positions_before": [
+        [
+          8.0,
+          7.0
+        ],
+        [
+          8.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 6,
+      "time_s": 3.0,
+      "tracking_time_s": null,
+      "wall_s": 3.3399999665562063e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": null,
+      "positions_before": [
+        [
+          9.0,
+          7.0
+        ],
+        [
+          9.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 7,
+      "time_s": 3.5,
+      "tracking_time_s": null,
+      "wall_s": 3.3200001780642197e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": null,
+      "positions_before": [
+        [
+          10.0,
+          7.0
+        ],
+        [
+          10.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 8,
+      "time_s": 4.0,
+      "tracking_time_s": null,
+      "wall_s": 3.229999856557697e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": null,
+      "positions_before": [
+        [
+          11.0,
+          7.0
+        ],
+        [
+          11.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 9,
+      "time_s": 4.5,
+      "tracking_time_s": null,
+      "wall_s": 3.2599997211946175e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": null,
+      "positions_before": [
+        [
+          12.0,
+          7.0
+        ],
+        [
+          12.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 10,
+      "time_s": 5.0,
+      "tracking_time_s": null,
+      "wall_s": 6.049999865354039e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": null,
+      "positions_before": [
+        [
+          13.0,
+          7.0
+        ],
+        [
+          13.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 11,
+      "time_s": 5.5,
+      "tracking_time_s": null,
+      "wall_s": 8.439999874099158e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": null,
+      "positions_before": [
+        [
+          14.0,
+          7.0
+        ],
+        [
+          14.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 12,
+      "time_s": 6.0,
+      "tracking_time_s": null,
+      "wall_s": 4.0499999158782884e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": null,
+      "positions_before": [
+        [
+          15.0,
+          7.0
+        ],
+        [
+          15.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 13,
+      "time_s": 6.5,
+      "tracking_time_s": null,
+      "wall_s": 3.6299999919719994e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": null,
+      "positions_before": [
+        [
+          16.0,
+          7.0
+        ],
+        [
+          16.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 14,
+      "time_s": 7.0,
+      "tracking_time_s": null,
+      "wall_s": 3.7999998312443495e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": null,
+      "positions_before": [
+        [
+          17.0,
+          7.0
+        ],
+        [
+          17.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 15,
+      "time_s": 7.5,
+      "tracking_time_s": null,
+      "wall_s": 3.690000085043721e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": null,
+      "positions_before": [
+        [
+          18.0,
+          7.0
+        ],
+        [
+          18.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 16,
+      "time_s": 8.0,
+      "tracking_time_s": null,
+      "wall_s": 3.3300002542091534e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": null,
+      "positions_before": [
+        [
+          19.0,
+          7.0
+        ],
+        [
+          19.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 17,
+      "time_s": 8.5,
+      "tracking_time_s": null,
+      "wall_s": 3.3799999073380604e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": null,
+      "positions_before": [
+        [
+          20.0,
+          7.0
+        ],
+        [
+          20.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 18,
+      "time_s": 9.0,
+      "tracking_time_s": null,
+      "wall_s": 3.35000004270114e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": null,
+      "positions_before": [
+        [
+          21.0,
+          7.0
+        ],
+        [
+          21.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 19,
+      "time_s": 9.5,
+      "tracking_time_s": null,
+      "wall_s": 3.2599997211946175e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": null,
+      "positions_before": [
+        [
+          22.0,
+          7.0
+        ],
+        [
+          22.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 20,
+      "time_s": 10.0,
+      "tracking_time_s": null,
+      "wall_s": 3.1699997634859756e-05
+    }
+  ],
+  "failure": null,
+  "field": {
+    "truth": [
+      [
+        0.010347208753096407,
+        0.3452826826653067,
+        0.3910391235409776,
+        -0.02439399990604775,
+        -0.2201891723633539,
+        0.0038846172337478713
+      ],
+      [
+        0.02332646955111022,
+        0.15437475488136082,
+        0.5236246595182688,
+        0.3558913342749674,
+        0.5669708765177142,
+        0.3964294406443212
+      ],
+      [
+        -0.08232205663345553,
+        -0.4987682050212278,
+        -0.7638983210292519,
+        -0.5072745179394024,
+        0.18058587054732184,
+        0.34658795820509475
+      ],
+      [
+        -0.067772740253568,
+        -0.05890511444970506,
+        -0.14344113732684113,
+        0.22487996424217835,
+        -0.23792980796958108,
+        -0.013801792526290723
+      ]
+    ],
+    "x": [
+      0.0,
+      12.0,
+      24.0,
+      36.0,
+      48.0,
+      60.0
+    ],
+    "y": [
+      0.0,
+      13.333333333333334,
+      26.666666666666668,
+      40.0
+    ]
+  },
+  "frames": [
+    {
+      "error": [
+        [
+          0.12170638269846022,
+          -0.2700408143121755,
+          -0.38652049812520783,
+          0.024422601519052976,
+          0.220189191444837,
+          -0.0038846172324061225
+        ],
+        [
+          0.07078879247646218,
+          -0.10074949503299965,
+          -0.5204042123472759,
+          -0.3558709497608257,
+          -0.5669708629182447,
+          -0.3964294406433649
+        ],
+        [
+          -0.11531684929888401,
+          0.38615695092237023,
+          0.7571354895630709,
+          0.5072317111407374,
+          -0.18058589910575332,
+          -0.34658795820710286
+        ],
+        [
+          0.012451513300106132,
+          0.027384029488581076,
+          0.14154814903780105,
+          -0.22489194631935552,
+          0.23792979997577307,
+          0.013801792525728624
+        ]
+      ],
+      "forecast_plan_id": null,
+      "gp_telemetry": {
+        "admitted_count": null,
+        "backend": "exact",
+        "dictionary_size": null,
+        "max_basis": null,
+        "observation_count": 2,
+        "projected_count": null,
+        "pruned_count": null,
+        "state_nbytes": null
+      },
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "mean": [
+        [
+          0.13205359145155662,
+          0.0752418683531312,
+          0.004518625415769775,
+          2.8601613005227138e-05,
+          1.9081483107527993e-08,
+          1.341748578965529e-12
+        ],
+        [
+          0.0941152620275724,
+          0.05362525984836117,
+          0.003220447170992922,
+          2.0384514141636736e-05,
+          1.3599469448723733e-08,
+          9.56270993438209e-13
+        ],
+        [
+          -0.19763890593233954,
+          -0.1126112540988576,
+          -0.006762831466181029,
+          -4.280679866497211e-05,
+          -2.85584314934874e-08,
+          -2.008137137870264e-12
+        ],
+        [
+          -0.055321226953461866,
+          -0.031521084961123984,
+          -0.0018929882890400863,
+          -1.198207717718688e-05,
+          -7.993808013827871e-09,
+          -5.620988936046239e-13
+        ]
+      ],
+      "mean_variance": 0.9009448103925782,
+      "min_separation": 20.0,
+      "path_length": 0.0,
+      "plan_id": null,
+      "planned_mean_variance": 0.9009448103925782,
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "rmse": 0.31960078881206433,
+      "samples_attempted": 2,
+      "samples_received": 2,
+      "std": [
+        [
+          0.7773553820090789,
+          0.9335571631474482,
+          0.999768303730375,
+          0.9999999907180954,
+          0.9999999999999959,
+          1.0
+        ],
+        [
+          0.7152502449429964,
+          0.9172972187737682,
+          0.9997140203009348,
+          0.9999999885437766,
+          0.9999999999999949,
+          1.0
+        ],
+        [
+          0.3895491225617558,
+          0.8512420711623813,
+          0.9995032764465861,
+          0.9999999801035656,
+          0.9999999999999911,
+          1.0
+        ],
+        [
+          0.9691719408203718,
+          0.9900968279735338,
+          0.9999644598061888,
+          0.9999999985760969,
+          0.9999999999999993,
+          1.0
+        ]
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 0.0
+    },
+    {
+      "error": [
+        [
+          0.095000190721798,
+          -0.13489050694514626,
+          -0.3195195135955972,
+          0.027277155471162228,
+          0.22020166917909062,
+          -0.003884611506897884
+        ],
+        [
+          0.06648099449436769,
+          -0.07809533577938552,
+          -0.5092110284518733,
+          -0.3553942562637158,
+          -0.5669687793326686,
+          -0.3964294396873035
+        ],
+        [
+          -0.011062122976235336,
+          -0.13771031224153835,
+          0.49726307338517317,
+          0.4961591141906706,
+          -0.18063429981592863,
+          -0.3465879804161933
+        ],
+        [
+          0.04082587034328107,
+          -0.11521160460585492,
+          0.07081218810685935,
+          -0.2279058473766046,
+          0.2379166255665793,
+          0.013801786480535575
+        ]
+      ],
+      "forecast_plan_id": null,
+      "gp_telemetry": {
+        "admitted_count": null,
+        "backend": "exact",
+        "dictionary_size": null,
+        "max_basis": null,
+        "observation_count": 4,
+        "projected_count": null,
+        "pruned_count": null,
+        "state_nbytes": null
+      },
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "mean": [
+        [
+          0.1053473994748944,
+          0.21039217572016045,
+          0.07151960994538036,
+          0.0028831555651144766,
+          1.24968157367158e-05,
+          5.726849987433449e-09
+        ],
+        [
+          0.0898074640454779,
+          0.0762794191019753,
+          0.014413631066395524,
+          0.0004970780112516001,
+          2.0971850455606162e-06,
+          9.57017675161565e-10
+        ],
+        [
+          -0.09338417960969086,
+          -0.6364785172627662,
+          -0.26663524764407875,
+          -0.011115403748731744,
+          -4.84292686067977e-05,
+          -2.221109859177617e-08
+        ],
+        [
+          -0.026946869910286927,
+          -0.17411671905555998,
+          -0.07262894921998178,
+          -0.003025883134426247,
+          -1.318240300178095e-05,
+          -6.045755148529205e-09
+        ]
+      ],
+      "mean_variance": 0.8222036957655305,
+      "min_separation": 20.0,
+      "path_length": 20.0,
+      "plan_id": null,
+      "planned_mean_variance": 0.8222036957655305,
+      "positions": [
+        [
+          13.0,
+          7.0
+        ],
+        [
+          13.0,
+          27.0
+        ]
+      ],
+      "rmse": 0.2774334897940838,
+      "samples_attempted": 4,
+      "samples_received": 4,
+      "std": [
+        [
+          0.7690363360414277,
+          0.7397936328808575,
+          0.9590286393808491,
+          0.9999275505535022,
+          0.9999999986158897,
+          0.9999999999999997
+        ],
+        [
+          0.7040246489291434,
+          0.6642859631645581,
+          0.9491629001526084,
+          0.9999105535797563,
+          0.9999999982911763,
+          0.9999999999999997
+        ],
+        [
+          0.3523610937214129,
+          0.17204900746888366,
+          0.9099131731948192,
+          0.9998446864690119,
+          0.9999999970329335,
+          0.9999999999999993
+        ],
+        [
+          0.9681533198629149,
+          0.96465126672126,
+          0.9938244431880094,
+          0.9999888861794022,
+          0.9999999997876695,
+          0.9999999999999999
+        ]
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 5.0
+    },
+    {
+      "error": [
+        [
+          0.13146340802062015,
+          -0.15969862792246617,
+          0.19151962105505038,
+          0.19441633134299025,
+          0.22507571799726514,
+          -0.003869977253953445
+        ],
+        [
+          0.09976802989739596,
+          -0.10078811683820821,
+          -0.04342142192928805,
+          -0.2030410478085529,
+          -0.5625258630868738,
+          -0.39641609988038345
+        ],
+        [
+          -0.033769469496184853,
+          -0.12246023572549919,
+          0.17580780427701215,
+          0.391082514238266,
+          -0.18369828451350148,
+          -0.34659717988229455
+        ],
+        [
+          0.034069496960984436,
+          -0.11066806541366708,
+          -0.024737186372887854,
+          -0.2591405457215058,
+          0.23700582976598888,
+          0.013799051857177717
+        ]
+      ],
+      "forecast_plan_id": null,
+      "gp_telemetry": {
+        "admitted_count": null,
+        "backend": "exact",
+        "dictionary_size": null,
+        "max_basis": null,
+        "observation_count": 6,
+        "projected_count": null,
+        "pruned_count": null,
+        "state_nbytes": null
+      },
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "mean": [
+        [
+          0.14181061677371656,
+          0.18558405474284054,
+          0.582558744596028,
+          0.17002233143694248,
+          0.004886545633911239,
+          1.4639979794426587e-05
+        ],
+        [
+          0.12309449944850617,
+          0.05358663804315261,
+          0.4802032375889807,
+          0.1528502864664145,
+          0.004445013430840306,
+          1.3340763937703569e-05
+        ],
+        [
+          -0.11609152612964038,
+          -0.621228440746727,
+          -0.5880905167522398,
+          -0.11619200370113636,
+          -0.00311241396617965,
+          -9.221677199785915e-06
+        ],
+        [
+          -0.03370324329258356,
+          -0.16957317986337214,
+          -0.168178323699729,
+          -0.03426058147932744,
+          -0.0009239782035921893,
+          -2.7406691130057593e-06
+        ]
+      ],
+      "mean_variance": 0.7443134693861673,
+      "min_separation": 20.0,
+      "path_length": 40.0,
+      "plan_id": null,
+      "planned_mean_variance": 0.7443134693861673,
+      "positions": [
+        [
+          23.0,
+          7.0
+        ],
+        [
+          23.0,
+          27.0
+        ]
+      ],
+      "rmse": 0.2232471929470803,
+      "samples_attempted": 6,
+      "samples_received": 6,
+      "std": [
+        [
+          0.7678042400103496,
+          0.7391972450039237,
+          0.7413563829200408,
+          0.979925159894729,
+          0.9999831592084603,
+          0.9999999998481944
+        ],
+        [
+          0.702352214920552,
+          0.6634540852640733,
+          0.6663929750542198,
+          0.9751539082808801,
+          0.9999792058305449,
+          0.9999999998125572
+        ],
+        [
+          0.34654796114729386,
+          0.1664510997105162,
+          0.18587253894400288,
+          0.956449455799886,
+          0.9999638980168581,
+          0.9999999996745739
+        ],
+        [
+          0.9680033042898226,
+          0.9645811434011926,
+          0.9648353464420003,
+          0.9969466573268562,
+          0.9999974165488231,
+          0.9999999999767122
+        ]
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 10.0
+    }
+  ],
+  "gp_failures": [],
+  "gp_telemetry": {
+    "admitted_count": null,
+    "backend": "exact",
+    "dictionary_size": null,
+    "max_basis": null,
+    "observation_count": 6,
+    "projected_count": null,
+    "pruned_count": null,
+    "state_nbytes": null
+  },
+  "gp_updates": [],
+  "initial_positions": [
+    [
+      3.0,
+      7.0
+    ],
+    [
+      3.0,
+      27.0
+    ]
+  ],
+  "method": "sweep",
+  "motion": [
+    {
+      "control_event_index": null,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 0.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 20,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          4.0,
+          7.0
+        ],
+        [
+          4.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          4.0,
+          7.0
+        ],
+        [
+          4.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        2.0,
+        2.0
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 0.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 21,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          5.0,
+          7.0
+        ],
+        [
+          5.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          5.0,
+          7.0
+        ],
+        [
+          5.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        2.0,
+        2.0
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 1.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 22,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          6.0,
+          7.0
+        ],
+        [
+          6.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          6.0,
+          7.0
+        ],
+        [
+          6.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        2.0,
+        2.0
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 1.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 23,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          7.0,
+          7.0
+        ],
+        [
+          7.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          7.0,
+          7.0
+        ],
+        [
+          7.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        2.0,
+        2.0
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 2.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 24,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          8.0,
+          7.0
+        ],
+        [
+          8.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          8.0,
+          7.0
+        ],
+        [
+          8.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        2.0,
+        2.0
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 2.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 25,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          9.0,
+          7.0
+        ],
+        [
+          9.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          9.0,
+          7.0
+        ],
+        [
+          9.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        2.0,
+        2.0
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 3.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 26,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          10.0,
+          7.0
+        ],
+        [
+          10.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          10.0,
+          7.0
+        ],
+        [
+          10.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        2.0,
+        2.0
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 3.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 27,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          11.0,
+          7.0
+        ],
+        [
+          11.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          11.0,
+          7.0
+        ],
+        [
+          11.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        2.0,
+        2.0
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 4.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 28,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          12.0,
+          7.0
+        ],
+        [
+          12.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          12.0,
+          7.0
+        ],
+        [
+          12.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        2.0,
+        2.0
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 4.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 29,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          13.0,
+          7.0
+        ],
+        [
+          13.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          13.0,
+          7.0
+        ],
+        [
+          13.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        2.0,
+        2.0
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 5.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 30,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          14.0,
+          7.0
+        ],
+        [
+          14.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          14.0,
+          7.0
+        ],
+        [
+          14.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        2.0,
+        2.0
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 5.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 31,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          15.0,
+          7.0
+        ],
+        [
+          15.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          15.0,
+          7.0
+        ],
+        [
+          15.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        2.0,
+        2.0
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 6.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 32,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          16.0,
+          7.0
+        ],
+        [
+          16.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          16.0,
+          7.0
+        ],
+        [
+          16.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        2.0,
+        2.0
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 6.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 33,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          17.0,
+          7.0
+        ],
+        [
+          17.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          17.0,
+          7.0
+        ],
+        [
+          17.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        2.0,
+        2.0
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 7.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 34,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          18.0,
+          7.0
+        ],
+        [
+          18.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          18.0,
+          7.0
+        ],
+        [
+          18.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        2.0,
+        2.0
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 7.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 35,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          19.0,
+          7.0
+        ],
+        [
+          19.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          19.0,
+          7.0
+        ],
+        [
+          19.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        2.0,
+        2.0
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 8.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 36,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          20.0,
+          7.0
+        ],
+        [
+          20.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          20.0,
+          7.0
+        ],
+        [
+          20.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        2.0,
+        2.0
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 8.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 37,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          21.0,
+          7.0
+        ],
+        [
+          21.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          21.0,
+          7.0
+        ],
+        [
+          21.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        2.0,
+        2.0
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 9.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 38,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          22.0,
+          7.0
+        ],
+        [
+          22.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          22.0,
+          7.0
+        ],
+        [
+          22.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        2.0,
+        2.0
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 9.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 39,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          23.0,
+          7.0
+        ],
+        [
+          23.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          23.0,
+          7.0
+        ],
+        [
+          23.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        2.0,
+        2.0
+      ],
+      "targets": [
+        [
+          58.0,
+          7.0
+        ],
+        [
+          58.0,
+          27.0
+        ]
+      ],
+      "time_s": 10.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "plan_events": [],
+  "planning_failures": [],
+  "plans": [],
+  "samples": [
+    {
+      "actual_position": [
+        3.0,
+        7.0
+      ],
+      "assimilated": true,
+      "dropout_uniform": 0.7624516078574131,
+      "noise_innovation": 0.10636350137682993,
+      "plan_id": null,
+      "planned_position": [
+        3.0,
+        7.0
+      ],
+      "received": true,
+      "robot_id": 0,
+      "time_s": 0.0,
+      "value": 0.20377313361119903
+    },
+    {
+      "actual_position": [
+        3.0,
+        27.0
+      ],
+      "assimilated": true,
+      "dropout_uniform": 0.49251675772745845,
+      "noise_innovation": -0.04908278163457198,
+      "plan_id": null,
+      "planned_position": [
+        3.0,
+        27.0
+      ],
+      "received": true,
+      "robot_id": 1,
+      "time_s": 0.0,
+      "value": -0.21823120010674657
+    },
+    {
+      "actual_position": [
+        13.0,
+        7.0
+      ],
+      "assimilated": true,
+      "dropout_uniform": 0.981240409612618,
+      "noise_innovation": -0.18421038745252002,
+      "plan_id": null,
+      "planned_position": [
+        13.0,
+        7.0
+      ],
+      "received": true,
+      "robot_id": 0,
+      "time_s": 5.0,
+      "value": 0.28398745768451017
+    },
+    {
+      "actual_position": [
+        13.0,
+        27.0
+      ],
+      "assimilated": true,
+      "dropout_uniform": 0.2735296430898088,
+      "noise_innovation": -0.12856652924924705,
+      "plan_id": null,
+      "planned_position": [
+        13.0,
+        27.0
+      ],
+      "received": true,
+      "robot_id": 1,
+      "time_s": 5.0,
+      "value": -0.6670889108537936
+    },
+    {
+      "actual_position": [
+        23.0,
+        7.0
+      ],
+      "assimilated": true,
+      "dropout_uniform": 0.356284802646373,
+      "noise_innovation": 0.05759258807517703,
+      "plan_id": null,
+      "planned_position": [
+        23.0,
+        7.0
+      ],
+      "received": true,
+      "robot_id": 0,
+      "time_s": 10.0,
+      "value": 0.8433852114344662
+    },
+    {
+      "actual_position": [
+        23.0,
+        27.0
+      ],
+      "assimilated": true,
+      "dropout_uniform": 0.2964969828333538,
+      "noise_innovation": 0.12411402968945848,
+      "plan_id": null,
+      "planned_position": [
+        23.0,
+        27.0
+      ],
+      "received": true,
+      "robot_id": 1,
+      "time_s": 10.0,
+      "value": -0.6389241082326488
+    }
+  ],
+  "schema_version": 1,
+  "scope": {
+    "adaptive": "replans from executed positions and received data at sample epochs",
+    "disturbance": "drift_strength: velocity tracking-command std m/s for holonomic, capped before constraint control; yaw-rate std rad/s for USV; no unmodeled post-control wind",
+    "forecast": "current_fixed_exact_gp_nominal_locations_all_future_samples_received",
+    "gp": "exact, fixed hyperparameters; finite evaluation grid",
+    "gp_update_order": "ascending (sample_tick, robot_id), received samples only",
+    "greedy": "open-loop nominal-information route; assumes all scheduled samples succeed",
+    "implementation": "independent application; not paper reproduction",
+    "planned_variance": "nominal receipt at previewed endpoints; not a guarantee",
+    "planning": "finite targets; USV endpoint rollouts; joint sequential fantasy gains",
+    "safety": "sampled piecewise-linear motion checked by common displacement backtracking",
+    "usv": "turn-rate-limited kinematic unicycle; zero-speed yaw allowed; no hydrodynamics",
+    "variance": "latent"
+  },
+  "seed_manifest": {
+    "dropout_key": 7,
+    "evaluation_noise_key": 6823953754371609207,
+    "field_seed": 3386250816931739734,
+    "master_seed": 7,
+    "measurement_noise_key": 17559002276220262541,
+    "motion_key": 7,
+    "planner_tie_break_seed": 18326047321325575129,
+    "pose_seed": 4042502035264064771
+  },
+  "status": "completed",
+  "summary": {
+    "completion_time_s": 10.0,
+    "control_interventions": 0,
+    "control_max_s": 8.439999874099158e-05,
+    "control_median_s": 3.395000021555461e-05,
+    "control_p95_s": 6.169499865791297e-05,
+    "control_preview_s": 0.0008293000028061215,
+    "control_rollout_s": 0,
+    "control_s": 0.0007951999941724353,
+    "dp_failed_planning_s": 0,
+    "dp_planning_median_s": null,
+    "dp_planning_p95_s": null,
+    "dp_planning_s": 0,
+    "final_planned_mean_variance": 0.7443134693861673,
+    "gp_backend": "exact",
+    "gp_failures": 0,
+    "gp_s": 0.0006790999941586051,
+    "max_speed_observed": 2.0,
+    "max_turn_rate_observed": 0.0,
+    "max_variance": 0.9999999999534244,
+    "mean_sample_position_error": 0.0,
+    "mean_variance": 0.7443134693861673,
+    "min_separation": 20.0,
+    "path_length": 40.0,
+    "path_length_per_robot": [
+      20.0,
+      20.0
+    ],
+    "planning_failures": 0,
+    "planning_s": 0.0021477999980561435,
+    "plans_generated": 0,
+    "preview_qp_failures": 0,
+    "preview_qp_solves": 0,
+    "qp_failures": 0,
+    "qp_solves": 0,
+    "rmse": 0.2232471929470803,
+    "rollout_control_calls": 0,
+    "rollout_qp_failures": 0,
+    "rollout_qp_solves": 0,
+    "runtime_s": 0.004777500002091983,
+    "safety_interventions": 0,
+    "samples_assimilated": 6,
+    "samples_attempted": 6,
+    "samples_lost": 0,
+    "samples_received": 6
+  }
+}

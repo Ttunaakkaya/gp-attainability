@@ -1,0 +1,65 @@
+# Python environments and caches
+.venv/
+.uv-cache/
+.python/
+.tools/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.pre-commit-cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Packaging
+build/
+dist/
+*.egg-info/
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.swp
+
+# Local secrets and machine-specific configuration
+.env
+.env.*
+!.env.example
+
+# Generated research artefacts
+outputs/*
+!outputs/.gitkeep
+notebooks/.ipynb_checkpoints/
+
+# Copyright-restricted or locally acquired papers
+references/private/*
+!references/private/.gitignore
+!references/private/README.md
+
+# Generated reports and media
+reports/build/
+*.mp4
+*.gif
+
+# Local tooling and temporary implementation material
+.claude/
+tmp/
+.scratch/mission-execution-ownership/candidates/
+.scratch/mission-execution-ownership/prepare_owner.py.txt
+.scratch/mission-execution-ownership/draft/
+
+# Keep the frozen reference and comparison reports; regenerate comparison outputs
+.scratch/mission-execution-ownership/reference/capture-*/
+.scratch/mission-execution-ownership/reference/repeat-20260918-*/
+.scratch/mission-execution-ownership/reference/after-*/*
+!.scratch/mission-execution-ownership/reference/after-*/report.json
+.scratch/mission-execution-ownership/reference/final-parity/*
+!.scratch/mission-execution-ownership/reference/final-parity/report.json
+.scratch/mission-execution-ownership/reference/repeat-frozen-20260918/*
+!.scratch/mission-execution-ownership/reference/repeat-frozen-20260918/report.json

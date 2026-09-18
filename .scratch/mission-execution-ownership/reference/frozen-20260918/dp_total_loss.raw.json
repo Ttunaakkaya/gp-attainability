@@ -1,0 +1,2444 @@
+{
+  "config": {
+    "controller": "filter",
+    "domain": [
+      60.0,
+      40.0
+    ],
+    "dp_grid_shape": [
+      4,
+      3
+    ],
+    "dp_horizon_steps": 2,
+    "dp_motion_primitives": true,
+    "dp_travel_weight": 0.01,
+    "drift_strength": 0.0,
+    "dropout_prob": 1.0,
+    "dt": 0.5,
+    "duration_s": 7.0,
+    "gp_backend": "exact",
+    "grid_shape": [
+      6,
+      4
+    ],
+    "length_scale": 8.0,
+    "max_speed": 2.0,
+    "max_turn_rate": 0.45,
+    "min_separation": 2.0,
+    "model": "holonomic",
+    "noise_std": 0.15,
+    "p_controller_rollout": true,
+    "p_deviation_trigger_m": 1.5,
+    "p_event_triggers": true,
+    "p_intervention_trigger_mps": 0.25,
+    "p_max_rollout_candidates": 6,
+    "p_retain_plan": true,
+    "p_switch_margin": 0.01,
+    "qp_acceptance_tol": 1e-07,
+    "qp_alpha": 1.0,
+    "qp_max_iter": 10000,
+    "qp_polygon_sides": 16,
+    "robot_count": 2,
+    "sample_period_s": 5.0,
+    "seed": 7,
+    "signal_variance": 1.0,
+    "sogp_max_basis": 64,
+    "sogp_novelty_tolerance": 1e-06,
+    "target_mean_variance": null
+  },
+  "controls": [
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "positions_before": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 1,
+      "time_s": 0.5,
+      "tracking_time_s": 5.0,
+      "wall_s": 6.84000006003771e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "positions_before": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 2,
+      "time_s": 1.0,
+      "tracking_time_s": 4.5,
+      "wall_s": 4.1799998143687844e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "positions_before": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 3,
+      "time_s": 1.5,
+      "tracking_time_s": 4.0,
+      "wall_s": 3.730000025825575e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "positions_before": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 4,
+      "time_s": 2.0,
+      "tracking_time_s": 3.5,
+      "wall_s": 3.550000110408291e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "positions_before": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 5,
+      "time_s": 2.5,
+      "tracking_time_s": 3.0,
+      "wall_s": 3.569999898900278e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "positions_before": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 6,
+      "time_s": 3.0,
+      "tracking_time_s": 2.5,
+      "wall_s": 3.469999865046702e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "positions_before": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 7,
+      "time_s": 3.5,
+      "tracking_time_s": 2.0,
+      "wall_s": 3.4100001357728615e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "positions_before": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 8,
+      "time_s": 4.0,
+      "tracking_time_s": 1.5,
+      "wall_s": 3.420000211917795e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "positions_before": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 9,
+      "time_s": 4.5,
+      "tracking_time_s": 1.0,
+      "wall_s": 3.430000288062729e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "positions_before": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 10,
+      "time_s": 5.0,
+      "tracking_time_s": 0.5,
+      "wall_s": 3.440000000409782e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000001-0f16dfdcb832",
+      "positions_before": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 11,
+      "time_s": 5.5,
+      "tracking_time_s": 2.0,
+      "wall_s": 4.8099998821271583e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000001-0f16dfdcb832",
+      "positions_before": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 12,
+      "time_s": 6.0,
+      "tracking_time_s": 1.5,
+      "wall_s": 3.809999907389283e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000001-0f16dfdcb832",
+      "positions_before": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 13,
+      "time_s": 6.5,
+      "tracking_time_s": 1.0,
+      "wall_s": 3.6600002204068005e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000001-0f16dfdcb832",
+      "positions_before": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 14,
+      "time_s": 7.0,
+      "tracking_time_s": 0.5,
+      "wall_s": 3.529999958118424e-05
+    }
+  ],
+  "failure": null,
+  "field": {
+    "truth": [
+      [
+        0.010347208753096407,
+        0.3452826826653067,
+        0.3910391235409776,
+        -0.02439399990604775,
+        -0.2201891723633539,
+        0.0038846172337478713
+      ],
+      [
+        0.02332646955111022,
+        0.15437475488136082,
+        0.5236246595182688,
+        0.3558913342749674,
+        0.5669708765177142,
+        0.3964294406443212
+      ],
+      [
+        -0.08232205663345553,
+        -0.4987682050212278,
+        -0.7638983210292519,
+        -0.5072745179394024,
+        0.18058587054732184,
+        0.34658795820509475
+      ],
+      [
+        -0.067772740253568,
+        -0.05890511444970506,
+        -0.14344113732684113,
+        0.22487996424217835,
+        -0.23792980796958108,
+        -0.013801792526290723
+      ]
+    ],
+    "x": [
+      0.0,
+      12.0,
+      24.0,
+      36.0,
+      48.0,
+      60.0
+    ],
+    "y": [
+      0.0,
+      13.333333333333334,
+      26.666666666666668,
+      40.0
+    ]
+  },
+  "frames": [
+    {
+      "error": [
+        [
+          -0.010347208753096407,
+          -0.3452826826653067,
+          -0.3910391235409776,
+          0.02439399990604775,
+          0.2201891723633539,
+          -0.0038846172337478713
+        ],
+        [
+          -0.02332646955111022,
+          -0.15437475488136082,
+          -0.5236246595182688,
+          -0.3558913342749674,
+          -0.5669708765177142,
+          -0.3964294406443212
+        ],
+        [
+          0.08232205663345553,
+          0.4987682050212278,
+          0.7638983210292519,
+          0.5072745179394024,
+          -0.18058587054732184,
+          -0.34658795820509475
+        ],
+        [
+          0.067772740253568,
+          0.05890511444970506,
+          0.14344113732684113,
+          -0.22487996424217835,
+          0.23792980796958108,
+          0.013801792526290723
+        ]
+      ],
+      "forecast_plan_id": null,
+      "gp_telemetry": {
+        "admitted_count": null,
+        "backend": "exact",
+        "dictionary_size": null,
+        "max_basis": null,
+        "observation_count": 0,
+        "projected_count": null,
+        "pruned_count": null,
+        "state_nbytes": null
+      },
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "mean": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "mean_variance": 1.0,
+      "min_separation": 20.0,
+      "path_length": 0.0,
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "planned_mean_variance": 1.0,
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "rmse": 0.3297929403653357,
+      "samples_attempted": 2,
+      "samples_received": 0,
+      "std": [
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "targets": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "time_s": 0.0
+    },
+    {
+      "error": [
+        [
+          -0.010347208753096407,
+          -0.3452826826653067,
+          -0.3910391235409776,
+          0.02439399990604775,
+          0.2201891723633539,
+          -0.0038846172337478713
+        ],
+        [
+          -0.02332646955111022,
+          -0.15437475488136082,
+          -0.5236246595182688,
+          -0.3558913342749674,
+          -0.5669708765177142,
+          -0.3964294406443212
+        ],
+        [
+          0.08232205663345553,
+          0.4987682050212278,
+          0.7638983210292519,
+          0.5072745179394024,
+          -0.18058587054732184,
+          -0.34658795820509475
+        ],
+        [
+          0.067772740253568,
+          0.05890511444970506,
+          0.14344113732684113,
+          -0.22487996424217835,
+          0.23792980796958108,
+          0.013801792526290723
+        ]
+      ],
+      "forecast_plan_id": "dp-000000-33ef1e8279e6",
+      "gp_telemetry": {
+        "admitted_count": null,
+        "backend": "exact",
+        "dictionary_size": null,
+        "max_basis": null,
+        "observation_count": 0,
+        "projected_count": null,
+        "pruned_count": null,
+        "state_nbytes": null
+      },
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "mean": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "mean_variance": 1.0,
+      "min_separation": 20.0,
+      "path_length": 0.0,
+      "plan_id": "dp-000001-0f16dfdcb832",
+      "planned_mean_variance": 0.9009448103925782,
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "rmse": 0.3297929403653357,
+      "samples_attempted": 4,
+      "samples_received": 0,
+      "std": [
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "targets": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "time_s": 5.0
+    },
+    {
+      "error": [
+        [
+          -0.010347208753096407,
+          -0.3452826826653067,
+          -0.3910391235409776,
+          0.02439399990604775,
+          0.2201891723633539,
+          -0.0038846172337478713
+        ],
+        [
+          -0.02332646955111022,
+          -0.15437475488136082,
+          -0.5236246595182688,
+          -0.3558913342749674,
+          -0.5669708765177142,
+          -0.3964294406443212
+        ],
+        [
+          0.08232205663345553,
+          0.4987682050212278,
+          0.7638983210292519,
+          0.5072745179394024,
+          -0.18058587054732184,
+          -0.34658795820509475
+        ],
+        [
+          0.067772740253568,
+          0.05890511444970506,
+          0.14344113732684113,
+          -0.22487996424217835,
+          0.23792980796958108,
+          0.013801792526290723
+        ]
+      ],
+      "forecast_plan_id": null,
+      "gp_telemetry": {
+        "admitted_count": null,
+        "backend": "exact",
+        "dictionary_size": null,
+        "max_basis": null,
+        "observation_count": 0,
+        "projected_count": null,
+        "pruned_count": null,
+        "state_nbytes": null
+      },
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "mean": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "mean_variance": 1.0,
+      "min_separation": 20.0,
+      "path_length": 0.0,
+      "plan_id": "dp-000001-0f16dfdcb832",
+      "planned_mean_variance": 1.0,
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "rmse": 0.3297929403653357,
+      "samples_attempted": 4,
+      "samples_received": 0,
+      "std": [
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "targets": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "time_s": 7.0
+    }
+  ],
+  "gp_failures": [],
+  "gp_telemetry": {
+    "admitted_count": null,
+    "backend": "exact",
+    "dictionary_size": null,
+    "max_basis": null,
+    "observation_count": 0,
+    "projected_count": null,
+    "pruned_count": null,
+    "state_nbytes": null
+  },
+  "gp_updates": [],
+  "initial_positions": [
+    [
+      3.0,
+      7.0
+    ],
+    [
+      3.0,
+      27.0
+    ]
+  ],
+  "method": "dp",
+  "motion": [
+    {
+      "control_event_index": null,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "time_s": 0.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 0,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "planned_positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "time_s": 0.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 1,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "planned_positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "time_s": 1.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 2,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "planned_positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "time_s": 1.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 3,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "planned_positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "time_s": 2.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 4,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "planned_positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "time_s": 2.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 5,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "planned_positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "time_s": 3.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 6,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "planned_positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "time_s": 3.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 7,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "planned_positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "time_s": 4.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 8,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "planned_positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "time_s": 4.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 9,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "planned_positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "time_s": 5.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 10,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": "dp-000001-0f16dfdcb832",
+      "planned_positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "time_s": 5.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 11,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": "dp-000001-0f16dfdcb832",
+      "planned_positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "time_s": 6.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 12,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": "dp-000001-0f16dfdcb832",
+      "planned_positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "time_s": 6.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 13,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": "dp-000001-0f16dfdcb832",
+      "planned_positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "time_s": 7.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "plan_events": [],
+  "planning_failures": [],
+  "plans": [
+    {
+      "belief_observation_count": 0,
+      "belief_telemetry": {
+        "admitted_count": null,
+        "backend": "exact",
+        "dictionary_size": null,
+        "max_basis": null,
+        "observation_count": 0,
+        "projected_count": null,
+        "pruned_count": null,
+        "state_nbytes": null
+      },
+      "candidate_selection": "joint_terminal_mean_latent_variance_then_travel_within_variance_tolerance",
+      "candidates": [
+        {
+          "candidate_id": "bellman-order-0",
+          "generation_wall_s": 0.00017920000027515925,
+          "generator": "frozen_reward_bellman",
+          "joint_evaluation_wall_s": 0.0003352999992785044,
+          "joint_information_gain": 0.09905518960742177,
+          "nominal_checks": {
+            "accepted": true,
+            "geometry_tolerance_m": 1e-07,
+            "max_bounds_violation_m": 0.0,
+            "max_separation_violation_m": 0.0,
+            "max_speed_mps": 0.0,
+            "max_speed_violation_mps": 0.0,
+            "min_pair_distance_m": 20.0,
+            "scope": "nominal_synchronized_straight_segments_without_controller_rollout",
+            "speed_tolerance_mps": 1e-07
+          },
+          "normalized_travel": 0.0,
+          "rejection_reason": null,
+          "robot_order": [
+            0,
+            1
+          ],
+          "selected": true,
+          "status": "accepted",
+          "surrogate_values_by_robot": [
+            0.04702162797640957,
+            0.05203356163101217
+          ],
+          "targets_by_epoch": [
+            [
+              [
+                3.0,
+                7.0
+              ],
+              [
+                3.0,
+                27.0
+              ]
+            ]
+          ],
+          "terminal_max_variance": 1.0,
+          "terminal_mean_variance": 0.9009448103925782,
+          "travel_m": 0.0
+        },
+        {
+          "candidate_id": "bellman-order-1",
+          "generation_wall_s": 0.0001581999968038872,
+          "generator": "frozen_reward_bellman",
+          "joint_evaluation_wall_s": 0.000276099999609869,
+          "joint_information_gain": 0.09905518960742177,
+          "nominal_checks": {
+            "accepted": true,
+            "geometry_tolerance_m": 1e-07,
+            "max_bounds_violation_m": 0.0,
+            "max_separation_violation_m": 0.0,
+            "max_speed_mps": 0.0,
+            "max_speed_violation_mps": 0.0,
+            "min_pair_distance_m": 20.0,
+            "scope": "nominal_synchronized_straight_segments_without_controller_rollout",
+            "speed_tolerance_mps": 1e-07
+          },
+          "normalized_travel": 0.0,
+          "rejection_reason": null,
+          "robot_order": [
+            1,
+            0
+          ],
+          "selected": false,
+          "status": "accepted",
+          "surrogate_values_by_robot": [
+            0.04631334426486868,
+            0.05274184534255309
+          ],
+          "targets_by_epoch": [
+            [
+              [
+                3.0,
+                7.0
+              ],
+              [
+                3.0,
+                27.0
+              ]
+            ]
+          ],
+          "terminal_max_variance": 1.0,
+          "terminal_mean_variance": 0.9009448103925782,
+          "travel_m": 0.0
+        },
+        {
+          "candidate_id": "nominal-hold",
+          "generation_wall_s": 0.0,
+          "generator": "nominal_hold",
+          "joint_evaluation_wall_s": 0.0002550999997765757,
+          "joint_information_gain": 0.09905518960742177,
+          "nominal_checks": {
+            "accepted": true,
+            "geometry_tolerance_m": 1e-07,
+            "max_bounds_violation_m": 0.0,
+            "max_separation_violation_m": 0.0,
+            "max_speed_mps": 0.0,
+            "max_speed_violation_mps": 0.0,
+            "min_pair_distance_m": 20.0,
+            "scope": "nominal_synchronized_straight_segments_without_controller_rollout",
+            "speed_tolerance_mps": 1e-07
+          },
+          "normalized_travel": 0.0,
+          "rejection_reason": null,
+          "robot_order": [],
+          "selected": false,
+          "status": "accepted",
+          "surrogate_values_by_robot": [],
+          "targets_by_epoch": [
+            [
+              [
+                3.0,
+                7.0
+              ],
+              [
+                3.0,
+                27.0
+              ]
+            ]
+          ],
+          "terminal_max_variance": 1.0,
+          "terminal_mean_variance": 0.9009448103925782,
+          "travel_m": 0.0
+        }
+      ],
+      "claim_limits": [
+        "not_a_full_belief_mdp_or_global_route_optimum",
+        "not_a_controller_rollout_or_robust_safety_certificate",
+        "no_task_impossibility_or_recovery_certificate",
+        "short_horizon_forecast_is_not_a_mission_terminal_forecast"
+      ],
+      "forecast": [
+        {
+          "max_variance": 1.0,
+          "mean_variance": 1.0,
+          "time_s": 0.0
+        },
+        {
+          "max_variance": 1.0,
+          "mean_variance": 0.9009448103925782,
+          "time_s": 5.0
+        }
+      ],
+      "forecast_scope": "current_fixed_exact_gp_nominal_locations_all_future_samples_received",
+      "generated_at_s": 0.0,
+      "gp_backend": "exact",
+      "horizon_end_s": 5.0,
+      "horizon_steps": 1,
+      "mission_end_s": 7.0,
+      "nominal_checks": {
+        "accepted": true,
+        "geometry_tolerance_m": 1e-07,
+        "max_bounds_violation_m": 0.0,
+        "max_separation_violation_m": 0.0,
+        "max_speed_mps": 0.0,
+        "max_speed_violation_mps": 0.0,
+        "min_pair_distance_m": 20.0,
+        "scope": "nominal_synchronized_straight_segments_without_controller_rollout",
+        "speed_tolerance_mps": 1e-07
+      },
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "plan_version": 0,
+      "planning_scope": "independent_coarse_frozen_reward_bellman_candidates_exact_joint_selection",
+      "planning_wall_s": 0.001729300001898082,
+      "posterior_covariance_wall_s": 0.0001173999989987351,
+      "previous_plan_id": null,
+      "received_sample_keys": [],
+      "replacement_reason": "periodic_sampling_epoch",
+      "sample_times_s": [
+        5.0
+      ],
+      "selected_candidate_id": "bellman-order-0",
+      "selection_variance_tolerance": 1e-10,
+      "settings": {
+        "grid_shape": [
+          4,
+          3
+        ],
+        "horizon_steps": 2,
+        "include_greedy_candidates": false,
+        "travel_weight": 0.01
+      },
+      "start_positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "starts": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "state": "coarse_cell_and_remaining_sample_epochs",
+      "status": "planned",
+      "surrogate_reward": "single_sample_mean_latent_variance_reduction_divided_by_signal_variance",
+      "surrogate_travel_cost": "travel_weight_times_metres_divided_by_team_horizon_travel_budget",
+      "targets_by_epoch": [
+        [
+          [
+            3.0,
+            7.0
+          ],
+          [
+            3.0,
+            27.0
+          ]
+        ]
+      ]
+    },
+    {
+      "belief_observation_count": 0,
+      "belief_telemetry": {
+        "admitted_count": null,
+        "backend": "exact",
+        "dictionary_size": null,
+        "max_basis": null,
+        "observation_count": 0,
+        "projected_count": null,
+        "pruned_count": null,
+        "state_nbytes": null
+      },
+      "candidate_selection": "joint_terminal_mean_latent_variance_then_travel_within_variance_tolerance",
+      "candidates": [],
+      "claim_limits": [
+        "not_a_full_belief_mdp_or_global_route_optimum",
+        "not_a_controller_rollout_or_robust_safety_certificate",
+        "no_task_impossibility_or_recovery_certificate",
+        "short_horizon_forecast_is_not_a_mission_terminal_forecast"
+      ],
+      "forecast": [
+        {
+          "max_variance": 1.0,
+          "mean_variance": 1.0,
+          "time_s": 5.0
+        }
+      ],
+      "forecast_scope": "current_fixed_exact_gp_nominal_locations_all_future_samples_received",
+      "generated_at_s": 5.0,
+      "gp_backend": "exact",
+      "horizon_end_s": 5.0,
+      "horizon_steps": 0,
+      "mission_end_s": 7.0,
+      "nominal_checks": {
+        "accepted": true,
+        "geometry_tolerance_m": 1e-07,
+        "max_bounds_violation_m": 0.0,
+        "max_separation_violation_m": 0.0,
+        "max_speed_mps": 0.0,
+        "max_speed_violation_mps": 0.0,
+        "min_pair_distance_m": 20.0,
+        "scope": "nominal_synchronized_straight_segments_without_controller_rollout",
+        "speed_tolerance_mps": 1e-07
+      },
+      "plan_id": "dp-000001-0f16dfdcb832",
+      "plan_version": 1,
+      "planning_scope": "independent_coarse_frozen_reward_bellman_candidates_exact_joint_selection",
+      "planning_wall_s": 9.230000068782829e-05,
+      "posterior_covariance_wall_s": 0.0,
+      "previous_plan_id": "dp-000000-33ef1e8279e6",
+      "received_sample_keys": [],
+      "replacement_reason": "periodic_sampling_epoch",
+      "sample_times_s": [],
+      "selected_candidate_id": null,
+      "selection_variance_tolerance": 1e-10,
+      "settings": {
+        "grid_shape": [
+          4,
+          3
+        ],
+        "horizon_steps": 2,
+        "include_greedy_candidates": false,
+        "travel_weight": 0.01
+      },
+      "start_positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "starts": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "state": "coarse_cell_and_remaining_sample_epochs",
+      "status": "no_remaining_samples",
+      "surrogate_reward": "single_sample_mean_latent_variance_reduction_divided_by_signal_variance",
+      "surrogate_travel_cost": "travel_weight_times_metres_divided_by_team_horizon_travel_budget",
+      "targets_by_epoch": []
+    }
+  ],
+  "samples": [
+    {
+      "actual_position": [
+        3.0,
+        7.0
+      ],
+      "assimilated": false,
+      "dropout_uniform": 0.7624516078574131,
+      "noise_innovation": 0.10636350137682993,
+      "plan_id": null,
+      "planned_position": [
+        3.0,
+        7.0
+      ],
+      "received": false,
+      "robot_id": 0,
+      "time_s": 0.0,
+      "value": null
+    },
+    {
+      "actual_position": [
+        3.0,
+        27.0
+      ],
+      "assimilated": false,
+      "dropout_uniform": 0.49251675772745845,
+      "noise_innovation": -0.04908278163457198,
+      "plan_id": null,
+      "planned_position": [
+        3.0,
+        27.0
+      ],
+      "received": false,
+      "robot_id": 1,
+      "time_s": 0.0,
+      "value": null
+    },
+    {
+      "actual_position": [
+        3.0,
+        7.0
+      ],
+      "assimilated": false,
+      "dropout_uniform": 0.981240409612618,
+      "noise_innovation": -0.18421038745252002,
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "planned_position": [
+        3.0,
+        7.0
+      ],
+      "received": false,
+      "robot_id": 0,
+      "time_s": 5.0,
+      "value": null
+    },
+    {
+      "actual_position": [
+        3.0,
+        27.0
+      ],
+      "assimilated": false,
+      "dropout_uniform": 0.2735296430898088,
+      "noise_innovation": -0.12856652924924705,
+      "plan_id": "dp-000000-33ef1e8279e6",
+      "planned_position": [
+        3.0,
+        27.0
+      ],
+      "received": false,
+      "robot_id": 1,
+      "time_s": 5.0,
+      "value": null
+    }
+  ],
+  "schema_version": 1,
+  "scope": {
+    "adaptive": "replans from executed positions and received data at sample epochs",
+    "disturbance": "drift_strength: velocity tracking-command std m/s for holonomic, capped before constraint control; yaw-rate std rad/s for USV; no unmodeled post-control wind",
+    "forecast": "current_fixed_exact_gp_nominal_locations_all_future_samples_received",
+    "gp": "exact, fixed hyperparameters; finite evaluation grid",
+    "gp_update_order": "ascending (sample_tick, robot_id), received samples only",
+    "greedy": "open-loop nominal-information route; assumes all scheduled samples succeed",
+    "implementation": "independent application; not paper reproduction",
+    "planned_variance": "geometric scheduled sites with all future measurements received; one selected joint-plan prefix, not guaranteed QP attainment",
+    "planning": "M2 periodic timed DP: frozen-reward Bellman candidates, joint GP final scoring; actual posterior and remaining sample budget, no controller candidate rollout",
+    "safety": "sampled piecewise-linear motion checked by common displacement backtracking",
+    "usv": "turn-rate-limited kinematic unicycle; zero-speed yaw allowed; no hydrodynamics",
+    "variance": "latent"
+  },
+  "seed_manifest": {
+    "dropout_key": 7,
+    "evaluation_noise_key": 6823953754371609207,
+    "field_seed": 3386250816931739734,
+    "master_seed": 7,
+    "measurement_noise_key": 17559002276220262541,
+    "motion_key": 7,
+    "planner_tie_break_seed": 18326047321325575129,
+    "pose_seed": 4042502035264064771
+  },
+  "status": "completed",
+  "summary": {
+    "completion_time_s": 7.0,
+    "control_interventions": 0,
+    "control_max_s": 6.84000006003771e-05,
+    "control_median_s": 3.5600000046542846e-05,
+    "control_p95_s": 5.5204999443958504e-05,
+    "control_preview_s": 0,
+    "control_rollout_s": 0,
+    "control_s": 0.0005485000037879217,
+    "dp_failed_planning_s": 0,
+    "dp_planning_median_s": 0.0009108000012929551,
+    "dp_planning_p95_s": 0.0016474500018375691,
+    "dp_planning_s": 0.0018216000025859103,
+    "final_planned_mean_variance": 1.0,
+    "gp_backend": "exact",
+    "gp_failures": 0,
+    "gp_s": 4.569999873638153e-05,
+    "max_speed_observed": 0.0,
+    "max_turn_rate_observed": 0.0,
+    "max_variance": 1.0,
+    "mean_sample_position_error": 0.0,
+    "mean_variance": 1.0,
+    "min_separation": 20.0,
+    "path_length": 0.0,
+    "path_length_per_robot": [
+      0.0,
+      0.0
+    ],
+    "planning_failures": 0,
+    "planning_s": 0.001970699999219505,
+    "plans_generated": 2,
+    "preview_qp_failures": 0,
+    "preview_qp_solves": 0,
+    "qp_failures": 0,
+    "qp_solves": 0,
+    "rmse": 0.3297929403653357,
+    "rollout_control_calls": 0,
+    "rollout_qp_failures": 0,
+    "rollout_qp_solves": 0,
+    "runtime_s": 0.0033566999991307966,
+    "safety_interventions": 0,
+    "samples_assimilated": 0,
+    "samples_attempted": 4,
+    "samples_lost": 4,
+    "samples_received": 0
+  }
+}

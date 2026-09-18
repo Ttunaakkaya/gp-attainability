@@ -1,0 +1,12 @@
+schema_version: 1
+name: attainable-gp-sampling-smoke
+phase: G0_source_lock
+master_seed: 20260901
+clocks:
+  control_s: 0.2
+  sampling_s: 10.0
+  planning_s: 20.0
+  logging_s: 10.0
+paths:
+  output_root: outputs
+  private_reference_root: references/private

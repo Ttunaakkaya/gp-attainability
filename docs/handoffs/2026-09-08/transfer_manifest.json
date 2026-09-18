@@ -1,0 +1,100 @@
+{
+  "date": "2026-09-08",
+  "source_thread": "01a080e3-2820-7be1-baab-e50ac3ddd6a3",
+  "source": "C:\\Users\\Lenovo\\Documents\\Codex\\2026-09-08\\ben-science-tokyo-niversitesi-takeshi-hatanaka\\outputs",
+  "policy": "Copy only; original sources retained. No differing destination overwritten. Cache bytecode and redundant ZIP excluded.",
+  "files": [
+    {
+      "path": "docs\\handoffs\\2026-09-08\\AKTIF_ONCELIK_PROJE.md",
+      "sha256": "9DDCD057876E4848ED6E6E481707BF3A0AEF2A451A6EF6EB2B9B3AB4B5BFA855"
+    },
+    {
+      "path": "docs\\handoffs\\2026-09-08\\GP_Projesine_Aktarim_Promptu.txt",
+      "sha256": "4236D9F48ED8AC63E344106A37830F0185BABFAEE5109C228B625FC3994B6B6E"
+    },
+    {
+      "path": "docs\\handoffs\\2026-09-08\\Hatanaka_Ilk_Mail_Taslagi_EN.md",
+      "sha256": "88CCC48E31F360CC444C751AB39DECC3806A92C00E11333E4F98CF2248985AA5"
+    },
+    {
+      "path": "docs\\handoffs\\2026-09-08\\Hatanaka_Proje_Karari_ve_Uygulama_TR.md",
+      "sha256": "D4F846012046D38C65B2C9F4B5CFBA16637D3E9F208A677AC9274C72408CEA6A"
+    },
+    {
+      "path": "docs\\handoffs\\2026-09-08\\Hatanaka_Research_Concept_EN.md",
+      "sha256": "F5F0AFFA9840FED0FCA9B69EEEB82236041C72B426D6031575E5FE1CE1AE35C7"
+    },
+    {
+      "path": "docs\\handoffs\\2026-09-08\\README.md",
+      "sha256": "A489ED47C2C5619BB89F08693DF14B821860CA407F76BE83F2A839919212B0FE"
+    },
+    {
+      "path": "docs\\handoffs\\2026-09-08\\SHA256.json",
+      "sha256": "5666B641E7171BA7C04928448154EC89AD6ABC412F71CC0C82F4FA15CFE39175"
+    },
+    {
+      "path": "experiments\\exact_gp_diagnostic\\config.json",
+      "sha256": "1938415F05E816E2B1381313C6B5AD648CA6266DC4AA841216E5BB9D19BC2CDE"
+    },
+    {
+      "path": "experiments\\exact_gp_diagnostic\\covariance_arrays.csv",
+      "sha256": "EE5F780EB31A59ACBF838FACB89A542C76D9D3A9F023A52290FD493CCD4D44AF"
+    },
+    {
+      "path": "experiments\\exact_gp_diagnostic\\diagnostic.py",
+      "sha256": "1AEECD5758E41BE2A3DD9BCB2E7CBD58C808A6B2AD7C9EA6889443361ACA0480"
+    },
+    {
+      "path": "experiments\\exact_gp_diagnostic\\matched_dropout_scenarios.csv",
+      "sha256": "809F9FE6D8A7F2765F8578D0C5004607834020C850C77EAD361B3EFC34332B66"
+    },
+    {
+      "path": "experiments\\exact_gp_diagnostic\\metrics.json",
+      "sha256": "B1102D57137C69A0B0D356E5691070AB265E928E010E2537D02FEE825B888A26"
+    },
+    {
+      "path": "experiments\\exact_gp_diagnostic\\plot_figures.py",
+      "sha256": "40E0229652DF968B372B36C7DC45E619C90F661CE89AB2C90637C18040144D00"
+    },
+    {
+      "path": "experiments\\exact_gp_diagnostic\\prefix_stress.png",
+      "sha256": "BDD274880158AD5E42BECEEE71B044A0047F66F0D3A2729C6EAB3C5974CA6EC8"
+    },
+    {
+      "path": "experiments\\exact_gp_diagnostic\\prefix_stress.svg",
+      "sha256": "39212D08491E1DE5EC7014867C56FD4BC660AFF72E4FB35E5E84ACE5B7FD11A1"
+    },
+    {
+      "path": "experiments\\exact_gp_diagnostic\\README_TR.md",
+      "sha256": "242028A85CA871A1BBD12C2107FF2BED02CC50FBCED184FB337342DE9C7D9FD0"
+    },
+    {
+      "path": "experiments\\exact_gp_diagnostic\\repeated_samples.csv",
+      "sha256": "EC692FD6AACCDB6A24BE000C063025F3A5AE7DF84E7CFD71947817832BF1665A"
+    },
+    {
+      "path": "experiments\\exact_gp_diagnostic\\repeated_variance.png",
+      "sha256": "A9E50BC80F57654C2C69190D93A75F84E6AF18C115983F3CD60A4B3CF5A90632"
+    },
+    {
+      "path": "experiments\\exact_gp_diagnostic\\repeated_variance.svg",
+      "sha256": "E54C18345EDFFFD5D5A5232443E4F90761E3D674DFA9DC1BD925024E38AB3A7C"
+    },
+    {
+      "path": "experiments\\exact_gp_diagnostic\\robust_prefix_envelopes.png",
+      "sha256": "43A46D689C0F69E2DC70A04C895A1DA8F7EC6C4142B2E239472FBB41CD034504"
+    },
+    {
+      "path": "experiments\\exact_gp_diagnostic\\robust_prefix_envelopes.svg",
+      "sha256": "E14CFEF9A7D3F30503CC230906EF12FC258DD029D08F1729A27704E29CCE2094"
+    },
+    {
+      "path": "experiments\\exact_gp_diagnostic\\route_prefixes.csv",
+      "sha256": "97E346DF3E0DE9A8E1B2B8AD22746A9170FAA8BDF228DF8A6A6AAA3DB676D9D7"
+    },
+    {
+      "path": "experiments\\exact_gp_diagnostic\\test_diagnostic.py",
+      "sha256": "881F6D93D1183A1D6A8BC0E38ABB014EF361D1E9878EC66A97BCBD146689A14A"
+    }
+  ]
+}

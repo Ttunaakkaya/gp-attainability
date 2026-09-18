@@ -1,0 +1,34 @@
+{
+  "scope": "synthetic contract probe, not a held-out result",
+  "target_risk": {
+    "target_mean_variance": 0.7640931803502544,
+    "selected_mission_end_mean_variance": 0.764094979487776,
+    "best_candidate_mission_end_mean_variance": 0.7640913812127328,
+    "margin": 1.7991375216297456e-06,
+    "status": "forecast_attainable_in_candidate_set",
+    "remaining_time_s": 20.0,
+    "remaining_sample_epochs": 4,
+    "forecast_covers_mission_end": true,
+    "continuation": "hold_final_positions_for_every_remaining_epoch",
+    "claim_limits": [
+      "upper candidate from an executable plan, not an attainability floor",
+      "a missed target here reflects this bounded candidate set, not impossibility",
+      "approximate SOGP forecasts carry no bound property"
+    ]
+  },
+  "decision": {
+    "action": "retained",
+    "trigger": "periodic_sampling_epoch",
+    "reason": "retained_plan_within_switch_margin_of_the_best_candidate",
+    "retained_candidate_id": "retained-plan",
+    "retained_mission_end_mean_variance": 0.764094979487776,
+    "selected_mission_end_mean_variance": 0.764094979487776,
+    "expected_gain": 0.0,
+    "switch_margin_variance": 0.00887765449869795,
+    "candidates_evaluated": 6,
+    "candidates_rejected": 0,
+    "candidates_not_evaluated": 0
+  },
+  "offset": 0.01,
+  "axis": 1
+}

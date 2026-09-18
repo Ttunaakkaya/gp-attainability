@@ -1,0 +1,10 @@
+schema_version: 1
+status: template
+freeze_required_before_held_out: true
+git_commit: null
+dependency_lock_sha256: null
+config_tree_sha256: null
+metric_definitions_version: null
+split_manifest_sha256: null
+exclusion_policy_version: null
+calibration_envelopes_sha256: null

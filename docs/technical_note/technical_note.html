@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>FIELDWORK technical note</title>
+<style>
+  @page { size: A4; margin: 17mm 17mm 16mm; }
+  :root { --ink: #16181b; --ink-2: #4c5058; --muted: #7a7e86; --rule: #d9dadc; --accent: #eb6834; --blue: #2a78d6; }
+  html { color-scheme: light; }
+  body { margin: 0; background: #ffffff; color: var(--ink); font: 9.6pt/1.46 "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+  h1 { font-size: 17pt; line-height: 1.2; margin: 0 0 4pt; letter-spacing: -0.2pt; font-weight: 650; }
+  .byline { color: var(--ink-2); font-size: 9pt; margin: 0 0 10pt; }
+  h2 { font-size: 11.5pt; margin: 15pt 0 5pt; font-weight: 650; break-after: avoid; }
+  h3 { font-size: 10pt; margin: 10pt 0 3pt; font-weight: 650; break-after: avoid; }
+  p { margin: 0 0 6pt; }
+  ul, ol { margin: 0 0 6pt; padding-left: 15pt; }
+  li { margin: 0 0 2.5pt; }
+  .summary { border-left: 2.5pt solid var(--accent); background: #fbf6f2; padding: 8pt 11pt; margin: 6pt 0 10pt; }
+  .summary p:last-child, .summary ul:last-child { margin-bottom: 0; }
+  figure { margin: 8pt 0 10pt; break-inside: avoid; }
+  figure img { width: 100%; display: block; }
+  figcaption { color: var(--ink-2); font-size: 8.4pt; margin-top: 3pt; }
+  table { border-collapse: collapse; width: 100%; margin: 4pt 0 9pt; font-size: 8.4pt; font-variant-numeric: tabular-nums; break-inside: avoid; }
+  th, td { padding: 2.6pt 5pt; border-bottom: 0.6pt solid var(--rule); text-align: right; vertical-align: top; }
+  th { color: var(--ink-2); font-weight: 600; border-bottom: 0.9pt solid #b9bbbf; }
+  th:first-child, td:first-child { text-align: left; padding-left: 0; }
+  caption { caption-side: top; text-align: left; font-size: 8.6pt; color: var(--ink-2); padding-bottom: 3pt; }
+  .sig { font-weight: 700; }
+  .note { color: var(--ink-2); font-size: 8.4pt; }
+  code { font-family: Consolas, "Cascadia Mono", monospace; font-size: 8.4pt; background: #f2f3f4; padding: 0 2pt; border-radius: 2pt; }
+  .arch { margin: 6pt 0 8pt; }
+  .arch svg { width: 100%; height: auto; display: block; }
+  .refs li { font-size: 8.4pt; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12pt; }
+  .keep { break-inside: avoid; }
+  .page-break { break-before: page; }
+  @media screen { body { max-width: 176mm; margin: 28px auto; padding: 0 16px; } }
+</style>
+</head>
+<body>
+
+<h1>Does tracking the gap between plan and execution help multi-robot GP mapping?</h1>
+<p class="byline">Tolga Tuna Akkaya · Technical University of Munich · technical note on the FIELDWORK simulator · 18 September 2026</p>
+
+<div class="summary">
+<p><strong>Question.</strong> Multi-robot Gaussian-process (GP) mapping systems plan where to sample from the current posterior, then hand the plan to a constrained controller. In the field, measurements are lost and robots drift, so what is executed differs from what was planned. I built an independent simulator around the hierarchy of Suenaga et al. (ECC 2025) — online sparse GP, Bellman planning over coarse cells, constrained control — and asked whether a policy that <em>tracks the gap between plan and execution</em> (policy P) maps the field better than a strong periodic replanner (B3), and whether a miss of a fixed uncertainty target can be foreseen early.</p>
+<p><strong>Answer, from protocols frozen before the runs, on 40 unseen tasks per block:</strong></p>
+<ul>
+<li>P is <strong>not</strong> measurably better than B3 in field RMSE: the 95% interval of the paired difference includes zero in <strong>10 of 10</strong> blocks (five scenarios × two vehicle models).</li>
+<li>On a turn-constrained USV, P's controller rollout changes its decisions in every task, reduces the distance between planned and actual sample positions by about 2 m under drift, and lowers the remaining variance — but the map error does not follow.</li>
+<li>P costs 4.5–50 times B3's planning time. The simple adaptive greedy planner B2 is the strongest method overall.</li>
+<li>Early warning did not work: forecasts separate hits from misses only in the last few epochs and turn optimistic when measurements are lost.</li>
+<li>A first USV run appeared to favour P. The raw records traced this to a defect in the comparator's planner. It is reported as run, the defect was fixed, and a new frozen study on new tasks reversed the conclusion.</li>
+</ul>
+</div>
+
+<h2>1&nbsp; Problem and scope</h2>
+<p>Several robots map an unknown scalar field (temperature, concentration) over a fixed mission. A GP belief turns received measurements into a map and a map of uncertainty. A planner chooses timed sampling locations that reduce uncertainty; a controller moves the robots there under speed, boundary and separation constraints. Suenaga, Hanif, Uto and Hatanaka (ECC 2025) combine an online sparse GP, a Bellman planner over grid cells and a quadratic-program controller with a variance-decay constraint. That hierarchy is the starting point here.</p>
+<p>The hierarchy assumes that what is planned is what happens. Three things break that: measurements are lost, tracking drifts, and a vehicle with a turning radius cannot reach every commanded cell in time. The proposed policy P therefore adds four mechanisms on top of periodic Bellman replanning (B3):</p>
+<ol>
+<li><strong>Controller rollout.</strong> Each candidate plan is replayed through the mission's own controller, and its information value is computed at the positions the robots would actually reach.</li>
+<li><strong>Plan retention.</strong> The plan in force is re-checked from the current state and kept unless a candidate beats it by an explicit margin.</li>
+<li><strong>Event-triggered decisions.</strong> Besides the sampling epochs, a decision is taken when a measurement is lost, a robot deviates more than 1.5 m from its reference, or the safety controller changes a command by more than 0.25 m/s.</li>
+<li><strong>Equal remaining budget.</strong> Every candidate is extended with an executable hold to the common mission end, so all candidates are scored over the same remaining sampling epochs, and the result is compared with a fixed mission target.</li>
+</ol>
+<p>This is an application project, not a theory contribution: no new theorem is claimed, and the paper's own numbers are not reproduced (the paper publishes no seeds, ground truth or exact start). A separate source profile implements the paper's equations for a <em>qualitative</em> comparison (Section 5).</p>
+
+<h2>2&nbsp; System</h2>
+<div class="arch">
+<svg viewBox="0 0 760 150" role="img" aria-label="Closed loop: sensing, GP belief, planner, controller, vehicles">
+  <defs><marker id="a" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 8 4 0 8z" fill="#4c5058"/></marker></defs>
+  <g font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="#16181b">
+    <rect x="4" y="30" width="130" height="62" rx="6" fill="#f4f5f6" stroke="#b9bbbf"/>
+    <text x="69" y="52" text-anchor="middle" font-weight="600">Sensing</text>
+    <text x="69" y="68" text-anchor="middle" font-size="9.5" fill="#4c5058">every 5 s, noisy,</text>
+    <text x="69" y="81" text-anchor="middle" font-size="9.5" fill="#4c5058">30% may be lost</text>
+    <rect x="162" y="30" width="130" height="62" rx="6" fill="#f4f5f6" stroke="#b9bbbf"/>
+    <text x="227" y="52" text-anchor="middle" font-weight="600">GP belief</text>
+    <text x="227" y="68" text-anchor="middle" font-size="9.5" fill="#4c5058">exact, or online</text>
+    <text x="227" y="81" text-anchor="middle" font-size="9.5" fill="#4c5058">sparse (SOGP)</text>
+    <rect x="320" y="18" width="160" height="86" rx="6" fill="#fbf6f2" stroke="#eb6834"/>
+    <text x="400" y="38" text-anchor="middle" font-weight="600">Planner</text>
+    <text x="400" y="54" text-anchor="middle" font-size="9.5" fill="#4c5058">B3: timed Bellman DP,</text>
+    <text x="400" y="67" text-anchor="middle" font-size="9.5" fill="#4c5058">every sampling epoch</text>
+    <text x="400" y="83" text-anchor="middle" font-size="9.5" fill="#eb6834">P: + rollout, retention,</text>
+    <text x="400" y="96" text-anchor="middle" font-size="9.5" fill="#eb6834">events, equal budget</text>
+    <rect x="508" y="30" width="118" height="62" rx="6" fill="#f4f5f6" stroke="#b9bbbf"/>
+    <text x="567" y="52" text-anchor="middle" font-weight="600">Controller</text>
+    <text x="567" y="68" text-anchor="middle" font-size="9.5" fill="#4c5058">velocity QP, or</text>
+    <text x="567" y="81" text-anchor="middle" font-size="9.5" fill="#4c5058">certified arc filter</text>
+    <rect x="654" y="30" width="102" height="62" rx="6" fill="#f4f5f6" stroke="#b9bbbf"/>
+    <text x="705" y="52" text-anchor="middle" font-weight="600">Vehicles</text>
+    <text x="705" y="68" text-anchor="middle" font-size="9.5" fill="#4c5058">holonomic, or</text>
+    <text x="705" y="81" text-anchor="middle" font-size="9.5" fill="#4c5058">USV, R = 4.44 m</text>
+    <g stroke="#4c5058" stroke-width="1.4" fill="none" marker-end="url(#a)">
+      <path d="M134 61h26"/><path d="M292 61h26"/><path d="M480 61h26"/><path d="M626 61h26"/>
+      <path d="M705 92v28H69V94"/>
+    </g>
+    <text x="387" y="136" text-anchor="middle" font-size="9.5" fill="#4c5058">actual positions and drift; the true field is used only by sensors and evaluation</text>
+  </g>
+</svg>
+</div>
+<ul>
+<li><strong>World.</strong> A seeded 60 × 40 m field (Gaussian features plus waves). Two to four robots, 0.5 s control ticks, 2 m/s top speed, 2 m minimum separation. Measurements every 5 s with noise (σ = 0.15); in loss scenarios each is lost with probability 0.3. Tracking drift perturbs the commanded velocity (holonomic) or the commanded curvature (USV). Methods in a comparison share field, starts, noise and loss events.</li>
+<li><strong>Belief.</strong> An exact GP (RBF kernel, 8 m length scale, fixed hyperparameters) or a bounded Csató–Opper sparse online GP with 32–128 basis points. Map error is the RMSE against the known field on a fixed 24 × 16 grid.</li>
+<li><strong>Baselines.</strong> B0 fixed sweep; B1 greedy variance reduction planned once, open loop; B2 adaptive greedy, re-planned every epoch from the actual posterior and positions; B3 periodic timed Bellman DP over 9 × 7 cells, four-epoch horizon, candidates over four robot orders, selected by the joint terminal variance.</li>
+<li><strong>Control.</strong> Holonomic robots use a central OSQP velocity QP (speed polygon, boundary, pairwise barrier and whole-segment separation). Every command is independently checked before execution.</li>
+<li><strong>Turn-constrained USV.</strong> Forward-only, curvature at most 1/4.44 m, exact arcs; it can stop but cannot turn on the spot. A certified filter keeps every robot inside the field, gives each a private loiter circle and keeps 2 m separation. B3 and P plan over a tree of seven motion primitives (full or half budget; left, straight or right; stop).</li>
+</ul>
+
+<h2>3&nbsp; Evaluation protocol</h2>
+<ul>
+<li><strong>Frozen before the runs.</strong> Each held-out study is a YAML protocol whose SHA-256 is pinned in code. The runner refuses a changed file and writes the job list to disk before the first job. Development used seeds 7, 19 and 31 only; held-out seeds were never used before their study.</li>
+<li><strong>Design.</strong> 40 tasks × five scenarios (nominal, measurement loss, tracking drift, loss + drift, and a 45 s short budget), four robots, 90 s. Three mandatory ablations of P ran on the loss + drift scenario. The primary statistic, named in advance, is the paired difference P − B3 in mission-end field RMSE, with a 95% percentile bootstrap over tasks (10 000 resamples). There is no multiplicity correction; every other difference is descriptive.</li>
+<li><strong>Audits.</strong> Every run was independently audited for geometry and control. Every decision of P was replayed, with 203,610 forecast prefixes recomputed by an independent exact GP. Every metric was recomputed from the raw records before analysis. No run failed in either study.</li>
+<li><strong>Two vehicle models.</strong> M6 is holonomic (seeds 9001–9040). M7 v2 is the turn-constrained USV (seeds 9201–9240); M7 v1, on seeds 9101–9140, is discussed in Section 4.5.</li>
+</ul>
+
+<h2>4&nbsp; Results</h2>
+<h3>4.1&nbsp; Primary comparison: P against B3</h3>
+<figure><img src="../../reports/figures/m8/01_primary_p_minus_b3.png" alt="Forest plot of P minus B3 field RMSE by scenario for both vehicle models"/><figcaption>Figure 1. Paired P − B3 mission-end field RMSE, mean and 95% bootstrap interval over 40 tasks per block. Negative values favour P.</figcaption></figure>
+<table><caption>Table 1. P − B3 field RMSE, mean [95% interval]; bold intervals exclude zero. Counts are tasks where P / B3 was better.</caption><thead><tr><th>Scenario</th><th>Holonomic robots · M6</th><th>P / B3 better</th><th>Turn-constrained USV · M7 v2</th><th>P / B3 better</th></tr></thead><tbody><tr><td>Nominal</td><td>+0.0025 [−0.0010, +0.0061]</td><td>21 / 19</td><td>+0.0008 [−0.0042, +0.0054]</td><td>17 / 23</td></tr><tr><td>Measurement loss</td><td>−0.0017 [−0.0067, +0.0033]</td><td>15 / 11</td><td>−0.0023 [−0.0085, +0.0040]</td><td>21 / 19</td></tr><tr><td>Tracking drift</td><td>+0.0010 [−0.0032, +0.0052]</td><td>20 / 20</td><td>−0.0078 [−0.0157, +0.0004]</td><td>24 / 16</td></tr><tr><td>Loss + drift</td><td>+0.0039 [−0.0028, +0.0106]</td><td>16 / 24</td><td>−0.0067 [−0.0142, +0.0008]</td><td>24 / 16</td></tr><tr><td>Short budget (45 s)</td><td>+0.0026 [−0.0047, +0.0102]</td><td>13 / 20</td><td>−0.0034 [−0.0142, +0.0074]</td><td>21 / 19</td></tr></tbody></table>
+<p>No block shows a significant advantage for P. On the USV the point estimates move in P's favour under drift, but the intervals still reach zero. Section 4.3 shows what P does change.</p>
+
+<h3>4.2&nbsp; All methods, and the strength of the simple baseline</h3>
+<figure><img src="../../reports/figures/m8/02_methods_rmse.png" alt="Mean field RMSE of five methods per scenario for both vehicle models"/><figcaption>Figure 2. Mean mission-end field RMSE of all five methods. The numbers are repeated in Table 2.</figcaption></figure>
+<table><caption>Table 2. Mean mission-end field RMSE over 40 tasks; the lowest per block in bold.</caption><thead><tr><th>Block</th><th>B0 sweep</th><th>B1 nominal greedy</th><th>B2 adaptive greedy</th><th>B3 periodic DP</th><th>P execution-aware</th></tr></thead><tbody><tr><td>M6 · Nominal</td><td>0.1301</td><td>0.1225</td><td>0.1225</td><td><span class="sig">0.1208</span></td><td>0.1232</td></tr><tr><td>M6 · Measurement loss</td><td>0.1532</td><td>0.1521</td><td><span class="sig">0.1406</span></td><td>0.1517</td><td>0.1500</td></tr><tr><td>M6 · Tracking drift</td><td>0.1344</td><td>0.1289</td><td><span class="sig">0.1188</span></td><td>0.1228</td><td>0.1238</td></tr><tr><td>M6 · Loss + drift</td><td>0.1554</td><td>0.1559</td><td><span class="sig">0.1395</span></td><td>0.1466</td><td>0.1505</td></tr><tr><td>M6 · Short budget (45 s)</td><td>0.2078</td><td>0.2076</td><td><span class="sig">0.1925</span></td><td>0.1994</td><td>0.2020</td></tr><tr><td>M7 v2 · Nominal</td><td>0.1538</td><td><span class="sig">0.1316</span></td><td><span class="sig">0.1316</span></td><td>0.1376</td><td>0.1384</td></tr><tr><td>M7 v2 · Measurement loss</td><td>0.1772</td><td>0.1571</td><td><span class="sig">0.1478</span></td><td>0.1566</td><td>0.1543</td></tr><tr><td>M7 v2 · Tracking drift</td><td>0.1451</td><td>0.1409</td><td><span class="sig">0.1283</span></td><td>0.1448</td><td>0.1370</td></tr><tr><td>M7 v2 · Loss + drift</td><td>0.1685</td><td>0.1673</td><td><span class="sig">0.1544</span></td><td>0.1651</td><td>0.1584</td></tr><tr><td>M7 v2 · Short budget (45 s)</td><td>0.2258</td><td>0.2140</td><td><span class="sig">0.1983</span></td><td>0.2252</td><td>0.2218</td></tr></tbody></table>
+<p>B2, the one-step greedy planner that re-plans every epoch from actual data, beats B3 significantly in 3 of 5 holonomic and 5 of 5 USV scenarios, and beats P significantly in 3 of 5 and 2 of 5 of them. Everywhere else the intervals include zero. The timed Bellman hierarchy (B3, P) does not outperform greedy re-planning in this simulator. One plausible reason, not tested: B2 picks each target at full one-epoch reach from the robot's actual position (eight directions), while B3 and P choose among 9 × 7 coarse cells or seven primitives, so B2 travels further and samples more distinct places. On the USV, B2 also scores the endpoint that the controller actually reaches.</p>
+
+<h3>4.3&nbsp; What P's mechanisms do: ablations</h3>
+<figure><img src="../../reports/figures/m8/03_ablations.png" alt="Ablation forest plots for field RMSE and mean variance on both vehicle models"/><figcaption>Figure 3. Each P variant minus full P on the loss + drift scenario, for field RMSE and for mission-end mean variance. Positive values mean the variant is worse.</figcaption></figure>
+<table><caption>Table 4. Variant minus full P on loss + drift, mean [95% interval]; bold intervals exclude zero.</caption><thead><tr><th>Variant</th><th>M6 · RMSE</th><th>M6 · variance</th><th>M7 v2 · RMSE</th><th>M7 v2 · variance</th></tr></thead><tbody><tr><td>No rollout</td><td>−0.0005 [−0.0014, +0.0000]</td><td>+0.0001 [+0.0000, +0.0001]</td><td>−0.0038 [−0.0132, +0.0056]</td><td><span class="sig">+0.0043 [+0.0001, +0.0084]</span></td></tr><tr><td>No plan retention</td><td>+0.0044 [−0.0014, +0.0105]</td><td><span class="sig">+0.0041 [+0.0020, +0.0063]</span></td><td>+0.0016 [−0.0078, +0.0112]</td><td><span class="sig">+0.0065 [+0.0018, +0.0116]</span></td></tr><tr><td>Periodic decisions only</td><td>+0.0004 [−0.0067, +0.0078]</td><td>+0.0019 [−0.0012, +0.0052]</td><td>+0.0085 [−0.0018, +0.0182]</td><td><span class="sig">+0.0060 [+0.0007, +0.0117]</span></td></tr></tbody></table>
+<p>The mechanisms act on the belief and on execution, not on the map error:</p>
+<ul>
+<li><strong>Rollout.</strong> On holonomic robots the QP reaches the commanded cells almost exactly, so the rollout left the outcome unchanged in 37 of 40 tasks while taking most of P's planning time. On the USV it changed the outcome in every task (0 of 40 identical). It reduced the gap between commanded and actual sample positions (removing it adds 1.7 m). With the straight-line planner, whose geometry is wrong for this vehicle, it also lowered the variance and raised the number of tasks that reach the target from 28 to 35 of 40.</li>
+<li><strong>Plan retention and events</strong> lower the variance (removing them raises it significantly on the USV).</li>
+<li><strong>Map error.</strong> None of the three mechanisms changes the field RMSE measurably. With a sound B3, P against B3 on the USV gives variance <span class="sig">−0.011 [−0.016, −0.006]</span> and arrival error <span class="sig">−2.47 [−2.71, −2.22]</span> m on loss + drift, and P reaches the target in 37 of 40 tasks against 29 for B3. The RMSE difference is still not significant. Lower posterior variance is not lower map error.</li>
+</ul>
+
+<h3>4.4&nbsp; Cost</h3>
+<figure><img src="../../reports/figures/m8/04_planning_cost.png" alt="Median planning time per mission for five methods, log scale"/><figcaption>Figure 4. Median planning wall-clock time per 90 s mission (log scale). Methods of one task ran sequentially in one process on a shared machine, so ratios are comparable and absolute times are not.</figcaption></figure>
+<table><caption>Table 3. Median planning time per 90 s mission (s) and the P / B3 ratio.</caption><thead><tr><th>Scenario</th><th>B3 · M6</th><th>P</th><th>P / B3</th><th>B3 · M7 v2</th><th>P</th><th>P / B3</th></tr></thead><tbody><tr><td>Nominal</td><td>0.9</td><td>22.2</td><td>24.2×</td><td>20.8</td><td>105.9</td><td>5.1×</td></tr><tr><td>Measurement loss</td><td>1.0</td><td>22.7</td><td>23.4×</td><td>17.1</td><td>76.8</td><td>4.5×</td></tr><tr><td>Tracking drift</td><td>1.0</td><td>46.8</td><td>48.8×</td><td>14.9</td><td>196.8</td><td>13.2×</td></tr><tr><td>Loss + drift</td><td>0.9</td><td>42.8</td><td>49.8×</td><td>12.8</td><td>174.3</td><td>13.7×</td></tr><tr><td>Short budget (45 s)</td><td>0.4</td><td>11.4</td><td>30.3×</td><td>4.5</td><td>64.9</td><td>14.4×</td></tr></tbody></table>
+
+<h3>4.5&nbsp; Failures: a comparator defect, and forecasts that miss the loss</h3>
+<p><strong>The M7 v1 result, and why it was not accepted.</strong> On the first frozen USV study (seeds 9101–9140), P beat B3 significantly under drift (<span class="sig">−0.0353 [−0.0470, −0.0249]</span>) and loss + drift (<span class="sig">−0.0350 [−0.0524, −0.0189]</span>). The raw records showed why: B3 flew about 410 m where B2 flew about 700 m, and was worse than the fixed sweep.</p>
+<p>The primitive planner checked field containment on sampled arc points with a margin of half a sampling interval (0.16–0.31 m). That was stricter than the controller's own invariant. Drift pushed robots into states near an edge where every moving primitive was rejected. A stopped robot never changes state, so B3 kept it stopped for the rest of the mission. Under drift, 94 of 160 B3 robots stopped for good for at least 30 s. For P, whose retention and event mechanisms partly avoid the trap, the count was 12.</p>
+<p>The v1 result is reported as run. The containment check was made exact, with a regression test. A new protocol (v2), frozen before its runs, repeated the study unchanged on new seeds, and the apparent advantage disappeared (Figure 5). The lesson is methodological: a significant win against a baseline is first a reason to audit the baseline.</p>
+<figure><img src="../../reports/figures/m8/05_comparator_defect.png" alt="Robots stranded by the defective planner, and the P minus B3 difference before and after the fix"/><figcaption>Figure 5. Left: robots stopped for good in M7 v1, recomputed from raw records; the corrected planner in v2 strands none. Right: P − B3 field RMSE in v1 (defective B3) and v2 (corrected B3).</figcaption></figure>
+<p><strong>Early warning.</strong> The planned question was whether a fixed uncertainty target's miss could be foreseen early. The answer is no:</p>
+<ul>
+<li>With a hold continuation to the mission end, the forecast is pessimistic early on, so every task warns for the first 7–11 of 18 epochs. Hits and misses separate only in the last 4–9 epochs.</li>
+<li>In the last epochs the forecasts turn optimistic whenever measurements are lost. Every forecast assumes that each measurement arrives, and P's rollout models the controller, not the loss (Figure 6). The one-step forecast error of P under loss is +0.0173 (holonomic) and +0.0174 (USV, loss + drift).</li>
+</ul>
+<figure><img src="../../reports/figures/m8/06_forecast_optimism.png" alt="One-step forecast error by scenario for B2, B3 and P"/><figcaption>Figure 6. Realised minus forecast mean variance one epoch ahead. The values are clearly positive, meaning optimistic, only in the scenarios with measurement loss.</figcaption></figure>
+<p><strong>Robustness checks (M6).</strong></p>
+<ul>
+<li><strong>Sparse GP.</strong> A 32-point sparse GP raises the RMSE of B3 and P by +0.014 and +0.017 without changing their order.</li>
+<li><strong>Model mismatch.</strong> A mis-specified 16 m kernel lowers every method's variance while raising its RMSE by +0.031 to +0.060, yet all 40 tasks still "reach" the variance target. A target defined on posterior variance cannot certify a map when the model is wrong.</li>
+</ul>
+
+<h2>5&nbsp; Relation to the ECC 2025 hierarchy</h2>
+<p>The full text of Suenaga et al. was audited equation by equation, with page references. The paper's SOGP (acceptance and pruning), variance-decay-rate constraint, per-robot QP with collision barrier, cell MDP and closed loop run as a separate source profile. Values the paper does not state are recorded as project choices, never inferred. Six internal inconsistencies of the paper are documented; for example, the printed equation (12) disagrees with its own derivative, and the figures start at an objective of about 3600, where 900 grid points and a unit-variance kernel give 900.</p>
+<p>Against eight criteria written down before the runs, the paper's ranking of the hierarchical controller over the constraint-only one appears in this profile only when the constraint-only robots cannot enter the field at all. Started from the field edge, the constraint-only controller ends with the lower objective. This is a qualitative comparison, not a reproduction.</p>
+
+<h2>6&nbsp; Limits</h2>
+<ul>
+<li>A kinematic simulator with one family of synthetic fields, four robots and a 60 × 40 m area. There is no hydrodynamics, current or hardware. The USV is a surrogate, not a validated boat model.</li>
+<li>40 tasks per block is not a power guarantee. In nominal conditions paths are independent of the measured values (fixed kernel), so path-level diversity is lower still.</li>
+<li>The primitive set searches only full turns and straight lines. The straight-line planner beat it for B3 on the USV, so B3 is not the strongest possible DP there.</li>
+<li>Safety statements are audits inside the model, not certificates for physical robots. Timings are wall-clock on a shared machine.</li>
+</ul>
+
+<h2>7&nbsp; What the results suggest next</h2>
+<p>Three questions follow directly. None is tested here, and each needs its own frozen study:</p>
+<ul>
+<li>A forecast that accounts for the probability of losing a measurement: the dominant error source found here.</li>
+<li>Richer primitives, or continuous candidate sets, for the Bellman planner.</li>
+<li>Cheaper event triggers that keep P's variance benefit at a fraction of its cost.</li>
+</ul>
+<p>The candidate longer-term directions are performance bounds conditional on execution and time-varying fields. They would be scoped after this work, not claimed here.</p>
+
+<h2>8&nbsp; Reproducibility</h2>
+<ul>
+<li><strong>Code and tests.</strong> Python 3.11, CPU only, locked dependencies and an MIT license. 1,007 automated tests; type-checked, with 94% coverage.</li>
+<li><strong>Demo.</strong> <code>scripts/demo.ps1</code> starts a local dashboard with four guided showcases (<code>scripts/make_showcases.py</code>).</li>
+<li><strong>Held-out studies.</strong> <code>python scripts/run_m6.py --milestone m6|m7|m7v2</code> reruns a study, and <code>scripts/report_m6.py</code> recomputes every statistic from raw records. <code>scripts/figures_m8.py</code> redraws the figures with a hash manifest.</li>
+<li><strong>Evidence.</strong> Analysis files of M6, M7 v1 and M7 v2 have SHA-256 prefixes <code>0b9ee786e467</code>, <code>7d7565e544b2</code> and <code>58c50f1ae4ed</code>. Every design decision and its reason is logged in <code>docs/decision_log.md</code>.</li>
+</ul>
+
+<h2>References</h2>
+<ol class="refs">
+<li>K. Suenaga, M. Hanif, K. Uto, T. Hatanaka. Hierarchical multi-robot data sampling for environmental state estimation through online Gaussian process. <em>European Control Conference (ECC)</em>, 2025, pp. 304–311. doi:10.23919/ECC65951.2025.11187026.</li>
+<li>L. Csató, M. Opper. Sparse on-line Gaussian processes. <em>Neural Computation</em> 14(3):641–668, 2002.</li>
+<li>C. E. Rasmussen, C. K. I. Williams. <em>Gaussian Processes for Machine Learning</em>. MIT Press, 2006.</li>
+<li>B. Stellato, G. Banjac, P. Goulart, A. Bemporad, S. Boyd. OSQP: an operator splitting solver for quadratic programs. <em>Mathematical Programming Computation</em> 12:637–672, 2020.</li>
+<li>L. Wang, A. D. Ames, M. Egerstedt. Safety barrier certificates for collisions in multirobot systems. <em>IEEE Transactions on Robotics</em> 33(3):661–674, 2017.</li>
+<li>A. Krause, A. Singh, C. Guestrin. Near-optimal sensor placements in Gaussian processes. <em>Journal of Machine Learning Research</em> 9:235–284, 2008.</li>
+<li>L. E. Dubins. On curves of minimal length with a constraint on average curvature. <em>American Journal of Mathematics</em> 79(3):497–516, 1957.</li>
+<li>B. Efron, R. J. Tibshirani. <em>An Introduction to the Bootstrap</em>. Chapman &amp; Hall, 1993.</li>
+</ol>
+</body>
+</html>

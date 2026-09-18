@@ -1,0 +1,86 @@
+{
+  "passed": true,
+  "reference_manifest_sha256": "176304312a59b1895be6cd86db4731b7005572756b86459ed94066960a683da8",
+  "controls": [
+    {
+      "control": "scientific_value",
+      "case": "adaptive_qp",
+      "mutation_path": [
+        "summary",
+        "mean_variance"
+      ],
+      "comparison_accepted": false,
+      "difference": "$.summary.mean_variance: expected 0.8248835429778069, got 42.0"
+    },
+    {
+      "control": "physical_clock",
+      "case": "adaptive_qp",
+      "mutation_path": [
+        "motion",
+        1,
+        "time_s"
+      ],
+      "comparison_accepted": false,
+      "difference": "$.motion[1].time_s: expected 0.5, got 0.6"
+    },
+    {
+      "control": "plan_provenance",
+      "case": "dp_fractional_tail",
+      "mutation_path": [
+        "plans",
+        1,
+        "previous_plan_id"
+      ],
+      "comparison_accepted": false,
+      "difference": "$.plans[1].previous_plan_id: expected 'dp-000000-c65007312529', got 'wrong-plan'"
+    },
+    {
+      "control": "receipt_provenance",
+      "case": "dp_fractional_tail",
+      "mutation_path": [
+        "samples",
+        0,
+        "received"
+      ],
+      "comparison_accepted": false,
+      "difference": "$.samples[0].received: expected True, got False"
+    },
+    {
+      "control": "failure_status",
+      "case": "execution_rejected",
+      "mutation_path": [
+        "status"
+      ],
+      "comparison_accepted": false,
+      "difference": "$.status: expected 'failed', got 'completed'"
+    },
+    {
+      "control": "nested_runtime",
+      "case": "p_interior",
+      "mutation_path": [
+        "plans",
+        0,
+        "candidates",
+        0,
+        "rollout",
+        "wall_s"
+      ],
+      "comparison_accepted": true,
+      "difference": null
+    },
+    {
+      "control": "summary_runtime",
+      "case": "adaptive_qp",
+      "mutation_path": [
+        "summary",
+        "runtime_s"
+      ],
+      "comparison_accepted": true,
+      "difference": null
+    }
+  ],
+  "timing_assertions": {
+    "command": ".venv/Scripts/python.exe -m pytest tests/unit/test_mission_reference.py tests/unit/test_mapping.py tests/unit/test_mapping_qp.py tests/unit/test_mapping_dp.py tests/unit/test_mapping_p.py -k \"mission_reference or planning_cost or execution_failure or preview_failure or complete_mapping_artifact or dp_qp_loop\" -q",
+    "result": "26 passed, 93 deselected in 2.16s"
+  }
+}

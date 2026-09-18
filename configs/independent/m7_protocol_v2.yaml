@@ -1,0 +1,161 @@
+# M7 confirmation protocol v2 (masterplan v2 sections 10, 11, 12 and 16).
+# Declared after the v1 held-out run (m7-usv-heldout-v1, seeds 9101-9140) exposed a
+# defect in the comparator's motion-primitive planner (decision D057): a sampled
+# containment margin, stricter than the controller's invariant, left robots near an
+# edge with only the stop primitive for the rest of the mission. The planner now
+# checks exact arc bounds. v2 repeats v1 unchanged on new tasks with the corrected
+# planner; v1 stays reported as run. Frozen before any v2 held-out run. Its SHA-256
+# (LF line endings) is pinned in attain_sampling.eval.m7_v2.FROZEN_PROTOCOL_SHA256
+# and in docs/decision_log.md; scripts/run_m6.py --milestone m7v2 refuses to run if
+# the file differs.
+schema_version: 1
+protocol_id: m7-usv-heldout-v2
+frozen_on: "2026-09-17"
+supersedes_for_confirmation: m7-usv-heldout-v1
+change_from_v1: >-
+  only the corrected planner containment check (code), the task seeds, the excluded
+  ranges and the target recomputed by the unchanged rule with the corrected code
+question: >-
+  The M6 question on a second vehicle model: for a forward-only USV with a minimum
+  turning radius, does the execution-aware policy P give a measurable benefit over
+  the periodic replanner B3, and does its controller rollout matter when the
+  controller cannot simply reach the commanded cells?
+
+vehicle:
+  model: usv_curvature
+  description: >-
+    forward-only kinematic unicycle, speed in [0, 2] m/s, curvature at most
+    1 / R with R = max_speed / max_turn_rate = 4.44 m, exact arcs, may stop but
+    cannot turn on the spot; guidance follows the shortest forward path to the
+    commanded cell; a certified filter keeps every robot inside the field with a
+    private loiter circle and the minimum separation
+  limits: >-
+    no hydrodynamics, no current, no drift of a stopped vehicle; the disturbance
+    is a yaw-rate tracking error on the commanded curvature
+
+tasks:
+  # Held-out: never used before. Development used 7, 19 and 31 (independent and
+  # this USV profile), 43 and 59 (ECC profile) and 731 (M3 stream); M6 used
+  # 9001-9040 and M7 v1 9101-9140 as held-out tasks, so both are excluded.
+  seed_start: 9201
+  seed_count: 40
+  development_seeds: [7, 19, 31, 43, 59, 731]
+  excluded_seed_ranges: [[9001, 9040], [9101, 9140]]
+  robots: 4
+  duration_s: 90.0
+  controller: filter
+  gp_backend: exact
+  model: usv_curvature
+
+# The frozen M2-M4 development settings, unchanged from M6 and M7 v1: nothing is
+# re-tuned for the USV. Everything else is a MappingConfig default.
+settings:
+  dp_horizon_steps: 4
+  dp_grid_shape: [9, 7]
+  dp_travel_weight: 0.01
+  p_switch_margin: 0.01
+  p_deviation_trigger_m: 1.5
+  p_intervention_trigger_mps: 0.25
+  p_max_rollout_candidates: 6
+  target_mean_variance: 0.0774
+
+target:
+  value: 0.0774
+  rule: >-
+    the unchanged M6/M7 v1 rule, applied with the corrected planner: median over
+    development seeds 7, 19 and 31 of B3's mission-end mean latent variance,
+    combined scenario, 4 robots, 90 s (0.07743; v1 gave 0.1557 with the defective
+    planner), rounded to three significant figures. The development values were
+    visible when the rule was applied; the rule itself is not new
+  outcome: reached when the mission-end mean latent variance is at most the target
+
+methods:
+  sweep: B0
+  greedy: B1
+  adaptive: B2
+  dp: B3
+  p: P
+
+blocks:
+  main:
+    methods: [sweep, greedy, adaptive, dp, p]
+    scenarios:
+      nominal: {base: nominal}
+      dropout: {base: dropout}
+      drift: {base: drift}
+      combined: {base: combined}
+      short_budget: {base: combined, duration_s: 45.0}
+  ablation:
+    # The three mandatory ablations on the representative block. Full P and B3 come
+    # from main/combined on the same tasks.
+    methods: [p]
+    scenario: {name: combined, base: combined}
+    variants:
+      p_no_rollout: {p_controller_rollout: false}
+      p_no_retain: {p_retain_plan: false}
+      p_periodic_only: {p_event_triggers: false}
+  straight_line:
+    # B3 and P with the holonomic M2 planner (straight-line reachability, inset
+    # cells) instead of motion primitives: the planner's geometry is wrong for this
+    # vehicle, which is where a controller rollout could matter. The second variant
+    # removes the rollout; its B3 must equal the first variant's B3.
+    methods: [dp, p]
+    scenario: {name: combined, base: combined}
+    variants:
+      straight: {dp_motion_primitives: false}
+      straight_no_rollout: {dp_motion_primitives: false, p_controller_rollout: false}
+
+analysis:
+  primary:
+    metric: rmse
+    comparison: [p, dp]
+    block: main
+    statement: mission-end field RMSE on the fixed grid, paired P minus B3, per scenario
+  secondary_metrics:
+    - mean_variance
+    - max_variance
+    - target_reached
+    - first_reach_time_s
+    - path_length
+    - samples_received
+    - planning_s
+    - runtime_s
+    - min_separation
+    - one_step_forecast_error
+    - mean_arrival_error_m
+    - control_interventions
+  context_pairs: [[p, adaptive], [dp, adaptive], [p, sweep], [dp, sweep]]
+  rollout_effect: >-
+    P without rollout minus full P, paired, in ablation (motion-primitive planner)
+    and in straight_line (straight-line planner)
+  bootstrap:
+    resamples: 10000
+    seed: 20260917
+    level: 0.95
+    method: percentile of the resampled mean paired difference, resampling tasks
+  tie_tolerance: 1.0e-9
+  failures: >-
+    a failed run is kept and counted; a pair with a failed run is excluded from the
+    paired differences and the exclusion is reported next to every statistic
+  warnings:
+    rule: a method warns at a sampling epoch when its mission-end forecast exceeds the target
+    p: target_risk best candidate over the bounded set (P's own rule), and P's selected plan
+    dp: >-
+      the evaluator applies the same hold continuation to B3's selected plan and
+      recorded belief; B3 never uses this value
+    blocks: [main]
+    report: >-
+      per epoch recall and false-alarm rate against the method's own mission outcome,
+      first warning epoch, and the earliest epoch from which the warning stays correct
+  forecast_error:
+    definition: realised minus forecast mean latent variance one epoch ahead
+    methods: [adaptive, dp, p]
+  multiplicity: >-
+    no correction; the primary comparison is named in advance and every other
+    difference is descriptive
+
+execution:
+  workers: 20
+  timing_note: >-
+    wall-clock on a shared machine; methods within one task run sequentially in one
+    process, so their relative cost is comparable, absolute times are not

@@ -1,0 +1,7 @@
+Test-Path: C:\Users\Lenovo\Desktop\GP Attainability\scripts\check.ps1:9
+Line |
+   9 |  if (Test-Path -LiteralPath $localUv -PathType Leaf) {
+     |      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Access to the path 'C:\Users\Lenovo\Desktop\GP Attainability\.tools\uv\bin\uv.exe' is denied.
+
+

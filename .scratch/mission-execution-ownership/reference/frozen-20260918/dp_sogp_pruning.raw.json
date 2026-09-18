@@ -1,0 +1,3382 @@
+{
+  "config": {
+    "controller": "filter",
+    "domain": [
+      60.0,
+      40.0
+    ],
+    "dp_grid_shape": [
+      4,
+      3
+    ],
+    "dp_horizon_steps": 2,
+    "dp_motion_primitives": true,
+    "dp_travel_weight": 0.01,
+    "drift_strength": 0.0,
+    "dropout_prob": 0.0,
+    "dt": 0.5,
+    "duration_s": 10.0,
+    "gp_backend": "sogp",
+    "grid_shape": [
+      6,
+      4
+    ],
+    "length_scale": 8.0,
+    "max_speed": 2.0,
+    "max_turn_rate": 0.45,
+    "min_separation": 2.0,
+    "model": "holonomic",
+    "noise_std": 0.15,
+    "p_controller_rollout": true,
+    "p_deviation_trigger_m": 1.5,
+    "p_event_triggers": true,
+    "p_intervention_trigger_mps": 0.25,
+    "p_max_rollout_candidates": 6,
+    "p_retain_plan": true,
+    "p_switch_margin": 0.01,
+    "qp_acceptance_tol": 1e-07,
+    "qp_alpha": 1.0,
+    "qp_max_iter": 10000,
+    "qp_polygon_sides": 16,
+    "robot_count": 2,
+    "sample_period_s": 5.0,
+    "seed": 7,
+    "signal_variance": 1.0,
+    "sogp_max_basis": 2,
+    "sogp_novelty_tolerance": 1e-06,
+    "target_mean_variance": null
+  },
+  "controls": [
+    {
+      "applied_velocity": [
+        [
+          -0.5999999999999996,
+          -1.4000000000000004
+        ],
+        [
+          -0.5999999999999996,
+          -1.3999999999999986
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000000-dc2dc675d254",
+      "positions_before": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          -0.6,
+          -1.4
+        ],
+        [
+          -0.6,
+          -1.4
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 1,
+      "time_s": 0.5,
+      "tracking_time_s": 5.0,
+      "wall_s": 6.709999797749333e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          -0.5999999999999996,
+          -1.4000000000000004
+        ],
+        [
+          -0.5999999999999996,
+          -1.3999999999999986
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000000-dc2dc675d254",
+      "positions_before": [
+        [
+          2.7,
+          6.3
+        ],
+        [
+          2.7,
+          26.3
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          -0.6,
+          -1.4
+        ],
+        [
+          -0.6,
+          -1.4000000000000001
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 2,
+      "time_s": 1.0,
+      "tracking_time_s": 4.5,
+      "wall_s": 4.649999755201861e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          -0.5999999999999996,
+          -1.4000000000000004
+        ],
+        [
+          -0.5999999999999996,
+          -1.3999999999999986
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000000-dc2dc675d254",
+      "positions_before": [
+        [
+          2.4000000000000004,
+          5.6
+        ],
+        [
+          2.4000000000000004,
+          25.6
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          -0.6000000000000001,
+          -1.4
+        ],
+        [
+          -0.6000000000000001,
+          -1.4000000000000004
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 3,
+      "time_s": 1.5,
+      "tracking_time_s": 4.0,
+      "wall_s": 4.020000051241368e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          -0.6000000000000001,
+          -1.4000000000000004
+        ],
+        [
+          -0.6000000000000001,
+          -1.3999999999999986
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000000-dc2dc675d254",
+      "positions_before": [
+        [
+          2.1000000000000005,
+          4.8999999999999995
+        ],
+        [
+          2.1000000000000005,
+          24.900000000000002
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          -0.6000000000000002,
+          -1.3999999999999997
+        ],
+        [
+          -0.6000000000000002,
+          -1.4000000000000008
+        ]
+      ],
+      "segment_min_separation": 20.000000000000004,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 4,
+      "time_s": 2.0,
+      "tracking_time_s": 3.5,
+      "wall_s": 3.7599998904624954e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          -0.6000000000000001,
+          -1.3999999999999995
+        ],
+        [
+          -0.6000000000000001,
+          -1.3999999999999986
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000000-dc2dc675d254",
+      "positions_before": [
+        [
+          1.8000000000000005,
+          4.199999999999999
+        ],
+        [
+          1.8000000000000005,
+          24.200000000000003
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          -0.6000000000000002,
+          -1.3999999999999997
+        ],
+        [
+          -0.6000000000000002,
+          -1.400000000000001
+        ]
+      ],
+      "segment_min_separation": 20.000000000000004,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 5,
+      "time_s": 2.5,
+      "tracking_time_s": 3.0,
+      "wall_s": 3.680000008898787e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          -0.6000000000000001,
+          -1.3999999999999995
+        ],
+        [
+          -0.6000000000000001,
+          -1.3999999999999986
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000000-dc2dc675d254",
+      "positions_before": [
+        [
+          1.5000000000000004,
+          3.4999999999999996
+        ],
+        [
+          1.5000000000000004,
+          23.500000000000004
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          -0.6000000000000002,
+          -1.3999999999999997
+        ],
+        [
+          -0.6000000000000002,
+          -1.4000000000000012
+        ]
+      ],
+      "segment_min_separation": 20.000000000000004,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 6,
+      "time_s": 3.0,
+      "tracking_time_s": 2.5,
+      "wall_s": 3.6699999327538535e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          -0.6000000000000001,
+          -1.4000000000000004
+        ],
+        [
+          -0.6000000000000001,
+          -1.4000000000000057
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000000-dc2dc675d254",
+      "positions_before": [
+        [
+          1.2000000000000004,
+          2.8
+        ],
+        [
+          1.2000000000000004,
+          22.800000000000004
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          -0.6000000000000002,
+          -1.4
+        ],
+        [
+          -0.6000000000000002,
+          -1.4000000000000021
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 7,
+      "time_s": 3.5,
+      "tracking_time_s": 2.0,
+      "wall_s": 3.609999839682132e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          -0.6000000000000001,
+          -1.3999999999999995
+        ],
+        [
+          -0.6000000000000001,
+          -1.3999999999999986
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000000-dc2dc675d254",
+      "positions_before": [
+        [
+          0.9000000000000004,
+          2.0999999999999996
+        ],
+        [
+          0.9000000000000004,
+          22.1
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          -0.6000000000000002,
+          -1.3999999999999997
+        ],
+        [
+          -0.6000000000000002,
+          -1.400000000000001
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 8,
+      "time_s": 4.0,
+      "tracking_time_s": 1.5,
+      "wall_s": 3.619999915827066e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          -0.6000000000000003,
+          -1.4
+        ],
+        [
+          -0.6000000000000003,
+          -1.3999999999999986
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000000-dc2dc675d254",
+      "positions_before": [
+        [
+          0.6000000000000003,
+          1.4
+        ],
+        [
+          0.6000000000000003,
+          21.400000000000002
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          -0.6000000000000003,
+          -1.4
+        ],
+        [
+          -0.6000000000000003,
+          -1.4000000000000021
+        ]
+      ],
+      "segment_min_separation": 20.000000000000004,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 9,
+      "time_s": 4.5,
+      "tracking_time_s": 1.0,
+      "wall_s": 3.619999915827066e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          -0.6000000000000003,
+          -1.4
+        ],
+        [
+          -0.6000000000000003,
+          -1.4000000000000057
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000000-dc2dc675d254",
+      "positions_before": [
+        [
+          0.30000000000000016,
+          0.7
+        ],
+        [
+          0.30000000000000016,
+          20.700000000000003
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          -0.6000000000000003,
+          -1.4
+        ],
+        [
+          -0.6000000000000003,
+          -1.4000000000000057
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 10,
+      "time_s": 5.0,
+      "tracking_time_s": 0.5,
+      "wall_s": 3.680000008898787e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000001-ea64be304ca4",
+      "positions_before": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 11,
+      "time_s": 5.5,
+      "tracking_time_s": 5.0,
+      "wall_s": 5.6700002460274845e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000001-ea64be304ca4",
+      "positions_before": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 12,
+      "time_s": 6.0,
+      "tracking_time_s": 4.5,
+      "wall_s": 4.099999932805076e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000001-ea64be304ca4",
+      "positions_before": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 13,
+      "time_s": 6.5,
+      "tracking_time_s": 4.0,
+      "wall_s": 3.65999985660892e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000001-ea64be304ca4",
+      "positions_before": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 14,
+      "time_s": 7.0,
+      "tracking_time_s": 3.5,
+      "wall_s": 3.440000000409782e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000001-ea64be304ca4",
+      "positions_before": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 15,
+      "time_s": 7.5,
+      "tracking_time_s": 3.0,
+      "wall_s": 3.279999873484485e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000001-ea64be304ca4",
+      "positions_before": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 16,
+      "time_s": 8.0,
+      "tracking_time_s": 2.5,
+      "wall_s": 3.199999991920777e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000001-ea64be304ca4",
+      "positions_before": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 17,
+      "time_s": 8.5,
+      "tracking_time_s": 2.0,
+      "wall_s": 3.2899999496294186e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000001-ea64be304ca4",
+      "positions_before": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 18,
+      "time_s": 9.0,
+      "tracking_time_s": 1.5,
+      "wall_s": 3.2099997042678297e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000001-ea64be304ca4",
+      "positions_before": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 19,
+      "time_s": 9.5,
+      "tracking_time_s": 1.0,
+      "wall_s": 3.199999991920777e-05
+    },
+    {
+      "applied_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "backend": "filter",
+      "dual_residual": null,
+      "iterations": null,
+      "max_constraint_violation": null,
+      "phase": "execution",
+      "plan_id": "dp-000001-ea64be304ca4",
+      "positions_before": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "primal_residual": null,
+      "requested_velocity": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "segment_min_separation": 20.0,
+      "solve_s": null,
+      "status": "accepted",
+      "success": true,
+      "tick": 20,
+      "time_s": 10.0,
+      "tracking_time_s": 0.5,
+      "wall_s": 3.229999856557697e-05
+    }
+  ],
+  "failure": null,
+  "field": {
+    "truth": [
+      [
+        0.010347208753096407,
+        0.3452826826653067,
+        0.3910391235409776,
+        -0.02439399990604775,
+        -0.2201891723633539,
+        0.0038846172337478713
+      ],
+      [
+        0.02332646955111022,
+        0.15437475488136082,
+        0.5236246595182688,
+        0.3558913342749674,
+        0.5669708765177142,
+        0.3964294406443212
+      ],
+      [
+        -0.08232205663345553,
+        -0.4987682050212278,
+        -0.7638983210292519,
+        -0.5072745179394024,
+        0.18058587054732184,
+        0.34658795820509475
+      ],
+      [
+        -0.067772740253568,
+        -0.05890511444970506,
+        -0.14344113732684113,
+        0.22487996424217835,
+        -0.23792980796958108,
+        -0.013801792526290723
+      ]
+    ],
+    "x": [
+      0.0,
+      12.0,
+      24.0,
+      36.0,
+      48.0,
+      60.0
+    ],
+    "y": [
+      0.0,
+      13.333333333333334,
+      26.666666666666668,
+      40.0
+    ]
+  },
+  "frames": [
+    {
+      "error": [
+        [
+          0.12170638269846022,
+          -0.2700408143121755,
+          -0.38652049812520783,
+          0.024422601519052976,
+          0.220189191444837,
+          -0.0038846172324061225
+        ],
+        [
+          0.07078879247646216,
+          -0.10074949503299965,
+          -0.5204042123472759,
+          -0.3558709497608257,
+          -0.5669708629182447,
+          -0.3964294406433649
+        ],
+        [
+          -0.11531684929888407,
+          0.3861569509223702,
+          0.7571354895630709,
+          0.5072317111407374,
+          -0.18058589910575332,
+          -0.34658795820710286
+        ],
+        [
+          0.012451513300106118,
+          0.02738402948858107,
+          0.14154814903780105,
+          -0.22489194631935552,
+          0.23792979997577307,
+          0.013801792525728624
+        ]
+      ],
+      "forecast_plan_id": null,
+      "gp_telemetry": {
+        "admitted_count": 2,
+        "backend": "sogp",
+        "dictionary_size": 2,
+        "max_basis": 2,
+        "observation_count": 2,
+        "projected_count": 0,
+        "pruned_count": 0,
+        "state_nbytes": 128
+      },
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "mean": [
+        [
+          0.13205359145155662,
+          0.0752418683531312,
+          0.004518625415769775,
+          2.8601613005227138e-05,
+          1.9081483107527993e-08,
+          1.341748578965529e-12
+        ],
+        [
+          0.09411526202757238,
+          0.05362525984836117,
+          0.0032204471709929216,
+          2.0384514141636736e-05,
+          1.3599469448723731e-08,
+          9.56270993438209e-13
+        ],
+        [
+          -0.1976389059323396,
+          -0.11261125409885762,
+          -0.006762831466181031,
+          -4.2806798664972125e-05,
+          -2.8558431493487405e-08,
+          -2.0081371378702642e-12
+        ],
+        [
+          -0.05532122695346188,
+          -0.03152108496112399,
+          -0.0018929882890400867,
+          -1.1982077177186884e-05,
+          -7.993808013827873e-09,
+          -5.620988936046241e-13
+        ]
+      ],
+      "mean_variance": 0.9009448103925782,
+      "min_separation": 20.0,
+      "path_length": 0.0,
+      "plan_id": "dp-000000-dc2dc675d254",
+      "planned_mean_variance": 0.9009448103925782,
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "rmse": 0.31960078881206433,
+      "samples_attempted": 2,
+      "samples_received": 2,
+      "std": [
+        [
+          0.7773553820090789,
+          0.9335571631474482,
+          0.999768303730375,
+          0.9999999907180954,
+          0.9999999999999959,
+          1.0
+        ],
+        [
+          0.7152502449429964,
+          0.9172972187737682,
+          0.9997140203009348,
+          0.9999999885437766,
+          0.9999999999999949,
+          1.0
+        ],
+        [
+          0.3895491225617555,
+          0.8512420711623812,
+          0.9995032764465861,
+          0.9999999801035656,
+          0.9999999999999911,
+          1.0
+        ],
+        [
+          0.9691719408203718,
+          0.9900968279735338,
+          0.9999644598061888,
+          0.9999999985760969,
+          0.9999999999999993,
+          1.0
+        ]
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 0.0
+    },
+    {
+      "error": [
+        [
+          -0.17215900525179556,
+          -0.3212235052636889,
+          -0.3856161700679985,
+          0.024442672882269416,
+          0.220189210289184,
+          -0.003884617230862541
+        ],
+        [
+          0.1933370391490471,
+          -0.0019347290153480523,
+          -0.5134779794700678,
+          -0.355823531165744,
+          -0.5669708299231507,
+          -0.3964294406409903
+        ],
+        [
+          0.10281043459162462,
+          0.5108915702377791,
+          0.7646417646699368,
+          0.5072792791913063,
+          -0.18058586734978252,
+          -0.34658795820486904
+        ],
+        [
+          0.06786347296974055,
+          0.05895724564164437,
+          0.14344428287321268,
+          -0.22487994427829783,
+          0.23792980798292024,
+          0.013801792526291662
+        ]
+      ],
+      "forecast_plan_id": "dp-000000-dc2dc675d254",
+      "gp_telemetry": {
+        "admitted_count": 4,
+        "backend": "sogp",
+        "dictionary_size": 2,
+        "max_basis": 2,
+        "observation_count": 4,
+        "projected_count": 0,
+        "pruned_count": 2,
+        "state_nbytes": 128
+      },
+      "headings": [
+        -1.9756881130799802,
+        -1.9756881130799788
+      ],
+      "mean": [
+        [
+          -0.16181179649869915,
+          0.024059177401617778,
+          0.005422953472979111,
+          4.867297622166658e-05,
+          3.7925830118043124e-08,
+          2.8853304398835953e-12
+        ],
+        [
+          0.21666350870015733,
+          0.15244002586601277,
+          0.010146680048200915,
+          6.780310922341027e-05,
+          4.659456343956659e-08,
+          3.330865417175521e-12
+        ],
+        [
+          0.020488377958169095,
+          0.012123365216551312,
+          0.0007434436406848948,
+          4.76125190396653e-06,
+          3.1975393264668442e-09,
+          2.256854252227143e-13
+        ],
+        [
+          9.073271617255014e-05,
+          5.213119193930735e-05,
+          3.145546371541928e-06,
+          1.996388052350633e-08,
+          1.3339169354697584e-11,
+          9.387818305015007e-16
+        ]
+      ],
+      "mean_variance": 0.9242292713536603,
+      "min_separation": 20.0,
+      "path_length": 15.231546211727817,
+      "plan_id": "dp-000001-ea64be304ca4",
+      "planned_mean_variance": 0.8570907826726774,
+      "positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "rmse": 0.3316145982742592,
+      "samples_attempted": 4,
+      "samples_received": 4,
+      "std": [
+        [
+          0.14722618096616327,
+          0.9251648831586248,
+          0.9997639756788519,
+          0.9999999890783148,
+          0.9999999999999944,
+          1.0
+        ],
+        [
+          0.7053574291378122,
+          0.9008681682866871,
+          0.9996245147665609,
+          0.9999999840209981,
+          0.9999999999999926,
+          1.0
+        ],
+        [
+          0.9985171524012268,
+          0.9994971284163253,
+          0.9999981399309096,
+          0.9999999999243755,
+          0.9999999999999999,
+          1.0
+        ],
+        [
+          0.9999999724557204,
+          0.9999999909630232,
+          0.9999999999672109,
+          0.9999999999999987,
+          1.0,
+          1.0
+        ]
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 5.0
+    },
+    {
+      "error": [
+        [
+          -0.05947117697148025,
+          -0.3025915112859189,
+          -0.3860567429638074,
+          0.02443425970594744,
+          0.22018920253833194,
+          -0.0038846172314932165
+        ],
+        [
+          0.1611949025625384,
+          -0.03161314170514505,
+          -0.5156491742267999,
+          -0.35583867668602265,
+          -0.5669708405605621,
+          -0.39642944064175967
+        ],
+        [
+          0.09829717149902086,
+          0.5081437988330301,
+          0.7644707192253786,
+          0.5072781747785449,
+          -0.18058586809485372,
+          -0.3465879582049218
+        ],
+        [
+          0.0678424846868749,
+          0.05894511703411076,
+          0.1434435486819582,
+          -0.22487994894648,
+          0.2379298079797979,
+          0.013801792526291441
+        ]
+      ],
+      "forecast_plan_id": "dp-000001-ea64be304ca4",
+      "gp_telemetry": {
+        "admitted_count": 5,
+        "backend": "sogp",
+        "dictionary_size": 2,
+        "max_basis": 2,
+        "observation_count": 6,
+        "projected_count": 1,
+        "pruned_count": 3,
+        "state_nbytes": 128
+      },
+      "headings": [
+        -1.9756881130799802,
+        -1.9756881130799788
+      ],
+      "mean": [
+        [
+          -0.04912396821838384,
+          0.04269117137938781,
+          0.004982380577170214,
+          4.025979989968726e-05,
+          3.017497803034314e-08,
+          2.254654781948894e-12
+        ],
+        [
+          0.18452137211364864,
+          0.12276161317621577,
+          0.007975485291468869,
+          5.265758894474576e-05,
+          3.595715205570396e-08,
+          2.5615171582083387e-12
+        ],
+        [
+          0.01597511486556533,
+          0.009375593811802214,
+          0.0005723981961266117,
+          3.6568391425382888e-06,
+          2.4524681204882022e-09,
+          1.7296325489167973e-13
+        ],
+        [
+          6.974443330690697e-05,
+          4.000258440569935e-05,
+          2.4113551170671194e-06,
+          1.5295698344739044e-08,
+          1.0216837481262092e-11,
+          7.189102584136131e-16
+        ]
+      ],
+      "mean_variance": 0.9237015322518168,
+      "min_separation": 20.0,
+      "path_length": 15.231546211727817,
+      "plan_id": "dp-000001-ea64be304ca4",
+      "planned_mean_variance": 0.8882091427600152,
+      "positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "rmse": 0.3284891629141209,
+      "samples_attempted": 6,
+      "samples_received": 6,
+      "std": [
+        [
+          0.10505106666152803,
+          0.9250067227526334,
+          0.9997638703594769,
+          0.9999999890469785,
+          0.9999999999999944,
+          1.0
+        ],
+        [
+          0.7046943244536674,
+          0.9004407979552411,
+          0.9996224709816331,
+          0.9999999839219104,
+          0.9999999999999926,
+          1.0
+        ],
+        [
+          0.998508331215803,
+          0.9994938687116296,
+          0.9999981273193489,
+          0.99999999992385,
+          0.9999999999999999,
+          1.0
+        ],
+        [
+          0.9999999722659018,
+          0.9999999908996599,
+          0.9999999999669787,
+          0.9999999999999987,
+          1.0,
+          1.0
+        ]
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 10.0
+    }
+  ],
+  "gp_failures": [],
+  "gp_telemetry": {
+    "admitted_count": 5,
+    "backend": "sogp",
+    "dictionary_size": 2,
+    "max_basis": 2,
+    "observation_count": 6,
+    "projected_count": 1,
+    "pruned_count": 3,
+    "state_nbytes": 128
+  },
+  "gp_updates": [
+    {
+      "dictionary_size": 1,
+      "gamma": 1.0,
+      "gamma_raw": 1.0,
+      "observation_index": 0,
+      "pruning_variance_jump": null,
+      "removal_score": null,
+      "removed_observation_index": null,
+      "removed_point_variance_after": null,
+      "removed_point_variance_before": null,
+      "removed_position": null,
+      "robot_id": 0,
+      "tick": 0,
+      "time_s": 0.0,
+      "update_kind": "admitted"
+    },
+    {
+      "dictionary_size": 2,
+      "gamma": 0.9980695458637723,
+      "gamma_raw": 0.9980695458637723,
+      "observation_index": 1,
+      "pruning_variance_jump": null,
+      "removal_score": null,
+      "removed_observation_index": null,
+      "removed_point_variance_after": null,
+      "removed_point_variance_before": null,
+      "removed_position": null,
+      "robot_id": 1,
+      "tick": 0,
+      "time_s": 0.0,
+      "update_kind": "admitted"
+    },
+    {
+      "dictionary_size": 2,
+      "gamma": 0.5953475161622168,
+      "gamma_raw": 0.5953475161622168,
+      "observation_index": 2,
+      "pruning_variance_jump": 0.9751765174336268,
+      "removal_score": 0.23327350067379404,
+      "removed_observation_index": 1,
+      "removed_point_variance_after": 0.9971800382699141,
+      "removed_point_variance_before": 0.022003520836287316,
+      "removed_position": [
+        3.0,
+        27.0
+      ],
+      "robot_id": 0,
+      "tick": 10,
+      "time_s": 5.0,
+      "update_kind": "admitted"
+    },
+    {
+      "dictionary_size": 2,
+      "gamma": 0.9161227172153883,
+      "gamma_raw": 0.9161227172153883,
+      "observation_index": 3,
+      "pruning_variance_jump": 0.8978541041263661,
+      "removal_score": 0.24663110423134854,
+      "removed_observation_index": 3,
+      "removed_point_variance_after": 0.9198168728796071,
+      "removed_point_variance_before": 0.02196276875324099,
+      "removed_position": [
+        0.0,
+        20.0
+      ],
+      "robot_id": 1,
+      "tick": 10,
+      "time_s": 5.0,
+      "update_kind": "admitted"
+    },
+    {
+      "dictionary_size": 2,
+      "gamma": 1.1102230246251565e-16,
+      "gamma_raw": 1.1102230246251565e-16,
+      "observation_index": 4,
+      "pruning_variance_jump": null,
+      "removal_score": null,
+      "removed_observation_index": null,
+      "removed_point_variance_after": null,
+      "removed_point_variance_before": null,
+      "removed_position": null,
+      "robot_id": 0,
+      "tick": 20,
+      "time_s": 10.0,
+      "update_kind": "projected"
+    },
+    {
+      "dictionary_size": 2,
+      "gamma": 0.9161227172153883,
+      "gamma_raw": 0.9161227172153883,
+      "observation_index": 5,
+      "pruning_variance_jump": 0.8974878972739188,
+      "removal_score": 0.020011442229061226,
+      "removed_observation_index": 5,
+      "removed_point_variance_after": 0.919450455475334,
+      "removed_point_variance_before": 0.02196255820141524,
+      "removed_position": [
+        0.0,
+        20.0
+      ],
+      "robot_id": 1,
+      "tick": 20,
+      "time_s": 10.0,
+      "update_kind": "admitted"
+    }
+  ],
+  "initial_positions": [
+    [
+      3.0,
+      7.0
+    ],
+    [
+      3.0,
+      27.0
+    ]
+  ],
+  "method": "dp",
+  "motion": [
+    {
+      "control_event_index": null,
+      "headings": [
+        0.0,
+        0.0
+      ],
+      "plan_id": null,
+      "planned_positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 0.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 0,
+      "headings": [
+        -1.9756881130799802,
+        -1.9756881130799802
+      ],
+      "plan_id": "dp-000000-dc2dc675d254",
+      "planned_positions": [
+        [
+          2.7,
+          6.3
+        ],
+        [
+          2.7,
+          26.3
+        ]
+      ],
+      "positions": [
+        [
+          2.7,
+          6.3
+        ],
+        [
+          2.7,
+          26.3
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        1.523154621172782,
+        1.5231546211727802
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 0.5,
+      "turn_rates": [
+        -3.9513762261599603,
+        -3.9513762261599603
+      ]
+    },
+    {
+      "control_event_index": 1,
+      "headings": [
+        -1.9756881130799802,
+        -1.97568811307998
+      ],
+      "plan_id": "dp-000000-dc2dc675d254",
+      "planned_positions": [
+        [
+          2.4,
+          5.6
+        ],
+        [
+          2.4,
+          25.6
+        ]
+      ],
+      "positions": [
+        [
+          2.4000000000000004,
+          5.6
+        ],
+        [
+          2.4000000000000004,
+          25.6
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        1.523154621172782,
+        1.5231546211727802
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 1.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 2,
+      "headings": [
+        -1.9756881130799802,
+        -1.97568811307998
+      ],
+      "plan_id": "dp-000000-dc2dc675d254",
+      "planned_positions": [
+        [
+          2.1,
+          4.9
+        ],
+        [
+          2.1,
+          24.9
+        ]
+      ],
+      "positions": [
+        [
+          2.1000000000000005,
+          4.8999999999999995
+        ],
+        [
+          2.1000000000000005,
+          24.900000000000002
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        1.523154621172782,
+        1.5231546211727802
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 1.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 3,
+      "headings": [
+        -1.9756881130799802,
+        -1.97568811307998
+      ],
+      "plan_id": "dp-000000-dc2dc675d254",
+      "planned_positions": [
+        [
+          1.8,
+          4.2
+        ],
+        [
+          1.8,
+          24.2
+        ]
+      ],
+      "positions": [
+        [
+          1.8000000000000005,
+          4.199999999999999
+        ],
+        [
+          1.8000000000000005,
+          24.200000000000003
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.000000000000004,
+      "speeds": [
+        1.523154621172782,
+        1.5231546211727802
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 2.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 4,
+      "headings": [
+        -1.9756881130799802,
+        -1.97568811307998
+      ],
+      "plan_id": "dp-000000-dc2dc675d254",
+      "planned_positions": [
+        [
+          1.5,
+          3.5
+        ],
+        [
+          1.5,
+          23.5
+        ]
+      ],
+      "positions": [
+        [
+          1.5000000000000004,
+          3.4999999999999996
+        ],
+        [
+          1.5000000000000004,
+          23.500000000000004
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.000000000000004,
+      "speeds": [
+        1.523154621172781,
+        1.5231546211727802
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 2.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 5,
+      "headings": [
+        -1.9756881130799802,
+        -1.97568811307998
+      ],
+      "plan_id": "dp-000000-dc2dc675d254",
+      "planned_positions": [
+        [
+          1.2,
+          2.8
+        ],
+        [
+          1.2,
+          22.8
+        ]
+      ],
+      "positions": [
+        [
+          1.2000000000000004,
+          2.8
+        ],
+        [
+          1.2000000000000004,
+          22.800000000000004
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.000000000000004,
+      "speeds": [
+        1.523154621172781,
+        1.5231546211727802
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 3.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 6,
+      "headings": [
+        -1.9756881130799802,
+        -1.9756881130799797
+      ],
+      "plan_id": "dp-000000-dc2dc675d254",
+      "planned_positions": [
+        [
+          0.8999999999999999,
+          2.0999999999999996
+        ],
+        [
+          0.8999999999999999,
+          22.1
+        ]
+      ],
+      "positions": [
+        [
+          0.9000000000000004,
+          2.0999999999999996
+        ],
+        [
+          0.9000000000000004,
+          22.1
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        1.523154621172782,
+        1.523154621172787
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 3.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 7,
+      "headings": [
+        -1.9756881130799802,
+        -1.97568811307998
+      ],
+      "plan_id": "dp-000000-dc2dc675d254",
+      "planned_positions": [
+        [
+          0.6000000000000001,
+          1.4000000000000004
+        ],
+        [
+          0.6000000000000001,
+          21.4
+        ]
+      ],
+      "positions": [
+        [
+          0.6000000000000003,
+          1.4
+        ],
+        [
+          0.6000000000000003,
+          21.400000000000002
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        1.523154621172781,
+        1.5231546211727802
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 4.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 8,
+      "headings": [
+        -1.9756881130799802,
+        -1.9756881130799797
+      ],
+      "plan_id": "dp-000000-dc2dc675d254",
+      "planned_positions": [
+        [
+          0.2999999999999998,
+          0.7000000000000002
+        ],
+        [
+          0.2999999999999998,
+          20.7
+        ]
+      ],
+      "positions": [
+        [
+          0.30000000000000016,
+          0.7
+        ],
+        [
+          0.30000000000000016,
+          20.700000000000003
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.000000000000004,
+      "speeds": [
+        1.5231546211727818,
+        1.5231546211727804
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 4.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 9,
+      "headings": [
+        -1.9756881130799802,
+        -1.9756881130799788
+      ],
+      "plan_id": "dp-000000-dc2dc675d254",
+      "planned_positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        1.5231546211727818,
+        1.523154621172787
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 5.0,
+      "turn_rates": [
+        0.0,
+        1.7763568394002505e-15
+      ]
+    },
+    {
+      "control_event_index": 10,
+      "headings": [
+        -1.9756881130799802,
+        -1.9756881130799788
+      ],
+      "plan_id": "dp-000001-ea64be304ca4",
+      "planned_positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 5.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 11,
+      "headings": [
+        -1.9756881130799802,
+        -1.9756881130799788
+      ],
+      "plan_id": "dp-000001-ea64be304ca4",
+      "planned_positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 6.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 12,
+      "headings": [
+        -1.9756881130799802,
+        -1.9756881130799788
+      ],
+      "plan_id": "dp-000001-ea64be304ca4",
+      "planned_positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 6.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 13,
+      "headings": [
+        -1.9756881130799802,
+        -1.9756881130799788
+      ],
+      "plan_id": "dp-000001-ea64be304ca4",
+      "planned_positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 7.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 14,
+      "headings": [
+        -1.9756881130799802,
+        -1.9756881130799788
+      ],
+      "plan_id": "dp-000001-ea64be304ca4",
+      "planned_positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 7.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 15,
+      "headings": [
+        -1.9756881130799802,
+        -1.9756881130799788
+      ],
+      "plan_id": "dp-000001-ea64be304ca4",
+      "planned_positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 8.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 16,
+      "headings": [
+        -1.9756881130799802,
+        -1.9756881130799788
+      ],
+      "plan_id": "dp-000001-ea64be304ca4",
+      "planned_positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 8.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 17,
+      "headings": [
+        -1.9756881130799802,
+        -1.9756881130799788
+      ],
+      "plan_id": "dp-000001-ea64be304ca4",
+      "planned_positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 9.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 18,
+      "headings": [
+        -1.9756881130799802,
+        -1.9756881130799788
+      ],
+      "plan_id": "dp-000001-ea64be304ca4",
+      "planned_positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 9.5,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "control_event_index": 19,
+      "headings": [
+        -1.9756881130799802,
+        -1.9756881130799788
+      ],
+      "plan_id": "dp-000001-ea64be304ca4",
+      "planned_positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "safety_intervention": false,
+      "segment_min_separation": 20.0,
+      "speeds": [
+        0.0,
+        0.0
+      ],
+      "targets": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "time_s": 10.0,
+      "turn_rates": [
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "plan_events": [],
+  "planning_failures": [],
+  "plans": [
+    {
+      "belief_observation_count": 2,
+      "belief_telemetry": {
+        "admitted_count": 2,
+        "backend": "sogp",
+        "dictionary_size": 2,
+        "max_basis": 2,
+        "observation_count": 2,
+        "projected_count": 0,
+        "pruned_count": 0,
+        "state_nbytes": 128
+      },
+      "candidate_selection": "joint_terminal_mean_latent_variance_then_travel_within_variance_tolerance",
+      "candidates": [
+        {
+          "candidate_id": "bellman-order-0",
+          "generation_wall_s": 0.0002552999976614956,
+          "generator": "frozen_reward_bellman",
+          "joint_evaluation_wall_s": 0.0003513999981805682,
+          "joint_information_gain": 0.04465992676952124,
+          "nominal_checks": {
+            "accepted": true,
+            "geometry_tolerance_m": 1e-07,
+            "max_bounds_violation_m": 0.0,
+            "max_separation_violation_m": 0.0,
+            "max_speed_mps": 1.5231546211727818,
+            "max_speed_violation_mps": 0.0,
+            "min_pair_distance_m": 20.0,
+            "scope": "nominal_synchronized_straight_segments_without_controller_rollout",
+            "speed_tolerance_mps": 1e-07
+          },
+          "normalized_travel": 0.38078865529319544,
+          "rejection_reason": null,
+          "robot_order": [
+            0,
+            1
+          ],
+          "selected": true,
+          "status": "accepted",
+          "surrogate_values_by_robot": [
+            0.05512390500516423,
+            0.028722730689719957
+          ],
+          "targets_by_epoch": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                20.0
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                20.0
+              ]
+            ]
+          ],
+          "terminal_max_variance": 1.0,
+          "terminal_mean_variance": 0.856284883623057,
+          "travel_m": 15.231546211727817
+        },
+        {
+          "candidate_id": "bellman-order-1",
+          "generation_wall_s": 0.00021700000070268288,
+          "generator": "frozen_reward_bellman",
+          "joint_evaluation_wall_s": 0.0003350000006321352,
+          "joint_information_gain": 0.04465992676952124,
+          "nominal_checks": {
+            "accepted": true,
+            "geometry_tolerance_m": 1e-07,
+            "max_bounds_violation_m": 0.0,
+            "max_separation_violation_m": 0.0,
+            "max_speed_mps": 1.5231546211727818,
+            "max_speed_violation_mps": 0.0,
+            "min_pair_distance_m": 20.0,
+            "scope": "nominal_synchronized_straight_segments_without_controller_rollout",
+            "speed_tolerance_mps": 1e-07
+          },
+          "normalized_travel": 0.38078865529319544,
+          "rejection_reason": null,
+          "robot_order": [
+            1,
+            0
+          ],
+          "selected": false,
+          "status": "accepted",
+          "surrogate_values_by_robot": [
+            0.05072700281624068,
+            0.03310360398424922
+          ],
+          "targets_by_epoch": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                20.0
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                20.0
+              ]
+            ]
+          ],
+          "terminal_max_variance": 1.0,
+          "terminal_mean_variance": 0.856284883623057,
+          "travel_m": 15.231546211727817
+        },
+        {
+          "candidate_id": "nominal-hold",
+          "generation_wall_s": 0.0,
+          "generator": "nominal_hold",
+          "joint_evaluation_wall_s": 0.00042299999768147245,
+          "joint_information_gain": 0.0014668546237185387,
+          "nominal_checks": {
+            "accepted": true,
+            "geometry_tolerance_m": 1e-07,
+            "max_bounds_violation_m": 0.0,
+            "max_separation_violation_m": 0.0,
+            "max_speed_mps": 0.0,
+            "max_speed_violation_mps": 0.0,
+            "min_pair_distance_m": 20.0,
+            "scope": "nominal_synchronized_straight_segments_without_controller_rollout",
+            "speed_tolerance_mps": 1e-07
+          },
+          "normalized_travel": 0.0,
+          "rejection_reason": null,
+          "robot_order": [],
+          "selected": false,
+          "status": "accepted",
+          "surrogate_values_by_robot": [],
+          "targets_by_epoch": [
+            [
+              [
+                3.0,
+                7.0
+              ],
+              [
+                3.0,
+                27.0
+              ]
+            ],
+            [
+              [
+                3.0,
+                7.0
+              ],
+              [
+                3.0,
+                27.0
+              ]
+            ]
+          ],
+          "terminal_max_variance": 1.0,
+          "terminal_mean_variance": 0.8994779557688597,
+          "travel_m": 0.0
+        }
+      ],
+      "claim_limits": [
+        "not_a_full_belief_mdp_or_global_route_optimum",
+        "not_a_controller_rollout_or_robust_safety_certificate",
+        "no_task_impossibility_or_recovery_certificate",
+        "short_horizon_forecast_is_not_a_mission_terminal_forecast"
+      ],
+      "forecast": [
+        {
+          "max_variance": 1.0,
+          "mean_variance": 0.9009448103925782,
+          "time_s": 0.0
+        },
+        {
+          "max_variance": 1.0,
+          "mean_variance": 0.8570907826726774,
+          "time_s": 5.0
+        },
+        {
+          "max_variance": 1.0,
+          "mean_variance": 0.856284883623057,
+          "time_s": 10.0
+        }
+      ],
+      "forecast_scope": "frozen_current_sogp_posterior_nominal_locations_all_future_samples_received_no_future_pruning",
+      "generated_at_s": 0.0,
+      "gp_backend": "sogp",
+      "horizon_end_s": 10.0,
+      "horizon_steps": 2,
+      "mission_end_s": 10.0,
+      "nominal_checks": {
+        "accepted": true,
+        "geometry_tolerance_m": 1e-07,
+        "max_bounds_violation_m": 0.0,
+        "max_separation_violation_m": 0.0,
+        "max_speed_mps": 1.5231546211727818,
+        "max_speed_violation_mps": 0.0,
+        "min_pair_distance_m": 20.0,
+        "scope": "nominal_synchronized_straight_segments_without_controller_rollout",
+        "speed_tolerance_mps": 1e-07
+      },
+      "plan_id": "dp-000000-dc2dc675d254",
+      "plan_version": 0,
+      "planning_scope": "independent_coarse_frozen_reward_bellman_candidates_approximate_joint_selection",
+      "planning_wall_s": 0.0023627000009582844,
+      "posterior_covariance_wall_s": 0.00013380000018514693,
+      "previous_plan_id": null,
+      "received_sample_keys": [
+        [
+          0.0,
+          0
+        ],
+        [
+          0.0,
+          1
+        ]
+      ],
+      "replacement_reason": "periodic_sampling_epoch",
+      "sample_times_s": [
+        5.0,
+        10.0
+      ],
+      "selected_candidate_id": "bellman-order-0",
+      "selection_variance_tolerance": 1e-10,
+      "settings": {
+        "grid_shape": [
+          4,
+          3
+        ],
+        "horizon_steps": 2,
+        "include_greedy_candidates": false,
+        "travel_weight": 0.01
+      },
+      "start_positions": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "starts": [
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          27.0
+        ]
+      ],
+      "state": "coarse_cell_and_remaining_sample_epochs",
+      "status": "planned",
+      "surrogate_reward": "single_sample_mean_latent_variance_reduction_divided_by_signal_variance",
+      "surrogate_travel_cost": "travel_weight_times_metres_divided_by_team_horizon_travel_budget",
+      "targets_by_epoch": [
+        [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            20.0
+          ]
+        ],
+        [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            20.0
+          ]
+        ]
+      ]
+    },
+    {
+      "belief_observation_count": 4,
+      "belief_telemetry": {
+        "admitted_count": 4,
+        "backend": "sogp",
+        "dictionary_size": 2,
+        "max_basis": 2,
+        "observation_count": 4,
+        "projected_count": 0,
+        "pruned_count": 2,
+        "state_nbytes": 128
+      },
+      "candidate_selection": "joint_terminal_mean_latent_variance_then_travel_within_variance_tolerance",
+      "candidates": [
+        {
+          "candidate_id": "bellman-order-0",
+          "generation_wall_s": 0.0001674999984970782,
+          "generator": "frozen_reward_bellman",
+          "joint_evaluation_wall_s": 0.00028839999868068844,
+          "joint_information_gain": 0.03602012859364512,
+          "nominal_checks": {
+            "accepted": true,
+            "geometry_tolerance_m": 1e-07,
+            "max_bounds_violation_m": 0.0,
+            "max_separation_violation_m": 0.0,
+            "max_speed_mps": 0.0,
+            "max_speed_violation_mps": 0.0,
+            "min_pair_distance_m": 20.0,
+            "scope": "nominal_synchronized_straight_segments_without_controller_rollout",
+            "speed_tolerance_mps": 1e-07
+          },
+          "normalized_travel": 0.0,
+          "rejection_reason": null,
+          "robot_order": [
+            1,
+            0
+          ],
+          "selected": true,
+          "status": "accepted",
+          "surrogate_values_by_robot": [
+            0.0004993446986015989,
+            0.03552078389504357
+          ],
+          "targets_by_epoch": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                20.0
+              ]
+            ]
+          ],
+          "terminal_max_variance": 1.0,
+          "terminal_mean_variance": 0.8882091427600152,
+          "travel_m": 0.0
+        },
+        {
+          "candidate_id": "bellman-order-1",
+          "generation_wall_s": 0.0001472000003559515,
+          "generator": "frozen_reward_bellman",
+          "joint_evaluation_wall_s": 0.00026220000290777534,
+          "joint_information_gain": 0.03602012859364512,
+          "nominal_checks": {
+            "accepted": true,
+            "geometry_tolerance_m": 1e-07,
+            "max_bounds_violation_m": 0.0,
+            "max_separation_violation_m": 0.0,
+            "max_speed_mps": 0.0,
+            "max_speed_violation_mps": 0.0,
+            "min_pair_distance_m": 20.0,
+            "scope": "nominal_synchronized_straight_segments_without_controller_rollout",
+            "speed_tolerance_mps": 1e-07
+          },
+          "normalized_travel": 0.0,
+          "rejection_reason": null,
+          "robot_order": [
+            0,
+            1
+          ],
+          "selected": false,
+          "status": "accepted",
+          "surrogate_values_by_robot": [
+            0.0005236961109612136,
+            0.03549643248268394
+          ],
+          "targets_by_epoch": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                20.0
+              ]
+            ]
+          ],
+          "terminal_max_variance": 1.0,
+          "terminal_mean_variance": 0.8882091427600152,
+          "travel_m": 0.0
+        },
+        {
+          "candidate_id": "nominal-hold",
+          "generation_wall_s": 0.0,
+          "generator": "nominal_hold",
+          "joint_evaluation_wall_s": 0.00026140000045415945,
+          "joint_information_gain": 0.03602012859364512,
+          "nominal_checks": {
+            "accepted": true,
+            "geometry_tolerance_m": 1e-07,
+            "max_bounds_violation_m": 0.0,
+            "max_separation_violation_m": 0.0,
+            "max_speed_mps": 0.0,
+            "max_speed_violation_mps": 0.0,
+            "min_pair_distance_m": 20.0,
+            "scope": "nominal_synchronized_straight_segments_without_controller_rollout",
+            "speed_tolerance_mps": 1e-07
+          },
+          "normalized_travel": 0.0,
+          "rejection_reason": null,
+          "robot_order": [],
+          "selected": false,
+          "status": "accepted",
+          "surrogate_values_by_robot": [],
+          "targets_by_epoch": [
+            [
+              [
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                20.0
+              ]
+            ]
+          ],
+          "terminal_max_variance": 1.0,
+          "terminal_mean_variance": 0.8882091427600152,
+          "travel_m": 0.0
+        }
+      ],
+      "claim_limits": [
+        "not_a_full_belief_mdp_or_global_route_optimum",
+        "not_a_controller_rollout_or_robust_safety_certificate",
+        "no_task_impossibility_or_recovery_certificate",
+        "short_horizon_forecast_is_not_a_mission_terminal_forecast"
+      ],
+      "forecast": [
+        {
+          "max_variance": 1.0,
+          "mean_variance": 0.9242292713536603,
+          "time_s": 5.0
+        },
+        {
+          "max_variance": 1.0,
+          "mean_variance": 0.8882091427600152,
+          "time_s": 10.0
+        }
+      ],
+      "forecast_scope": "frozen_current_sogp_posterior_nominal_locations_all_future_samples_received_no_future_pruning",
+      "generated_at_s": 5.0,
+      "gp_backend": "sogp",
+      "horizon_end_s": 10.0,
+      "horizon_steps": 1,
+      "mission_end_s": 10.0,
+      "nominal_checks": {
+        "accepted": true,
+        "geometry_tolerance_m": 1e-07,
+        "max_bounds_violation_m": 0.0,
+        "max_separation_violation_m": 0.0,
+        "max_speed_mps": 0.0,
+        "max_speed_violation_mps": 0.0,
+        "min_pair_distance_m": 20.0,
+        "scope": "nominal_synchronized_straight_segments_without_controller_rollout",
+        "speed_tolerance_mps": 1e-07
+      },
+      "plan_id": "dp-000001-ea64be304ca4",
+      "plan_version": 1,
+      "planning_scope": "independent_coarse_frozen_reward_bellman_candidates_approximate_joint_selection",
+      "planning_wall_s": 0.0016175999990082346,
+      "posterior_covariance_wall_s": 0.00013179999950807542,
+      "previous_plan_id": "dp-000000-dc2dc675d254",
+      "received_sample_keys": [
+        [
+          0.0,
+          0
+        ],
+        [
+          0.0,
+          1
+        ],
+        [
+          5.0,
+          0
+        ],
+        [
+          5.0,
+          1
+        ]
+      ],
+      "replacement_reason": "periodic_sampling_epoch",
+      "sample_times_s": [
+        10.0
+      ],
+      "selected_candidate_id": "bellman-order-0",
+      "selection_variance_tolerance": 1e-10,
+      "settings": {
+        "grid_shape": [
+          4,
+          3
+        ],
+        "horizon_steps": 2,
+        "include_greedy_candidates": false,
+        "travel_weight": 0.01
+      },
+      "start_positions": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "starts": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          20.0
+        ]
+      ],
+      "state": "coarse_cell_and_remaining_sample_epochs",
+      "status": "planned",
+      "surrogate_reward": "single_sample_mean_latent_variance_reduction_divided_by_signal_variance",
+      "surrogate_travel_cost": "travel_weight_times_metres_divided_by_team_horizon_travel_budget",
+      "targets_by_epoch": [
+        [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            20.0
+          ]
+        ]
+      ]
+    }
+  ],
+  "samples": [
+    {
+      "actual_position": [
+        3.0,
+        7.0
+      ],
+      "assimilated": true,
+      "dropout_uniform": 0.7624516078574131,
+      "noise_innovation": 0.10636350137682993,
+      "plan_id": null,
+      "planned_position": [
+        3.0,
+        7.0
+      ],
+      "received": true,
+      "robot_id": 0,
+      "time_s": 0.0,
+      "value": 0.20377313361119903
+    },
+    {
+      "actual_position": [
+        3.0,
+        27.0
+      ],
+      "assimilated": true,
+      "dropout_uniform": 0.49251675772745845,
+      "noise_innovation": -0.04908278163457198,
+      "plan_id": null,
+      "planned_position": [
+        3.0,
+        27.0
+      ],
+      "received": true,
+      "robot_id": 1,
+      "time_s": 0.0,
+      "value": -0.21823120010674657
+    },
+    {
+      "actual_position": [
+        0.0,
+        0.0
+      ],
+      "assimilated": true,
+      "dropout_uniform": 0.981240409612618,
+      "noise_innovation": -0.18421038745252002,
+      "plan_id": "dp-000000-dc2dc675d254",
+      "planned_position": [
+        0.0,
+        0.0
+      ],
+      "received": true,
+      "robot_id": 0,
+      "time_s": 5.0,
+      "value": -0.1738631786994236
+    },
+    {
+      "actual_position": [
+        0.0,
+        20.0
+      ],
+      "assimilated": true,
+      "dropout_uniform": 0.2735296430898088,
+      "noise_innovation": -0.12856652924924705,
+      "plan_id": "dp-000000-dc2dc675d254",
+      "planned_position": [
+        0.0,
+        20.0
+      ],
+      "received": true,
+      "robot_id": 1,
+      "time_s": 5.0,
+      "value": -0.15116767293094738
+    },
+    {
+      "actual_position": [
+        0.0,
+        0.0
+      ],
+      "assimilated": true,
+      "dropout_uniform": 0.356284802646373,
+      "noise_innovation": 0.05759258807517703,
+      "plan_id": "dp-000001-ea64be304ca4",
+      "planned_position": [
+        0.0,
+        0.0
+      ],
+      "received": true,
+      "robot_id": 0,
+      "time_s": 10.0,
+      "value": 0.06793979682827343
+    },
+    {
+      "actual_position": [
+        0.0,
+        20.0
+      ],
+      "assimilated": true,
+      "dropout_uniform": 0.2964969828333538,
+      "noise_innovation": 0.12411402968945848,
+      "plan_id": "dp-000001-ea64be304ca4",
+      "planned_position": [
+        0.0,
+        20.0
+      ],
+      "received": true,
+      "robot_id": 1,
+      "time_s": 10.0,
+      "value": 0.10151288600775814
+    }
+  ],
+  "schema_version": 1,
+  "scope": {
+    "adaptive": "replans from executed positions and received data at sample epochs",
+    "disturbance": "drift_strength: velocity tracking-command std m/s for holonomic, capped before constraint control; yaw-rate std rad/s for USV; no unmodeled post-control wind",
+    "forecast": "frozen_current_sogp_posterior_nominal_locations_all_future_samples_received_no_future_pruning",
+    "gp": "sogp, fixed hyperparameters; finite evaluation grid",
+    "gp_update_order": "ascending (sample_tick, robot_id), received samples only",
+    "greedy": "open-loop nominal-information route; assumes all scheduled samples succeed",
+    "implementation": "independent application; not paper reproduction",
+    "planned_variance": "geometric scheduled sites with all future measurements received; one selected joint-plan prefix, not guaranteed QP attainment",
+    "planning": "M2 periodic timed DP: frozen-reward Bellman candidates, joint GP final scoring; actual posterior and remaining sample budget, no controller candidate rollout",
+    "safety": "sampled piecewise-linear motion checked by common displacement backtracking",
+    "usv": "turn-rate-limited kinematic unicycle; zero-speed yaw allowed; no hydrodynamics",
+    "variance": "latent"
+  },
+  "seed_manifest": {
+    "dropout_key": 7,
+    "evaluation_noise_key": 6823953754371609207,
+    "field_seed": 3386250816931739734,
+    "master_seed": 7,
+    "measurement_noise_key": 17559002276220262541,
+    "motion_key": 7,
+    "planner_tie_break_seed": 18326047321325575129,
+    "pose_seed": 4042502035264064771
+  },
+  "status": "completed",
+  "summary": {
+    "completion_time_s": 10.0,
+    "control_interventions": 0,
+    "control_max_s": 6.709999797749333e-05,
+    "control_median_s": 3.639999886217993e-05,
+    "control_p95_s": 5.7220002236135774e-05,
+    "control_preview_s": 0,
+    "control_rollout_s": 0,
+    "control_s": 0.00077299998520175,
+    "dp_failed_planning_s": 0,
+    "dp_planning_median_s": 0.0019901499999832595,
+    "dp_planning_p95_s": 0.0023254450008607817,
+    "dp_planning_s": 0.003980299999966519,
+    "final_planned_mean_variance": 0.8882091427600152,
+    "gp_backend": "sogp",
+    "gp_failures": 0,
+    "gp_s": 0.0009549999958835542,
+    "max_speed_observed": 1.523154621172787,
+    "max_turn_rate_observed": 3.9513762261599603,
+    "max_variance": 1.0,
+    "mean_sample_position_error": 0.0,
+    "mean_variance": 0.9237015322518168,
+    "min_separation": 20.0,
+    "path_length": 15.231546211727817,
+    "path_length_per_robot": [
+      7.615773105863909,
+      7.6157731058639095
+    ],
+    "planning_failures": 0,
+    "planning_s": 0.004160500000580214,
+    "plans_generated": 2,
+    "preview_qp_failures": 0,
+    "preview_qp_solves": 0,
+    "qp_failures": 0,
+    "qp_solves": 0,
+    "rmse": 0.3284891629141209,
+    "rollout_control_calls": 0,
+    "rollout_qp_failures": 0,
+    "rollout_qp_solves": 0,
+    "runtime_s": 0.006945900000573602,
+    "safety_interventions": 0,
+    "samples_assimilated": 6,
+    "samples_attempted": 6,
+    "samples_lost": 0,
+    "samples_received": 6
+  }
+}

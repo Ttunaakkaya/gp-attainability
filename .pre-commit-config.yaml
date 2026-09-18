@@ -1,0 +1,20 @@
+exclude: ^(docs/handoffs/|experiments/exact_gp_diagnostic/|GP_Attainability_Masterplan_TR\.md$|AKTIF_ONCELIK_PROJE\.md$)
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.5
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+        args: [--maxkb=1024]
+        # Intentional, hash-pinned mission preservation evidence.
+        exclude: ^\.scratch/mission-execution-ownership/reference/frozen-20260918/p_interior\.(raw|normalized)\.json$
+      - id: check-merge-conflict
+      - id: check-toml
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace

@@ -1,0 +1,22 @@
+{
+  "started_utc": "2026-09-18T14:54:10.0888545Z",
+  "finished_utc": "2026-09-18T14:57:37.0741439Z",
+  "checks": [
+    {
+      "command": "python -m ruff check .",
+      "exit_code": 0
+    },
+    {
+      "command": "python -m ruff format --check src tests",
+      "exit_code": 0
+    },
+    {
+      "command": "python -m mypy src",
+      "exit_code": 0
+    },
+    {
+      "command": "python -m pytest -q --cov=attain_sampling --cov-report=term-missing",
+      "exit_code": 0
+    }
+  ]
+}

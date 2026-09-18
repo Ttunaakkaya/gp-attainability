@@ -1,0 +1,112 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "attainable-gp-sampling"
+dynamic = ["version"]
+description = "Independent execution-aware multi-robot Gaussian-process mapping simulator"
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+license = { file = "LICENSE" }
+authors = [
+  { name = "Tolga Tuna Akkaya" },
+]
+keywords = [
+  "gaussian-process",
+  "multi-robot-systems",
+  "informative-path-planning",
+  "control-barrier-functions",
+  "reproducible-research",
+]
+classifiers = [
+  "Development Status :: 2 - Pre-Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.11",
+  "Typing :: Typed",
+]
+dependencies = [
+  "clarabel>=0.9,<1",
+  "cvxpy>=1.6,<2",
+  "imageio>=2.36,<3",
+  "imageio-ffmpeg>=0.5,<1",
+  "matplotlib>=3.9,<4",
+  "networkx>=3.4,<4",
+  "numpy>=1.26,<3",
+  "osqp>=1.1.0,<2",
+  "pyarrow>=18,<24",
+  "pyyaml>=6,<7",
+  "scipy>=1.14,<2",
+  "seaborn>=0.13,<1",
+  "shapely>=2,<3",
+  "zarr>=2.18,<4",
+]
+
+[project.optional-dependencies]
+dev = [
+  "hypothesis>=6.120,<7",
+  "mypy>=1.13,<2",
+  "pre-commit>=4,<5",
+  "pytest>=8.3,<10",
+  "pytest-cov>=6,<8",
+  "ruff>=0.8,<1",
+  "types-pyyaml>=6.0.12,<7",
+]
+oracle = [
+  "scikit-learn>=1.5,<2",
+]
+
+[project.scripts]
+attain-sampling = "attain_sampling.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/attain_sampling"]
+
+[tool.hatch.version]
+path = "src/attain_sampling/_version.py"
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-config --strict-markers"
+testpaths = ["tests"]
+xfail_strict = true
+
+[tool.coverage.run]
+branch = true
+source = ["attain_sampling"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+fail_under = 80
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+extend-exclude = ["experiments/exact_gp_diagnostic", "docs/handoffs"]
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "SIM", "UP"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unreachable = true
+packages = ["attain_sampling"]
+
+[[tool.mypy.overrides]]
+module = [
+  "clarabel.*",
+  "cvxpy.*",
+  "imageio.*",
+  "matplotlib.*",
+  "networkx.*",
+  "osqp.*",
+  "pyarrow.*",
+  "scipy.*",
+  "seaborn.*",
+  "shapely.*",
+  "zarr.*",
+]
+ignore_missing_imports = true

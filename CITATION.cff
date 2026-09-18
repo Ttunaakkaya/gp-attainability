@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this research software, please cite the repository release."
+title: "Attainability-Aware Multi-Robot Environmental Sampling"
+type: software
+authors:
+  - family-names: Akkaya
+    given-names: Tolga Tuna
+version: 0.1.0
+date-released: 2026-09-01
+license: MIT
+abstract: >-
+  A clean-room research implementation scaffold for reproducing and extending
+  hierarchical multi-robot environmental sampling with online sparse Gaussian
+  processes. No reproduction or performance claim is made at scaffold stage.

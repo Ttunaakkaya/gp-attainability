@@ -1,0 +1,9 @@
+{
+  "scope": "Synthetic SOGP / ECC controller belief comparison; no basis pruning",
+  "observations": 10,
+  "dictionary_size": 1,
+  "current_sogp_latent_variance": 0.015748031505750548,
+  "sogp_variance_after_one_more_sample": 0.01433691757155615,
+  "ecc_controller_augmented_basis_variance": 0.07407407407407396,
+  "interpretation": "The ECC controller reconstructs a GP from retained basis locations, discarding information carried by SOGP projection coefficients. This is a source-profile consistency issue, not an independent ExactGP/P batch arithmetic error."
+}

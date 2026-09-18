@@ -1,0 +1,1448 @@
+--- baseline/src/attain_sampling/sim/mapping.py
++++ current/src/attain_sampling/sim/mapping.py
+@@ -966,740 +966,769 @@
+ 
+ def run_mapping(config: MappingConfig, method: str) -> dict[str, Any]:
+     """Run a mission; rejected controls produce explicit partial failure evidence."""
+-    progress: dict[str, Any] = {}
+-    try:
+-        result = _run_mapping(config, method, progress)
+-    except ControlFailure as exc:
+-        if "planning_started" in progress:
+-            progress["planning_s"] += time.perf_counter() - progress.pop("planning_started")
+-        result = _failed_mapping(config, method, progress, exc)
+-    result["summary"].update(_control_summary(result["controls"]))
+-    plans = result.get("plans", [])
+-    plan_times = [plan["planning_wall_s"] for plan in plans]
+-    result["summary"].update(
+-        {
+-            "plans_generated": len(plans),
+-            "dp_planning_s": sum(plan_times),
+-            "dp_planning_median_s": float(np.median(plan_times)) if plan_times else None,
+-            "dp_planning_p95_s": float(np.quantile(plan_times, 0.95)) if plan_times else None,
+-            "planning_failures": len(result.get("planning_failures", [])),
+-            "gp_backend": config.gp_backend,
+-            "gp_failures": len(result.get("gp_failures", [])),
+-            "samples_assimilated": result["gp_telemetry"]["observation_count"],
+-            "dp_failed_planning_s": sum(
+-                event["wall_s"] for event in result.get("planning_failures", [])
+-            ),
+-        }
+-    )
+-    return result
+-
+-
+-def _failed_mapping(
+-    config: MappingConfig, method: str, progress: dict[str, Any], failure: ControlFailure
+-) -> dict[str, Any]:
+-    """Keep the last actually reached state, never pad a failed mission to its horizon."""
+-    starts = np.asarray(progress["initial_positions"], dtype=float)
+-    motion = progress.get("motion", [])
+-    if not motion:
+-        motion = [
++    return _MissionExecution(config, method).run()
++
++
++class _MissionExecution:
++    """Own one whole mission's state, ordering and partial failure evidence."""
++
++    def __init__(self, config: MappingConfig, method: str) -> None:
++        self.config = config
++        self.method = method
++        # A nominal preview can fail before the first real observation.
++        self.samples: list[dict[str, Any]] = []
++        self.frames: list[dict[str, Any]] = []
++        self.motion: list[dict[str, Any]] = []
++        self.planning_started: float | None = None
++        self.active_plan_id: str | None = None
++        self.active_plan: dict[str, Any] | None = None
++
++    def run(self) -> dict[str, Any]:
++        try:
++            result = self._execute()
++        except ControlFailure as exc:
++            if self.planning_started is not None:
++                self.planning_s += time.perf_counter() - self.planning_started
++                self.planning_started = None
++            result = self._failed(exc)
++        result["summary"].update(_control_summary(result["controls"]))
++        plans = result.get("plans", [])
++        plan_times = [plan["planning_wall_s"] for plan in plans]
++        result["summary"].update(
+             {
+-                "time_s": 0.0,
+-                "positions": starts.tolist(),
+-                "planned_positions": starts.tolist(),
+-                "targets": starts.tolist(),
+-                "headings": [0.0] * config.robot_count,
+-                "speeds": [0.0] * config.robot_count,
+-                "turn_rates": [0.0] * config.robot_count,
+-                "safety_intervention": False,
+-                "segment_min_separation": segment_min_separation(starts, starts),
+-                "control_event_index": None,
+-                "plan_id": None,
++                "plans_generated": len(plans),
++                "dp_planning_s": sum(plan_times),
++                "dp_planning_median_s": float(np.median(plan_times)) if plan_times else None,
++                "dp_planning_p95_s": float(np.quantile(plan_times, 0.95)) if plan_times else None,
++                "planning_failures": len(result.get("planning_failures", [])),
++                "gp_backend": self.config.gp_backend,
++                "gp_failures": len(result.get("gp_failures", [])),
++                "samples_assimilated": result["gp_telemetry"]["observation_count"],
++                "dp_failed_planning_s": sum(
++                    event["wall_s"] for event in result.get("planning_failures", [])
++                ),
+             }
+-        ]
+-    samples = progress.get("samples", [])
+-    reconstruction_started = time.perf_counter()
+-    # Retain the last committed belief. Replaying received-but-rejected values
+-    # could repeat a numerical failure or silently assimilate a failed batch.
+-    gp = progress["actual_gp"]
+-    received = [sample for sample in samples if sample["received"]]
+-    field = progress["field"]
+-    xx, yy = np.meshgrid(field["x"], field["y"])
+-    prediction = gp.predict(np.column_stack((xx.ravel(), yy.ravel())), variance="latent")
+-    reconstruction_gp_s = time.perf_counter() - reconstruction_started
+-    nx, ny = config.grid_shape
+-    mean = prediction.mean.reshape(ny, nx)
+-    variance = prediction.variance.reshape(ny, nx)
+-    error = mean - np.asarray(field["truth"])
+-    route = np.array([state["positions"] for state in motion])
+-    distances = np.sum(np.linalg.norm(np.diff(route, axis=0), axis=2), axis=0)
+-    last = motion[-1]
+-    minimum = min(state["segment_min_separation"] for state in motion)
+-    frames = list(progress.get("frames", []))
+-    final = {
+-        "time_s": last["time_s"],
+-        "positions": last["positions"],
+-        "targets": last["targets"],
+-        "headings": last["headings"],
+-        "mean": mean.tolist(),
+-        "std": np.sqrt(variance).tolist(),
+-        "error": error.tolist(),
+-        "rmse": float(np.sqrt(np.mean(error**2))),
+-        "mean_variance": float(np.mean(variance)),
+-        "path_length": float(np.sum(distances)),
+-        "samples_received": len(received),
+-        "samples_attempted": len(samples),
+-        "min_separation": minimum,
+-        # No nominal completion prediction is claimed for a rejected plan.
+-        "planned_mean_variance": None,
+-        "plan_id": progress.get("active_plan_id"),
+-        "forecast_plan_id": None,
+-        "gp_telemetry": _gp_telemetry(gp),
+-    }
+-    if frames and frames[-1]["time_s"] == last["time_s"]:
+-        frames[-1] = final
+-    else:
+-        frames.append(final)
+-    controls = progress["controls"]
+-    return {
+-        "schema_version": 1,
+-        "status": "failed",
+-        "method": method,
+-        "config": asdict(config),
+-        "failure": {
+-            "reason": str(failure),
+-            "phase": failure.event["phase"],
+-            "tick": failure.event["tick"],
+-            "time_s": failure.event["time_s"],
+-            "last_executed_time_s": last["time_s"],
+-            "details": failure.event,
+-        },
+-        "field": field,
+-        "initial_positions": starts.tolist(),
+-        "frames": frames,
+-        "motion": motion,
+-        "samples": samples,
+-        "controls": controls,
+-        "plans": progress.get("plans", []),
+-        "plan_events": progress.get("plan_events", []),
+-        "planning_failures": progress.get("planning_failures", []),
+-        "gp_telemetry": _gp_telemetry(gp),
+-        "gp_updates": progress.get("gp_updates", []),
+-        "gp_failures": progress.get("gp_failures", []),
+-        "summary": {
+-            "rmse": final["rmse"],
+-            "mean_variance": final["mean_variance"],
+-            "max_variance": float(np.max(variance)),
+-            "path_length": final["path_length"],
+-            "path_length_per_robot": distances.tolist(),
++        )
++        return result
++
++    def _failed(self, failure: ControlFailure) -> dict[str, Any]:
++        """Keep the last actually reached state, never pad a failed mission to its horizon."""
++        starts = np.asarray(self.starts, dtype=float)
++        motion = self.motion
++        if not motion:
++            motion = [
++                {
++                    "time_s": 0.0,
++                    "positions": starts.tolist(),
++                    "planned_positions": starts.tolist(),
++                    "targets": starts.tolist(),
++                    "headings": [0.0] * self.config.robot_count,
++                    "speeds": [0.0] * self.config.robot_count,
++                    "turn_rates": [0.0] * self.config.robot_count,
++                    "safety_intervention": False,
++                    "segment_min_separation": segment_min_separation(starts, starts),
++                    "control_event_index": None,
++                    "plan_id": None,
++                }
++            ]
++        samples = self.samples
++        reconstruction_started = time.perf_counter()
++        # Retain the last committed belief. Replaying received-but-rejected values
++        # could repeat a numerical failure or silently assimilate a failed batch.
++        gp = self.actual_gp
++        received = [sample for sample in samples if sample["received"]]
++        field = self.field
++        xx, yy = np.meshgrid(field["x"], field["y"])
++        prediction = gp.predict(np.column_stack((xx.ravel(), yy.ravel())), variance="latent")
++        reconstruction_gp_s = time.perf_counter() - reconstruction_started
++        nx, ny = self.config.grid_shape
++        mean = prediction.mean.reshape(ny, nx)
++        variance = prediction.variance.reshape(ny, nx)
++        error = mean - np.asarray(field["truth"])
++        route = np.array([state["positions"] for state in motion])
++        distances = np.sum(np.linalg.norm(np.diff(route, axis=0), axis=2), axis=0)
++        last = motion[-1]
++        minimum = min(state["segment_min_separation"] for state in motion)
++        frames = list(self.frames)
++        final = {
++            "time_s": last["time_s"],
++            "positions": last["positions"],
++            "targets": last["targets"],
++            "headings": last["headings"],
++            "mean": mean.tolist(),
++            "std": np.sqrt(variance).tolist(),
++            "error": error.tolist(),
++            "rmse": float(np.sqrt(np.mean(error**2))),
++            "mean_variance": float(np.mean(variance)),
++            "path_length": float(np.sum(distances)),
+             "samples_received": len(received),
+             "samples_attempted": len(samples),
+-            "samples_lost": len(samples) - len(received),
+-            "runtime_s": time.perf_counter() - progress["started"],
+-            "planning_s": progress["planning_s"],
+-            "gp_s": progress["gp_s"] + reconstruction_gp_s,
+-            "failure_reconstruction_gp_s": reconstruction_gp_s,
+-            "timing_scope": "partial mission; GP time includes last committed belief prediction",
+             "min_separation": minimum,
+-            "max_speed_observed": max(max(m["speeds"]) for m in motion),
+-            "max_turn_rate_observed": max(max(abs(v) for v in m["turn_rates"]) for m in motion),
+-            "safety_interventions": sum(m["safety_intervention"] for m in motion),
+-            "control_interventions": sum(m["safety_intervention"] for m in motion),
+-            "completion_time_s": last["time_s"],
+-            "final_planned_mean_variance": None,
+-            "mean_sample_position_error": float(
+-                np.mean(
+-                    [
+-                        np.linalg.norm(np.array(s["actual_position"]) - s["planned_position"])
+-                        for s in samples
+-                    ]
++            # No nominal completion prediction is claimed for a rejected plan.
++            "planned_mean_variance": None,
++            "plan_id": self.active_plan_id,
++            "forecast_plan_id": None,
++            "gp_telemetry": _gp_telemetry(gp),
++        }
++        if frames and frames[-1]["time_s"] == last["time_s"]:
++            frames[-1] = final
++        else:
++            frames.append(final)
++        controls = self.controls
++        return {
++            "schema_version": 1,
++            "status": "failed",
++            "method": self.method,
++            "config": asdict(self.config),
++            "failure": {
++                "reason": str(failure),
++                "phase": failure.event["phase"],
++                "tick": failure.event["tick"],
++                "time_s": failure.event["time_s"],
++                "last_executed_time_s": last["time_s"],
++                "details": failure.event,
++            },
++            "field": field,
++            "initial_positions": starts.tolist(),
++            "frames": frames,
++            "motion": motion,
++            "samples": samples,
++            "controls": controls,
++            "plans": self.plans,
++            "plan_events": self.plan_events,
++            "planning_failures": self.planning_failures,
++            "gp_telemetry": _gp_telemetry(gp),
++            "gp_updates": self.gp_updates,
++            "gp_failures": self.gp_failures,
++            "summary": {
++                "rmse": final["rmse"],
++                "mean_variance": final["mean_variance"],
++                "max_variance": float(np.max(variance)),
++                "path_length": final["path_length"],
++                "path_length_per_robot": distances.tolist(),
++                "samples_received": len(received),
++                "samples_attempted": len(samples),
++                "samples_lost": len(samples) - len(received),
++                "runtime_s": time.perf_counter() - self.started,
++                "planning_s": self.planning_s,
++                "gp_s": self.gp_s + reconstruction_gp_s,
++                "failure_reconstruction_gp_s": reconstruction_gp_s,
++                "timing_scope": (
++                    "partial mission; GP time includes last committed belief prediction"
++                ),
++                "min_separation": minimum,
++                "max_speed_observed": max(max(m["speeds"]) for m in motion),
++                "max_turn_rate_observed": max(max(abs(v) for v in m["turn_rates"]) for m in motion),
++                "safety_interventions": sum(m["safety_intervention"] for m in motion),
++                "control_interventions": sum(m["safety_intervention"] for m in motion),
++                "completion_time_s": last["time_s"],
++                "final_planned_mean_variance": None,
++                "mean_sample_position_error": float(
++                    np.mean(
++                        [
++                            np.linalg.norm(np.array(s["actual_position"]) - s["planned_position"])
++                            for s in samples
++                        ]
++                    )
+                 )
+-            )
+-            if samples
+-            else None,
+-        },
+-        "seed_manifest": progress["seed_manifest"],
+-        "scope": {
+-            "implementation": "independent; failed partial mission, not a completed result",
+-            "variance": "latent",
+-            "safety": "rejected control not applied; no fallback",
+-            "timing": "all attempted control events retained, including nominal preview",
+-            "gp": gp.backend_name,
+-            "gp_update_order": "ascending (sample_tick, robot_id), received samples only",
+-            "forecast": gp.forecast_scope,
+-        },
+-    }
+-
+-
+-def _run_mapping(config: MappingConfig, method: str, progress: dict[str, Any]) -> dict[str, Any]:
+-    """Execute one deterministic paired scenario and return a JSON-safe demo artifact."""
+-
+-    if method not in AVAILABLE_METHODS:
+-        raise ValueError(f"method must be one of {AVAILABLE_METHODS}")
+-    if method in PLANNING_METHODS and config.model not in PLANNING_MODELS:
+-        raise ValueError(
+-            "timed DP and M4 management support holonomic robots and the curvature USV only"
+-        )
+-    started = time.perf_counter()
+-    planning_s = 0.0
+-    gp_s = 0.0
+-    manifest = derive_seed_manifest(config.seed)
+-    nx, ny = config.grid_shape
+-    x = np.linspace(0, config.domain[0], nx)
+-    y = np.linspace(0, config.domain[1], ny)
+-    xx, yy = np.meshgrid(x, y)
+-    grid = np.column_stack((xx.ravel(), yy.ravel()))
+-    truth = evaluate_field(grid, config)
+-    positions = initial_positions(config)
+-    starts = positions.copy()
+-    headings = np.zeros(config.robot_count)
+-    total_ticks = round(config.duration_s / config.dt)
+-    sample_ticks = round(config.sample_period_s / config.dt)
+-    epoch_ticks = list(range(0, total_ticks + 1, sample_ticks))
+-    # A non-sampling-aligned horizon still receives a final visualisation, but no
+-    # extra sensor event: every method has exactly the same physical sample clock.
+-    boundaries = sorted(set([*epoch_ticks, total_ticks]))
+-    actual_gp = _new_gp(config)
+-    controls: list[dict[str, Any]] = []
+-    plans: list[dict[str, Any]] = []
+-    planning_failures: list[dict[str, Any]] = []
+-    gp_updates: list[dict[str, Any]] = []
+-    gp_failures: list[dict[str, Any]] = []
+-    active_plan_id: str | None = None
+-    active_plan: dict[str, Any] | None = None
+-    plan_budget: MissionBudget | None = None
+-    plan_events: list[dict[str, Any]] = []
+-    forecast_plan_ids: dict[int, str] = {}
+-    progress.update(
+-        {
+-            "started": started,
+-            "field": {"x": x.tolist(), "y": y.tolist(), "truth": truth.reshape(ny, nx).tolist()},
+-            "initial_positions": starts.tolist(),
+-            "controls": controls,
+-            "plans": plans,
+-            "plan_events": plan_events,
+-            "planning_failures": planning_failures,
+-            "actual_gp": actual_gp,
+-            "gp_updates": gp_updates,
+-            "gp_failures": gp_failures,
+-            "planning_s": 0.0,
+-            "gp_s": 0.0,
+-            "seed_manifest": {
+-                **manifest.as_dict(),
+-                "dropout_key": config.seed,
+-                "motion_key": config.seed,
++                if samples
++                else None,
++            },
++            "seed_manifest": self.seed_manifest,
++            "scope": {
++                "implementation": "independent; failed partial mission, not a completed result",
++                "variance": "latent",
++                "safety": "rejected control not applied; no fallback",
++                "timing": "all attempted control events retained, including nominal preview",
++                "gp": gp.backend_name,
++                "gp_update_order": "ascending (sample_tick, robot_id), received samples only",
++                "forecast": gp.forecast_scope,
+             },
+         }
+-    )
+-    static_paths: dict[int, FloatArray] = {0: positions.copy()}
+-    static_goals: dict[int, FloatArray] = {}
+-    expected_variance: dict[int, float] = {}
+-    if method in ("sweep", "greedy"):
+-        planning_started = time.perf_counter()
+-        progress["planning_started"] = planning_started
+-        # B0/B1 are open-loop nominal baselines. Their covariance-only route
+-        # design uses the same fixed exact prior surrogate for both estimators.
+-        # Zero labels here never enter the real SOGP or its label-dependent
+-        # pruning. Only B2/B3 use the current received-data posterior to replan.
+-        nominal_gp = ExactGP(
+-            length_scale=config.length_scale,
+-            signal_variance=config.signal_variance,
+-            noise_variance=config.noise_std**2,
+-        )
+-        nominal_gp.update(positions, np.zeros(config.robot_count))
+-        expected_variance[0] = float(np.mean(nominal_gp.predict(grid, variance="latent").variance))
+-        nominal_positions, nominal_headings = positions.copy(), headings.copy()
+-        routes = _sweep_routes(config, positions) if method == "sweep" else None
+-        route_indices = [0] * config.robot_count
+-        for start_tick, end_tick in zip(boundaries[:-1], boundaries[1:], strict=True):
+-            steps = end_tick - start_tick
+-            targets = (
+-                _select_targets(
+-                    nominal_gp, nominal_positions, nominal_headings, grid, config, steps
+-                )
+-                if method == "greedy"
+-                else nominal_positions.copy()
+-            )
+-            path, goals, nominal_headings = _preview(
+-                nominal_positions,
+-                nominal_headings,
+-                targets,
+-                config,
+-                start_tick,
+-                steps,
+-                routes=routes,
+-                route_indices=route_indices,
+-                control_events=controls,
+-            )
+-            for offset, point in enumerate(path):
+-                static_paths[start_tick + offset] = point
+-            for offset, goal in enumerate(goals):
+-                static_goals[start_tick + offset] = goal
+-            nominal_positions = path[-1]
+-            if end_tick % sample_ticks == 0:
+-                nominal_gp.update(nominal_positions, np.zeros(config.robot_count))
+-            expected_variance[end_tick] = float(
+-                np.mean(nominal_gp.predict(grid, variance="latent").variance)
+-            )
+-        planning_s += time.perf_counter() - planning_started
+-        progress["planning_s"] = planning_s
+-        progress.pop("planning_started")
+-
+-    samples: list[dict[str, Any]] = []
+-    frames: list[dict[str, Any]] = []
+-    motion: list[dict[str, Any]] = []
+-    progress.update({"samples": samples, "frames": frames, "motion": motion})
+-    received = attempted = interventions = 0
+-    distance_travelled = np.zeros(config.robot_count)
+-    minimum_separation = segment_min_separation(positions, positions)
+-    max_speed_observed = max_turn_observed = 0.0
+-    previous_targets = positions.copy()
+-
+-    def collect(tick: int, planned_positions: FloatArray) -> None:
+-        nonlocal received, attempted, gp_s
++
++    def _collect(self, tick: int, planned_positions: FloatArray) -> None:
+         observed_x, observed_y = [], []
+         received_batch: list[dict[str, Any]] = []
+-        true_values = evaluate_field(positions, config)
+-        for robot in range(config.robot_count):
+-            noise = config.noise_std * indexed_normal(manifest.measurement_noise_key, robot, tick)
+-            normal_coin = indexed_normal(config.seed, robot, tick, stream="dropout")
++        true_values = evaluate_field(self.positions, self.config)
++        for robot in range(self.config.robot_count):
++            noise = self.config.noise_std * indexed_normal(
++                self.manifest.measurement_noise_key, robot, tick
++            )
++            normal_coin = indexed_normal(self.config.seed, robot, tick, stream="dropout")
+             uniform_coin = 0.5 * (1 + math.erf(normal_coin / math.sqrt(2)))
+-            success = uniform_coin >= config.dropout_prob
++            success = uniform_coin >= self.config.dropout_prob
+             value = float(true_values[robot] + noise)
+-            samples.append(
++            self.samples.append(
+                 {
+-                    "time_s": tick * config.dt,
++                    "time_s": tick * self.config.dt,
+                     "robot_id": robot,
+                     "planned_position": planned_positions[robot].tolist(),
+-                    "actual_position": positions[robot].tolist(),
++                    "actual_position": self.positions[robot].tolist(),
+                     "received": success,
+                     "assimilated": False,
+                     "value": value if success else None,
+                     "noise_innovation": noise,
+                     "dropout_uniform": uniform_coin,
+-                    "plan_id": active_plan_id,
++                    "plan_id": self.active_plan_id,
+                 }
+             )
+-            attempted += 1
++            self.attempted += 1
+             if success:
+-                received += 1
+-                observed_x.append(positions[robot].copy())
++                self.received += 1
++                observed_x.append(self.positions[robot].copy())
+                 observed_y.append(value)
+-                received_batch.append(samples[-1])
++                received_batch.append(self.samples[-1])
+         if observed_y:
+             gp_started = time.perf_counter()
+             try:
+-                actual_gp.update(np.array(observed_x), np.array(observed_y))
++                self.actual_gp.update(np.array(observed_x), np.array(observed_y))
+             except FloatingPointError as error:
+                 event = {
+                     "phase": "gp_update",
+-                    "backend": config.gp_backend,
++                    "backend": self.config.gp_backend,
+                     "tick": tick,
+-                    "time_s": tick * config.dt,
++                    "time_s": tick * self.config.dt,
+                     "success": False,
+                     "status": "belief_update_rejected",
+                     "failure_reason": f"{type(error).__name__}: {error}",
+                     "received_sample_keys": [[s["time_s"], s["robot_id"]] for s in received_batch],
+-                    "belief_observation_count": actual_gp.observation_count,
++                    "belief_observation_count": self.actual_gp.observation_count,
+                     "claim_limit": "numerical update failure, not mission impossibility",
+                 }
+-                gp_failures.append(event)
++                self.gp_failures.append(event)
+                 raise ControlFailure(event) from error
+             finally:
+-                gp_s += time.perf_counter() - gp_started
+-                progress["gp_s"] = gp_s
++                self.gp_s += time.perf_counter() - gp_started
+             for sample in received_batch:
+                 sample["assimilated"] = True
+-            if isinstance(actual_gp, SparseOnlineGP):
+-                for sample, event in zip(received_batch, actual_gp.last_update_events, strict=True):
+-                    gp_updates.append(
++            if isinstance(self.actual_gp, SparseOnlineGP):
++                for sample, event in zip(
++                    received_batch, self.actual_gp.last_update_events, strict=True
++                ):
++                    self.gp_updates.append(
+                         {
+                             **event,
+-                            "time_s": tick * config.dt,
++                            "time_s": tick * self.config.dt,
+                             "tick": tick,
+                             "robot_id": sample["robot_id"],
+                         }
+                     )
+ 
+-    collect(0, positions)
+-    for epoch, tick in enumerate(boundaries):
+-        gp_started = time.perf_counter()
+-        prediction = actual_gp.predict(grid, variance="latent")
+-        gp_s += time.perf_counter() - gp_started
+-        progress["gp_s"] = gp_s
+-        variance = np.maximum(prediction.variance, 0)
+-        error = prediction.mean - truth
+-        rmse = float(np.sqrt(np.mean(error**2)))
+-        segment_path: list[FloatArray] = []
+-        segment_goals: list[FloatArray] = []
+-        if epoch < len(boundaries) - 1:
+-            end_tick = boundaries[epoch + 1]
+-            steps = end_tick - tick
+-            if method in PLANNING_METHODS:
+-                planning_started = time.perf_counter()
+-                progress["planning_started"] = planning_started
+-                if method == "p":
+-                    epoch_time = tick * config.dt
+-                    lost_here = any(
+-                        not sample["received"]
+-                        and math.isclose(sample["time_s"], epoch_time, rel_tol=0, abs_tol=1e-9)
+-                        for sample in samples
++    def _activate_plan(
++        self, plan: dict[str, Any], tick: int, *, execution_metrics: dict[str, float] | None = None
++    ) -> FloatArray:
++        """Record synchronous activation; callers update their future reference interval."""
++        plan["previous_plan_id"] = self.active_plan_id
++        plan["start_positions"] = self.positions.tolist()
++        plan["belief_telemetry"] = _gp_telemetry(self.actual_gp)
++        plan["received_sample_keys"] = [
++            [sample["time_s"], sample["robot_id"]] for sample in self.samples if sample["received"]
++        ]
++        self.plans.append(plan)
++        self.active_plan, self.active_plan_id = plan, plan["plan_id"]
++        if self.method == "p":
++            event = {
++                "time_s": tick * self.config.dt,
++                "tick": tick,
++                "plan_id": self.active_plan_id,
++                "previous_plan_id": plan["previous_plan_id"],
++                **plan["decision"],
++                "target_status": plan["target_risk"]["status"],
++                "remaining_sample_epochs": plan["budget"]["remaining_sample_epochs"],
++            }
++            if execution_metrics is not None:
++                event.update(execution_metrics)
++            self.plan_events.append(event)
++        return (
++            np.asarray(plan["targets_by_epoch"][0], dtype=float)
++            if plan["sample_times_s"]
++            else self.positions.copy()
++        )
++
++    def _execute(self) -> dict[str, Any]:
++        """Execute one deterministic paired scenario and return a JSON-safe demo artifact."""
++
++        if self.method not in AVAILABLE_METHODS:
++            raise ValueError(f"method must be one of {AVAILABLE_METHODS}")
++        if self.method in PLANNING_METHODS and self.config.model not in PLANNING_MODELS:
++            raise ValueError(
++                "timed DP and M4 management support holonomic robots and the curvature USV only"
++            )
++        self.started = time.perf_counter()
++        self.planning_s = 0.0
++        self.gp_s = 0.0
++        self.manifest = derive_seed_manifest(self.config.seed)
++        nx, ny = self.config.grid_shape
++        x = np.linspace(0, self.config.domain[0], nx)
++        y = np.linspace(0, self.config.domain[1], ny)
++        xx, yy = np.meshgrid(x, y)
++        self.grid = np.column_stack((xx.ravel(), yy.ravel()))
++        self.truth = evaluate_field(self.grid, self.config)
++        self.positions = initial_positions(self.config)
++        self.starts = self.positions.copy()
++        self.headings = np.zeros(self.config.robot_count)
++        self.total_ticks = round(self.config.duration_s / self.config.dt)
++        self.sample_ticks = round(self.config.sample_period_s / self.config.dt)
++        epoch_ticks = list(range(0, self.total_ticks + 1, self.sample_ticks))
++        # A non-sampling-aligned horizon still receives a final visualisation, but no
++        # extra sensor event: every method has exactly the same physical sample clock.
++        self.boundaries = sorted(set([*epoch_ticks, self.total_ticks]))
++        self.actual_gp = _new_gp(self.config)
++        self.controls: list[dict[str, Any]] = []
++        self.plans: list[dict[str, Any]] = []
++        self.planning_failures: list[dict[str, Any]] = []
++        self.gp_updates: list[dict[str, Any]] = []
++        self.gp_failures: list[dict[str, Any]] = []
++        self.active_plan_id = None
++        self.active_plan = None
++        self.plan_budget: MissionBudget | None = None
++        self.plan_events: list[dict[str, Any]] = []
++        self.forecast_plan_ids: dict[int, str] = {}
++        self.field = {
++            "x": x.tolist(),
++            "y": y.tolist(),
++            "truth": self.truth.reshape(ny, nx).tolist(),
++        }
++        self.seed_manifest = {
++            **self.manifest.as_dict(),
++            "dropout_key": self.config.seed,
++            "motion_key": self.config.seed,
++        }
++        self.static_paths: dict[int, FloatArray] = {0: self.positions.copy()}
++        self.static_goals: dict[int, FloatArray] = {}
++        self.expected_variance: dict[int, float] = {}
++        if self.method in ("sweep", "greedy"):
++            self.planning_started = time.perf_counter()
++            # B0/B1 are open-loop nominal baselines. Their covariance-only route
++            # design uses the same fixed exact prior surrogate for both estimators.
++            # Zero labels here never enter the real SOGP or its label-dependent
++            # pruning. Only B2/B3 use the current received-data posterior to replan.
++            nominal_gp = ExactGP(
++                length_scale=self.config.length_scale,
++                signal_variance=self.config.signal_variance,
++                noise_variance=self.config.noise_std**2,
++            )
++            nominal_gp.update(self.positions, np.zeros(self.config.robot_count))
++            self.expected_variance[0] = float(
++                np.mean(nominal_gp.predict(self.grid, variance="latent").variance)
++            )
++            nominal_positions, nominal_headings = self.positions.copy(), self.headings.copy()
++            routes = _sweep_routes(self.config, self.positions) if self.method == "sweep" else None
++            route_indices = [0] * self.config.robot_count
++            for start_tick, end_tick in zip(self.boundaries[:-1], self.boundaries[1:], strict=True):
++                self.end_tick = end_tick
++                steps = self.end_tick - start_tick
++                targets = (
++                    _select_targets(
++                        nominal_gp,
++                        nominal_positions,
++                        nominal_headings,
++                        self.grid,
++                        self.config,
++                        steps,
+                     )
+-                    trigger = (
+-                        "initial"
+-                        if active_plan is None
+-                        else "missed_measurement"
+-                        if lost_here
+-                        else "periodic_sampling_epoch"
++                    if self.method == "greedy"
++                    else nominal_positions.copy()
++                )
++                path, goals, nominal_headings = _preview(
++                    nominal_positions,
++                    nominal_headings,
++                    targets,
++                    self.config,
++                    start_tick,
++                    steps,
++                    routes=routes,
++                    route_indices=route_indices,
++                    control_events=self.controls,
++                )
++                for offset, point in enumerate(path):
++                    self.static_paths[start_tick + offset] = point
++                for offset, goal in enumerate(goals):
++                    self.static_goals[start_tick + offset] = goal
++                nominal_positions = path[-1]
++                if self.end_tick % self.sample_ticks == 0:
++                    nominal_gp.update(nominal_positions, np.zeros(self.config.robot_count))
++                self.expected_variance[self.end_tick] = float(
++                    np.mean(nominal_gp.predict(self.grid, variance="latent").variance)
++                )
++            self.planning_s += time.perf_counter() - self.planning_started
++            self.planning_started = None
++
++        self.received = self.attempted = self.interventions = 0
++        self.distance_travelled = np.zeros(self.config.robot_count)
++        self.minimum_separation = segment_min_separation(self.positions, self.positions)
++        self.max_speed_observed = self.max_turn_observed = 0.0
++        self.previous_targets = self.positions.copy()
++
++        self._collect(0, self.positions)
++        for epoch, tick in enumerate(self.boundaries):
++            self.epoch, self.tick = epoch, tick
++            gp_started = time.perf_counter()
++            prediction = self.actual_gp.predict(self.grid, variance="latent")
++            self.gp_s += time.perf_counter() - gp_started
++            variance = np.maximum(prediction.variance, 0)
++            error = prediction.mean - self.truth
++            rmse = float(np.sqrt(np.mean(error**2)))
++            self.segment_path: list[FloatArray] = []
++            self.segment_goals: list[FloatArray] = []
++            if self.epoch < len(self.boundaries) - 1:
++                self.end_tick = self.boundaries[self.epoch + 1]
++                steps = self.end_tick - self.tick
++                if self.method in PLANNING_METHODS:
++                    self.planning_started = time.perf_counter()
++                    if self.method == "p":
++                        epoch_time = self.tick * self.config.dt
++                        lost_here = any(
++                            not sample["received"]
++                            and math.isclose(sample["time_s"], epoch_time, rel_tol=0, abs_tol=1e-9)
++                            for sample in self.samples
++                        )
++                        trigger = (
++                            "initial"
++                            if self.active_plan is None
++                            else "missed_measurement"
++                            if lost_here
++                            else "periodic_sampling_epoch"
++                        )
++                        plan, self.plan_budget = _managed_plan(
++                            self.actual_gp,
++                            self.positions,
++                            self.headings,
++                            self.grid,
++                            self.config,
++                            self.tick,
++                            len(self.plans),
++                            self.planning_failures,
++                            retained_plan=self.active_plan,
++                            trigger=trigger,
++                            controls=self.controls,
++                            previous_budget=self.plan_budget,
++                        )
++                    else:
++                        plan = _timed_dp_plan(
++                            self.actual_gp,
++                            self.positions,
++                            self.headings,
++                            self.grid,
++                            self.config,
++                            self.tick,
++                            len(self.plans),
++                            self.planning_failures,
++                        )
++                        plan["replacement_reason"] = "periodic_sampling_epoch"
++                    targets = self._activate_plan(plan, self.tick)
++                    # Both planners execute the geometric schedule toward the commanded
++                    # cell. Only P *scores* candidates at rolled-out arrival positions;
++                    # the actual QP and disturbance can still miss either.
++                    self.segment_path = _reference_path(
++                        self.positions, self.headings, targets, steps, self.config
+                     )
+-                    plan, plan_budget = _managed_plan(
+-                        actual_gp,
+-                        positions,
+-                        headings,
+-                        grid,
+-                        config,
+-                        tick,
+-                        len(plans),
+-                        planning_failures,
+-                        retained_plan=active_plan,
+-                        trigger=trigger,
+-                        controls=controls,
+-                        previous_budget=plan_budget,
++                    self.segment_goals = [targets.copy() for _ in range(steps)]
++                    self.expected_variance[self.end_tick] = (
++                        float(plan["forecast"][1]["mean_variance"])
++                        if plan["sample_times_s"]
++                        else float(np.mean(variance))
+                     )
++                    if plan["sample_times_s"]:
++                        self.forecast_plan_ids[self.end_tick] = plan["plan_id"]
++                    self.planning_s += time.perf_counter() - self.planning_started
++                    self.planning_started = None
++                elif self.method == "adaptive":
++                    self.planning_started = time.perf_counter()
++                    targets = _select_targets(
++                        self.actual_gp, self.positions, self.headings, self.grid, self.config, steps
++                    )
++                    self.segment_path, self.segment_goals, _ = _preview(
++                        self.positions,
++                        self.headings,
++                        targets,
++                        self.config,
++                        self.tick,
++                        steps,
++                        control_events=self.controls,
++                    )
++                    if self.end_tick % self.sample_ticks == 0:
++                        self.expected_variance[self.end_tick] = float(
++                            np.mean(
++                                self.actual_gp.fantasy_variance(self.grid, self.segment_path[-1])
++                            )
++                        )
++                    else:
++                        self.expected_variance[self.end_tick] = float(np.mean(variance))
++                    self.planning_s += time.perf_counter() - self.planning_started
++                    self.planning_started = None
+                 else:
+-                    plan = _timed_dp_plan(
+-                        actual_gp,
+-                        positions,
+-                        headings,
+-                        grid,
+-                        config,
+-                        tick,
+-                        len(plans),
+-                        planning_failures,
+-                    )
+-                    plan["replacement_reason"] = "periodic_sampling_epoch"
+-                plan["previous_plan_id"] = active_plan_id
+-                plan["start_positions"] = positions.tolist()
+-                plan["belief_telemetry"] = _gp_telemetry(actual_gp)
+-                plan["received_sample_keys"] = [
+-                    [sample["time_s"], sample["robot_id"]]
+-                    for sample in samples
+-                    if sample["received"]
+-                ]
+-                plans.append(plan)
+-                active_plan, active_plan_id = plan, plan["plan_id"]
+-                progress["active_plan_id"] = active_plan_id
+-                if method == "p":
+-                    plan_events.append(
+-                        {
+-                            "time_s": tick * config.dt,
+-                            "tick": tick,
+-                            "plan_id": active_plan_id,
+-                            "previous_plan_id": plan["previous_plan_id"],
+-                            **plan["decision"],
+-                            "target_status": plan["target_risk"]["status"],
+-                            "remaining_sample_epochs": (plan["budget"]["remaining_sample_epochs"]),
+-                        }
+-                    )
+-                targets = (
+-                    np.asarray(plan["targets_by_epoch"][0], dtype=float)
+-                    if plan["sample_times_s"]
+-                    else positions.copy()
+-                )
+-                # Both planners execute the geometric schedule toward the commanded
+-                # cell. Only P *scores* candidates at rolled-out arrival positions;
+-                # the actual QP and disturbance can still miss either.
+-                segment_path = _reference_path(positions, headings, targets, steps, config)
+-                segment_goals = [targets.copy() for _ in range(steps)]
+-                expected_variance[end_tick] = (
+-                    float(plan["forecast"][1]["mean_variance"])
+-                    if plan["sample_times_s"]
+-                    else float(np.mean(variance))
+-                )
+-                if plan["sample_times_s"]:
+-                    forecast_plan_ids[end_tick] = active_plan_id
+-                planning_s += time.perf_counter() - planning_started
+-                progress["planning_s"] = planning_s
+-                progress.pop("planning_started")
+-            elif method == "adaptive":
+-                planning_started = time.perf_counter()
+-                progress["planning_started"] = planning_started
+-                targets = _select_targets(actual_gp, positions, headings, grid, config, steps)
+-                segment_path, segment_goals, _ = _preview(
+-                    positions, headings, targets, config, tick, steps, control_events=controls
+-                )
+-                if end_tick % sample_ticks == 0:
+-                    expected_variance[end_tick] = float(
+-                        np.mean(actual_gp.fantasy_variance(grid, segment_path[-1]))
+-                    )
+-                else:
+-                    expected_variance[end_tick] = float(np.mean(variance))
+-                planning_s += time.perf_counter() - planning_started
+-                progress["planning_s"] = planning_s
+-                progress.pop("planning_started")
+-            else:
+-                segment_path = [static_paths[t] for t in range(tick, end_tick + 1)]
+-                segment_goals = [static_goals[t] for t in range(tick, end_tick)]
+-            previous_targets = segment_goals[0]
+-        frames.append(
+-            {
+-                "time_s": tick * config.dt,
+-                "positions": positions.tolist(),
+-                "targets": previous_targets.tolist(),
+-                "headings": headings.tolist(),
+-                "mean": prediction.mean.reshape(ny, nx).tolist(),
+-                "std": np.sqrt(variance).reshape(ny, nx).tolist(),
+-                "error": error.reshape(ny, nx).tolist(),
+-                "rmse": rmse,
+-                "mean_variance": float(np.mean(variance)),
+-                "path_length": float(np.sum(distance_travelled)),
+-                "samples_received": received,
+-                "samples_attempted": attempted,
+-                "min_separation": minimum_separation,
+-                "planned_mean_variance": expected_variance.get(tick, float(np.mean(variance))),
+-                "plan_id": active_plan_id,
+-                "forecast_plan_id": forecast_plan_ids.get(tick),
+-                "gp_telemetry": _gp_telemetry(actual_gp),
+-            }
+-        )
+-        if tick == 0:
+-            motion.append(
++                    self.segment_path = [
++                        self.static_paths[t] for t in range(self.tick, self.end_tick + 1)
++                    ]
++                    self.segment_goals = [
++                        self.static_goals[t] for t in range(self.tick, self.end_tick)
++                    ]
++                self.previous_targets = self.segment_goals[0]
++            self.frames.append(
+                 {
+-                    "time_s": 0.0,
+-                    "planned_positions": starts.tolist(),
+-                    "positions": positions.tolist(),
+-                    "targets": previous_targets.tolist(),
+-                    "headings": headings.tolist(),
+-                    "speeds": [0.0] * config.robot_count,
+-                    "turn_rates": [0.0] * config.robot_count,
+-                    "safety_intervention": False,
+-                    "segment_min_separation": minimum_separation,
+-                    "control_event_index": None,
+-                    "plan_id": None,
++                    "time_s": self.tick * self.config.dt,
++                    "positions": self.positions.tolist(),
++                    "targets": self.previous_targets.tolist(),
++                    "headings": self.headings.tolist(),
++                    "mean": prediction.mean.reshape(ny, nx).tolist(),
++                    "std": np.sqrt(variance).reshape(ny, nx).tolist(),
++                    "error": error.reshape(ny, nx).tolist(),
++                    "rmse": rmse,
++                    "mean_variance": float(np.mean(variance)),
++                    "path_length": float(np.sum(self.distance_travelled)),
++                    "samples_received": self.received,
++                    "samples_attempted": self.attempted,
++                    "min_separation": self.minimum_separation,
++                    "planned_mean_variance": self.expected_variance.get(
++                        self.tick, float(np.mean(variance))
++                    ),
++                    "plan_id": self.active_plan_id,
++                    "forecast_plan_id": self.forecast_plan_ids.get(self.tick),
++                    "gp_telemetry": _gp_telemetry(self.actual_gp),
+                 }
+             )
+-        for offset, targets in enumerate(segment_goals):
+-            next_tick = tick + offset + 1
+-            next_positions, next_headings, intervention, separation, turn_rates = _advance(
+-                positions,
+-                headings,
+-                targets,
+-                config,
+-                next_tick,
+-                disturbed=True,
+-                control_events=controls,
+-                phase="execution",
+-                tracking_time_s=(
+-                    (end_tick - next_tick + 1) * config.dt if method in PLANNING_METHODS else None
+-                ),
+-                plan_id=active_plan_id,
+-            )
+-            movement = np.linalg.norm(next_positions - positions, axis=1)
+-            distance_travelled += movement
+-            speeds = movement / config.dt
+-            max_speed_observed = max(max_speed_observed, float(np.max(speeds)))
+-            max_turn_observed = max(max_turn_observed, float(np.max(np.abs(turn_rates))))
+-            minimum_separation = min(minimum_separation, separation)
+-            interventions += int(intervention)
+-            positions, headings = next_positions, next_headings
+-            motion.append(
+-                {
+-                    "time_s": next_tick * config.dt,
+-                    "planned_positions": segment_path[offset + 1].tolist(),
+-                    "positions": positions.tolist(),
+-                    "targets": targets.tolist(),
+-                    "headings": headings.tolist(),
+-                    "speeds": speeds.tolist(),
+-                    "turn_rates": turn_rates.tolist(),
+-                    "safety_intervention": intervention,
+-                    "segment_min_separation": separation,
+-                    "control_event_index": len(controls) - 1,
+-                    "plan_id": active_plan_id,
+-                }
+-            )
+-            # Event-triggered management (§9.3): re-decide inside the interval when
+-            # execution has already diverged, instead of waiting for the next epoch.
+-            if method == "p" and config.p_event_triggers and next_tick < end_tick:
+-                deviation = float(
+-                    np.max(np.linalg.norm(positions - segment_path[offset + 1], axis=1))
++            if self.tick == 0:
++                self.motion.append(
++                    {
++                        "time_s": 0.0,
++                        "planned_positions": self.starts.tolist(),
++                        "positions": self.positions.tolist(),
++                        "targets": self.previous_targets.tolist(),
++                        "headings": self.headings.tolist(),
++                        "speeds": [0.0] * self.config.robot_count,
++                        "turn_rates": [0.0] * self.config.robot_count,
++                        "safety_intervention": False,
++                        "segment_min_separation": self.minimum_separation,
++                        "control_event_index": None,
++                        "plan_id": None,
++                    }
+                 )
+-                # A *significant* intervention, not any constraint-layer adjustment:
+-                # the QP nudges almost every command, so the boolean flag would
+-                # re-decide on numerical noise rather than on real execution loss.
+-                applied = controls[-1]["applied_velocity"]
+-                correction = (
+-                    float(
++            for offset, targets in enumerate(self.segment_goals):
++                self.next_tick = self.tick + offset + 1
++                next_positions, next_headings, intervention, separation, turn_rates = _advance(
++                    self.positions,
++                    self.headings,
++                    targets,
++                    self.config,
++                    self.next_tick,
++                    disturbed=True,
++                    control_events=self.controls,
++                    phase="execution",
++                    tracking_time_s=(
++                        (self.end_tick - self.next_tick + 1) * self.config.dt
++                        if self.method in PLANNING_METHODS
++                        else None
++                    ),
++                    plan_id=self.active_plan_id,
++                )
++                movement = np.linalg.norm(next_positions - self.positions, axis=1)
++                self.distance_travelled += movement
++                speeds = movement / self.config.dt
++                self.max_speed_observed = max(self.max_speed_observed, float(np.max(speeds)))
++                self.max_turn_observed = max(
++                    self.max_turn_observed, float(np.max(np.abs(turn_rates)))
++                )
++                self.minimum_separation = min(self.minimum_separation, separation)
++                self.interventions += int(intervention)
++                self.positions, self.headings = next_positions, next_headings
++                self.motion.append(
++                    {
++                        "time_s": self.next_tick * self.config.dt,
++                        "planned_positions": self.segment_path[offset + 1].tolist(),
++                        "positions": self.positions.tolist(),
++                        "targets": targets.tolist(),
++                        "headings": self.headings.tolist(),
++                        "speeds": speeds.tolist(),
++                        "turn_rates": turn_rates.tolist(),
++                        "safety_intervention": intervention,
++                        "segment_min_separation": separation,
++                        "control_event_index": len(self.controls) - 1,
++                        "plan_id": self.active_plan_id,
++                    }
++                )
++                # Event-triggered management (§9.3): re-decide inside the interval when
++                # execution has already diverged, instead of waiting for the next epoch.
++                if (
++                    self.method == "p"
++                    and self.config.p_event_triggers
++                    and self.next_tick < self.end_tick
++                ):
++                    deviation = float(
+                         np.max(
+-                            np.linalg.norm(
+-                                np.asarray(applied, dtype=float)
+-                                - np.asarray(controls[-1]["requested_velocity"], dtype=float),
+-                                axis=1,
++                            np.linalg.norm(self.positions - self.segment_path[offset + 1], axis=1)
++                        )
++                    )
++                    # A *significant* intervention, not any constraint-layer adjustment:
++                    # the QP nudges almost every command, so the boolean flag would
++                    # re-decide on numerical noise rather than on real execution loss.
++                    applied = self.controls[-1]["applied_velocity"]
++                    correction = (
++                        float(
++                            np.max(
++                                np.linalg.norm(
++                                    np.asarray(applied, dtype=float)
++                                    - np.asarray(
++                                        self.controls[-1]["requested_velocity"], dtype=float
++                                    ),
++                                    axis=1,
++                                )
+                             )
+                         )
++                        if applied is not None
++                        else 0.0
+                     )
+-                    if applied is not None
+-                    else 0.0
+-                )
+-                event_trigger = (
+-                    "control_intervention"
+-                    if correction > config.p_intervention_trigger_mps
+-                    else "execution_deviation"
+-                    if deviation > config.p_deviation_trigger_m
+-                    else None
+-                )
+-                if event_trigger is not None:
+-                    planning_started = time.perf_counter()
+-                    progress["planning_started"] = planning_started
+-                    plan, plan_budget = _managed_plan(
+-                        actual_gp,
+-                        positions,
+-                        headings,
+-                        grid,
+-                        config,
+-                        next_tick,
+-                        len(plans),
+-                        planning_failures,
+-                        retained_plan=active_plan,
+-                        trigger=event_trigger,
+-                        controls=controls,
+-                        previous_budget=plan_budget,
++                    event_trigger = (
++                        "control_intervention"
++                        if correction > self.config.p_intervention_trigger_mps
++                        else "execution_deviation"
++                        if deviation > self.config.p_deviation_trigger_m
++                        else None
+                     )
+-                    plan["previous_plan_id"] = active_plan_id
+-                    plan["start_positions"] = positions.tolist()
+-                    plan["belief_telemetry"] = _gp_telemetry(actual_gp)
+-                    plan["received_sample_keys"] = [
+-                        [sample["time_s"], sample["robot_id"]]
+-                        for sample in samples
+-                        if sample["received"]
+-                    ]
+-                    plans.append(plan)
+-                    active_plan, active_plan_id = plan, plan["plan_id"]
+-                    progress["active_plan_id"] = active_plan_id
+-                    plan_events.append(
+-                        {
+-                            "time_s": next_tick * config.dt,
+-                            "tick": next_tick,
+-                            "plan_id": active_plan_id,
+-                            "previous_plan_id": plan["previous_plan_id"],
+-                            **plan["decision"],
+-                            "target_status": plan["target_risk"]["status"],
+-                            "remaining_sample_epochs": plan["budget"]["remaining_sample_epochs"],
+-                            "deviation_m": deviation,
+-                            "control_correction_mps": correction,
+-                        }
+-                    )
+-                    new_targets = (
+-                        np.asarray(plan["targets_by_epoch"][0], dtype=float)
+-                        if plan["sample_times_s"]
+-                        else positions.copy()
+-                    )
+-                    remaining_steps = end_tick - next_tick
+-                    reference = _reference_path(
+-                        positions, headings, new_targets, remaining_steps, config
+-                    )
+-                    for index in range(remaining_steps):
+-                        segment_goals[offset + 1 + index] = new_targets.copy()
+-                        segment_path[offset + 2 + index] = reference[index + 1]
+-                    if plan["sample_times_s"]:
+-                        expected_variance[end_tick] = float(plan["forecast"][1]["mean_variance"])
+-                        forecast_plan_ids[end_tick] = active_plan_id
+-                    planning_s += time.perf_counter() - planning_started
+-                    progress["planning_s"] = planning_s
+-                    progress.pop("planning_started")
+-        if segment_goals and boundaries[epoch + 1] % sample_ticks == 0:
+-            collect(boundaries[epoch + 1], segment_path[-1])
+-
+-    final = frames[-1]
+-    final_variance = np.square(np.asarray(final["std"]))
+-    sample_errors = [
+-        np.linalg.norm(np.asarray(sample["actual_position"]) - sample["planned_position"])
+-        for sample in samples
+-    ]
+-    summary = {
+-        "rmse": final["rmse"],
+-        "mean_variance": final["mean_variance"],
+-        "max_variance": float(np.max(final_variance)),
+-        "path_length": float(np.sum(distance_travelled)),
+-        "path_length_per_robot": distance_travelled.tolist(),
+-        "samples_received": received,
+-        "samples_attempted": attempted,
+-        "samples_lost": attempted - received,
+-        "runtime_s": time.perf_counter() - started,
+-        "planning_s": planning_s,
+-        "gp_s": gp_s,
+-        "min_separation": minimum_separation,
+-        "max_speed_observed": max_speed_observed,
+-        "max_turn_rate_observed": max_turn_observed,
+-        "safety_interventions": interventions,
+-        "mean_sample_position_error": float(np.mean(sample_errors)),
+-        "final_planned_mean_variance": final["planned_mean_variance"],
+-        "completion_time_s": config.duration_s,
+-        "control_interventions": interventions,
+-    }
+-    return {
+-        "schema_version": 1,
+-        "status": "completed",
+-        "failure": None,
+-        "method": method,
+-        "config": asdict(config),
+-        "field": {"x": x.tolist(), "y": y.tolist(), "truth": truth.reshape(ny, nx).tolist()},
+-        "initial_positions": starts.tolist(),
+-        "frames": frames,
+-        "motion": motion,
+-        "samples": samples,
+-        "summary": summary,
+-        "controls": controls,
+-        "plans": plans,
+-        "plan_events": plan_events,
+-        "planning_failures": planning_failures,
+-        "gp_telemetry": _gp_telemetry(actual_gp),
+-        "gp_updates": gp_updates,
+-        "gp_failures": gp_failures,
+-        "seed_manifest": {
+-            **manifest.as_dict(),
+-            "dropout_key": config.seed,
+-            "motion_key": config.seed,
+-        },
+-        "scope": {
+-            "implementation": "independent application; not paper reproduction",
+-            "variance": "latent",
+-            "gp": f"{config.gp_backend}, fixed hyperparameters; finite evaluation grid",
+-            "gp_update_order": "ascending (sample_tick, robot_id), received samples only",
+-            "forecast": (
+-                "fixed_exact_prior_nominal_route_surrogate_not_future_sogp"
+-                if method in ("sweep", "greedy") and config.gp_backend == "sogp"
+-                else actual_gp.forecast_scope
+-            ),
+-            "greedy": "open-loop nominal-information route; assumes all scheduled samples succeed",
+-            "adaptive": "replans from executed positions and received data at sample epochs",
+-            "safety": (
+-                "independent holonomic tracking QP: CBF plus segment-separating constraints; "
+-                "hard inscribed speed polygon; numerical postchecks, no physical certificate"
+-                if config.controller == "qp"
+-                else "sampled piecewise-linear motion checked by common displacement backtracking"
+-            ),
+-            "usv": "turn-rate-limited kinematic unicycle; zero-speed yaw allowed; no hydrodynamics",
+-            "disturbance": (
+-                "drift_strength: velocity tracking-command std m/s for holonomic, capped before "
+-                "constraint control; yaw-rate std rad/s for USV; no unmodeled post-control wind"
+-            ),
+-            "planning": (
+-                "M2 periodic timed DP: frozen-reward Bellman candidates, joint GP final scoring; "
+-                "actual posterior and remaining sample budget, no controller candidate rollout"
+-                if method == "dp"
+-                else "M4 execution-aware management: Bellman/greedy/retained/hold candidates "
+-                "re-scored through a nominal controller rollout over equal remaining epochs"
+-                if method == "p"
+-                else "finite targets; USV endpoint rollouts; joint sequential fantasy gains"
+-            ),
+-            "planned_variance": (
+-                "geometric scheduled sites with all future measurements received; "
+-                "one selected joint-plan prefix, not guaranteed QP attainment"
+-                if method == "dp"
+-                else "rolled-out arrival sites with all future measurements received; "
+-                "mission-end value uses an executable hold continuation and is an upper "
+-                "candidate, never an attainability floor"
+-                if method == "p"
+-                else "nominal receipt at previewed endpoints; not a guarantee"
+-            ),
+-        },
+-    }
++                    if event_trigger is not None:
++                        self.planning_started = time.perf_counter()
++                        plan, self.plan_budget = _managed_plan(
++                            self.actual_gp,
++                            self.positions,
++                            self.headings,
++                            self.grid,
++                            self.config,
++                            self.next_tick,
++                            len(self.plans),
++                            self.planning_failures,
++                            retained_plan=self.active_plan,
++                            trigger=event_trigger,
++                            controls=self.controls,
++                            previous_budget=self.plan_budget,
++                        )
++                        new_targets = self._activate_plan(
++                            plan,
++                            self.next_tick,
++                            execution_metrics={
++                                "deviation_m": deviation,
++                                "control_correction_mps": correction,
++                            },
++                        )
++                        remaining_steps = self.end_tick - self.next_tick
++                        reference = _reference_path(
++                            self.positions, self.headings, new_targets, remaining_steps, self.config
++                        )
++                        for index in range(remaining_steps):
++                            self.segment_goals[offset + 1 + index] = new_targets.copy()
++                            self.segment_path[offset + 2 + index] = reference[index + 1]
++                        if plan["sample_times_s"]:
++                            self.expected_variance[self.end_tick] = float(
++                                plan["forecast"][1]["mean_variance"]
++                            )
++                            self.forecast_plan_ids[self.end_tick] = plan["plan_id"]
++                        self.planning_s += time.perf_counter() - self.planning_started
++                        self.planning_started = None
++            if self.segment_goals and self.boundaries[self.epoch + 1] % self.sample_ticks == 0:
++                self._collect(self.boundaries[self.epoch + 1], self.segment_path[-1])
++
++        final = self.frames[-1]
++        final_variance = np.square(np.asarray(final["std"]))
++        sample_errors = [
++            np.linalg.norm(np.asarray(sample["actual_position"]) - sample["planned_position"])
++            for sample in self.samples
++        ]
++        summary = {
++            "rmse": final["rmse"],
++            "mean_variance": final["mean_variance"],
++            "max_variance": float(np.max(final_variance)),
++            "path_length": float(np.sum(self.distance_travelled)),
++            "path_length_per_robot": self.distance_travelled.tolist(),
++            "samples_received": self.received,
++            "samples_attempted": self.attempted,
++            "samples_lost": self.attempted - self.received,
++            "runtime_s": time.perf_counter() - self.started,
++            "planning_s": self.planning_s,
++            "gp_s": self.gp_s,
++            "min_separation": self.minimum_separation,
++            "max_speed_observed": self.max_speed_observed,
++            "max_turn_rate_observed": self.max_turn_observed,
++            "safety_interventions": self.interventions,
++            "mean_sample_position_error": float(np.mean(sample_errors)),
++            "final_planned_mean_variance": final["planned_mean_variance"],
++            "completion_time_s": self.config.duration_s,
++            "control_interventions": self.interventions,
++        }
++        return {
++            "schema_version": 1,
++            "status": "completed",
++            "failure": None,
++            "method": self.method,
++            "config": asdict(self.config),
++            "field": {
++                "x": x.tolist(),
++                "y": y.tolist(),
++                "truth": self.truth.reshape(ny, nx).tolist(),
++            },
++            "initial_positions": self.starts.tolist(),
++            "frames": self.frames,
++            "motion": self.motion,
++            "samples": self.samples,
++            "summary": summary,
++            "controls": self.controls,
++            "plans": self.plans,
++            "plan_events": self.plan_events,
++            "planning_failures": self.planning_failures,
++            "gp_telemetry": _gp_telemetry(self.actual_gp),
++            "gp_updates": self.gp_updates,
++            "gp_failures": self.gp_failures,
++            "seed_manifest": {
++                **self.manifest.as_dict(),
++                "dropout_key": self.config.seed,
++                "motion_key": self.config.seed,
++            },
++            "scope": {
++                "implementation": "independent application; not paper reproduction",
++                "variance": "latent",
++                "gp": f"{self.config.gp_backend}, fixed hyperparameters; finite evaluation grid",
++                "gp_update_order": "ascending (sample_tick, robot_id), received samples only",
++                "forecast": (
++                    "fixed_exact_prior_nominal_route_surrogate_not_future_sogp"
++                    if self.method in ("sweep", "greedy") and self.config.gp_backend == "sogp"
++                    else self.actual_gp.forecast_scope
++                ),
++                "greedy": (
++                    "open-loop nominal-information route; assumes all scheduled samples succeed"
++                ),
++                "adaptive": "replans from executed positions and received data at sample epochs",
++                "safety": (
++                    "independent holonomic tracking QP: CBF plus segment-separating constraints; "
++                    "hard inscribed speed polygon; numerical postchecks, no physical certificate"
++                    if self.config.controller == "qp"
++                    else "sampled piecewise-linear motion checked by common "
++                    "displacement backtracking"
++                ),
++                "usv": (
++                    "turn-rate-limited kinematic unicycle; zero-speed yaw allowed; no hydrodynamics"
++                ),
++                "disturbance": (
++                    "drift_strength: velocity tracking-command std m/s for holonomic, "
++                    "capped before "
++                    "constraint control; yaw-rate std rad/s for USV; no unmodeled post-control wind"
++                ),
++                "planning": (
++                    "M2 periodic timed DP: frozen-reward Bellman candidates, "
++                    "joint GP final scoring; "
++                    "actual posterior and remaining sample budget, no controller candidate rollout"
++                    if self.method == "dp"
++                    else "M4 execution-aware management: Bellman/greedy/retained/hold candidates "
++                    "re-scored through a nominal controller rollout over equal remaining epochs"
++                    if self.method == "p"
++                    else "finite targets; USV endpoint rollouts; joint sequential fantasy gains"
++                ),
++                "planned_variance": (
++                    "geometric scheduled sites with all future measurements received; "
++                    "one selected joint-plan prefix, not guaranteed QP attainment"
++                    if self.method == "dp"
++                    else "rolled-out arrival sites with all future measurements received; "
++                    "mission-end value uses an executable hold continuation and is an upper "
++                    "candidate, never an attainability floor"
++                    if self.method == "p"
++                    else "nominal receipt at previewed endpoints; not a guarantee"
++                ),
++            },
++        }

@@ -1,0 +1,45 @@
+{
+  "definition": "robots whose requested speed stays zero for the last 30 s or more",
+  "inputs": {
+    "m7v1": "7d3fb154162561320e07d7fcc6075955639c8ed6f2dd3afd7ea97c07c2aa68af",
+    "m7v2": "9acf920f8cb655a73d55e08b1171b686c2ed48a41c09efa28eb243939d91a060"
+  },
+  "counts": {
+    "m7v1": {
+      "nominal": {
+        "dp": 0,
+        "p": 0
+      },
+      "dropout": {
+        "dp": 19,
+        "p": 6
+      },
+      "drift": {
+        "dp": 94,
+        "p": 12
+      },
+      "combined": {
+        "dp": 102,
+        "p": 11
+      }
+    },
+    "m7v2": {
+      "nominal": {
+        "dp": 0,
+        "p": 0
+      },
+      "dropout": {
+        "dp": 0,
+        "p": 0
+      },
+      "drift": {
+        "dp": 0,
+        "p": 0
+      },
+      "combined": {
+        "dp": 0,
+        "p": 0
+      }
+    }
+  }
+}
