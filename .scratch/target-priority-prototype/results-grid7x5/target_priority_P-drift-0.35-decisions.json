@@ -1,0 +1,686 @@
+[
+  {
+    "time_s": 0.0,
+    "plan_id": "p-000000-8dafe4b0d59b",
+    "selected_candidate_id": "bellman-order-0",
+    "best_forecast": 0.6898460378610421,
+    "retained_forecast": null,
+    "crosses_target": false,
+    "override_needed": false,
+    "decision": {
+      "action": "initial",
+      "trigger": "initial",
+      "reason": "no_plan_in_force",
+      "retained_candidate_id": null,
+      "retained_mission_end_mean_variance": null,
+      "selected_mission_end_mean_variance": 0.6898460378610421,
+      "expected_gain": null,
+      "switch_margin_variance": 0.008593899259560481,
+      "candidates_evaluated": 5,
+      "candidates_rejected": 0,
+      "candidates_not_evaluated": 0
+    },
+    "target_risk": {
+      "target_mean_variance": 0.1779786077640211,
+      "selected_mission_end_mean_variance": 0.6898460378610421,
+      "best_candidate_mission_end_mean_variance": 0.6898460378610421,
+      "margin": -0.5118674300970211,
+      "status": "no_candidate_forecast_reaches_target",
+      "remaining_time_s": 20.0,
+      "remaining_sample_epochs": 10,
+      "forecast_covers_mission_end": true,
+      "continuation": "hold_final_positions_for_every_remaining_epoch",
+      "claim_limits": [
+        "upper candidate from an executable plan, not an attainability floor",
+        "a missed target here reflects this bounded candidate set, not impossibility",
+        "approximate SOGP forecasts carry no bound property"
+      ]
+    }
+  },
+  {
+    "time_s": 2.0,
+    "plan_id": "p-000001-aaf6454c4b6e",
+    "selected_candidate_id": "bellman-order-0",
+    "best_forecast": 0.5921616090834508,
+    "retained_forecast": 0.6883633734362943,
+    "crosses_target": false,
+    "override_needed": false,
+    "decision": {
+      "action": "replaced",
+      "trigger": "periodic_sampling_epoch",
+      "reason": "candidate_improves_mission_forecast_beyond_switch_margin",
+      "retained_candidate_id": "retained-plan",
+      "retained_mission_end_mean_variance": 0.6883633734362943,
+      "selected_mission_end_mean_variance": 0.5921616090834508,
+      "expected_gain": 0.09620176435284344,
+      "switch_margin_variance": 0.007879500566480674,
+      "candidates_evaluated": 6,
+      "candidates_rejected": 0,
+      "candidates_not_evaluated": 0
+    },
+    "target_risk": {
+      "target_mean_variance": 0.1779786077640211,
+      "selected_mission_end_mean_variance": 0.5921616090834508,
+      "best_candidate_mission_end_mean_variance": 0.5921616090834508,
+      "margin": -0.41418300131942976,
+      "status": "no_candidate_forecast_reaches_target",
+      "remaining_time_s": 18.0,
+      "remaining_sample_epochs": 9,
+      "forecast_covers_mission_end": true,
+      "continuation": "hold_final_positions_for_every_remaining_epoch",
+      "claim_limits": [
+        "upper candidate from an executable plan, not an attainability floor",
+        "a missed target here reflects this bounded candidate set, not impossibility",
+        "approximate SOGP forecasts carry no bound property"
+      ]
+    }
+  },
+  {
+    "time_s": 4.0,
+    "plan_id": "p-000002-5576aee1a182",
+    "selected_candidate_id": "bellman-order-0",
+    "best_forecast": 0.494150280569196,
+    "retained_forecast": 0.5909431605468888,
+    "crosses_target": false,
+    "override_needed": false,
+    "decision": {
+      "action": "replaced",
+      "trigger": "periodic_sampling_epoch",
+      "reason": "candidate_improves_mission_forecast_beyond_switch_margin",
+      "retained_candidate_id": "retained-plan",
+      "retained_mission_end_mean_variance": 0.5909431605468888,
+      "selected_mission_end_mean_variance": 0.494150280569196,
+      "expected_gain": 0.09679287997769276,
+      "switch_margin_variance": 0.006927794354076932,
+      "candidates_evaluated": 6,
+      "candidates_rejected": 0,
+      "candidates_not_evaluated": 0
+    },
+    "target_risk": {
+      "target_mean_variance": 0.1779786077640211,
+      "selected_mission_end_mean_variance": 0.494150280569196,
+      "best_candidate_mission_end_mean_variance": 0.494150280569196,
+      "margin": -0.3161716728051749,
+      "status": "no_candidate_forecast_reaches_target",
+      "remaining_time_s": 16.0,
+      "remaining_sample_epochs": 8,
+      "forecast_covers_mission_end": true,
+      "continuation": "hold_final_positions_for_every_remaining_epoch",
+      "claim_limits": [
+        "upper candidate from an executable plan, not an attainability floor",
+        "a missed target here reflects this bounded candidate set, not impossibility",
+        "approximate SOGP forecasts carry no bound property"
+      ]
+    }
+  },
+  {
+    "time_s": 6.0,
+    "plan_id": "p-000003-22fae44b107c",
+    "selected_candidate_id": "bellman-order-0",
+    "best_forecast": 0.40185390673242455,
+    "retained_forecast": 0.493552695899075,
+    "crosses_target": false,
+    "override_needed": false,
+    "decision": {
+      "action": "replaced",
+      "trigger": "periodic_sampling_epoch",
+      "reason": "candidate_improves_mission_forecast_beyond_switch_margin",
+      "retained_candidate_id": "retained-plan",
+      "retained_mission_end_mean_variance": 0.493552695899075,
+      "selected_mission_end_mean_variance": 0.40185390673242455,
+      "expected_gain": 0.09169878916665047,
+      "switch_margin_variance": 0.005916883882917638,
+      "candidates_evaluated": 6,
+      "candidates_rejected": 0,
+      "candidates_not_evaluated": 0
+    },
+    "target_risk": {
+      "target_mean_variance": 0.1779786077640211,
+      "selected_mission_end_mean_variance": 0.40185390673242455,
+      "best_candidate_mission_end_mean_variance": 0.40185390673242455,
+      "margin": -0.22387529896840344,
+      "status": "no_candidate_forecast_reaches_target",
+      "remaining_time_s": 14.0,
+      "remaining_sample_epochs": 7,
+      "forecast_covers_mission_end": true,
+      "continuation": "hold_final_positions_for_every_remaining_epoch",
+      "claim_limits": [
+        "upper candidate from an executable plan, not an attainability floor",
+        "a missed target here reflects this bounded candidate set, not impossibility",
+        "approximate SOGP forecasts carry no bound property"
+      ]
+    }
+  },
+  {
+    "time_s": 8.0,
+    "plan_id": "p-000004-7acaf148a000",
+    "selected_candidate_id": "bellman-order-0",
+    "best_forecast": 0.3472315696305879,
+    "retained_forecast": 0.4015161019377043,
+    "crosses_target": false,
+    "override_needed": false,
+    "decision": {
+      "action": "replaced",
+      "trigger": "periodic_sampling_epoch",
+      "reason": "candidate_improves_mission_forecast_beyond_switch_margin",
+      "retained_candidate_id": "retained-plan",
+      "retained_mission_end_mean_variance": 0.4015161019377043,
+      "selected_mission_end_mean_variance": 0.3472315696305879,
+      "expected_gain": 0.05428453230711644,
+      "switch_margin_variance": 0.004977138420942322,
+      "candidates_evaluated": 6,
+      "candidates_rejected": 0,
+      "candidates_not_evaluated": 0
+    },
+    "target_risk": {
+      "target_mean_variance": 0.1779786077640211,
+      "selected_mission_end_mean_variance": 0.3472315696305879,
+      "best_candidate_mission_end_mean_variance": 0.3472315696305879,
+      "margin": -0.16925296186656677,
+      "status": "no_candidate_forecast_reaches_target",
+      "remaining_time_s": 12.0,
+      "remaining_sample_epochs": 6,
+      "forecast_covers_mission_end": true,
+      "continuation": "hold_final_positions_for_every_remaining_epoch",
+      "claim_limits": [
+        "upper candidate from an executable plan, not an attainability floor",
+        "a missed target here reflects this bounded candidate set, not impossibility",
+        "approximate SOGP forecasts carry no bound property"
+      ]
+    }
+  },
+  {
+    "time_s": 10.0,
+    "plan_id": "p-000005-ea98e74ff047",
+    "selected_candidate_id": "bellman-order-1",
+    "best_forecast": 0.3431806932714075,
+    "retained_forecast": 0.34821971608289476,
+    "crosses_target": false,
+    "override_needed": false,
+    "decision": {
+      "action": "replaced",
+      "trigger": "periodic_sampling_epoch",
+      "reason": "candidate_improves_mission_forecast_beyond_switch_margin",
+      "retained_candidate_id": "retained-plan",
+      "retained_mission_end_mean_variance": 0.34821971608289476,
+      "selected_mission_end_mean_variance": 0.3431806932714075,
+      "expected_gain": 0.00503902281148727,
+      "switch_margin_variance": 0.00402693950716606,
+      "candidates_evaluated": 6,
+      "candidates_rejected": 0,
+      "candidates_not_evaluated": 0
+    },
+    "target_risk": {
+      "target_mean_variance": 0.1779786077640211,
+      "selected_mission_end_mean_variance": 0.3431806932714075,
+      "best_candidate_mission_end_mean_variance": 0.3431806932714075,
+      "margin": -0.16520208550738638,
+      "status": "no_candidate_forecast_reaches_target",
+      "remaining_time_s": 10.0,
+      "remaining_sample_epochs": 5,
+      "forecast_covers_mission_end": true,
+      "continuation": "hold_final_positions_for_every_remaining_epoch",
+      "claim_limits": [
+        "upper candidate from an executable plan, not an attainability floor",
+        "a missed target here reflects this bounded candidate set, not impossibility",
+        "approximate SOGP forecasts carry no bound property"
+      ]
+    }
+  },
+  {
+    "time_s": 12.0,
+    "plan_id": "p-000006-59d1f6a7b7b7",
+    "selected_candidate_id": "bellman-order-0",
+    "best_forecast": 0.26570866675802995,
+    "retained_forecast": 0.33685066302038263,
+    "crosses_target": false,
+    "override_needed": false,
+    "decision": {
+      "action": "replaced",
+      "trigger": "periodic_sampling_epoch",
+      "reason": "candidate_improves_mission_forecast_beyond_switch_margin",
+      "retained_candidate_id": "retained-plan",
+      "retained_mission_end_mean_variance": 0.33685066302038263,
+      "selected_mission_end_mean_variance": 0.26570866675802995,
+      "expected_gain": 0.07114199626235268,
+      "switch_margin_variance": 0.00343138171042997,
+      "candidates_evaluated": 6,
+      "candidates_rejected": 0,
+      "candidates_not_evaluated": 0
+    },
+    "target_risk": {
+      "target_mean_variance": 0.1779786077640211,
+      "selected_mission_end_mean_variance": 0.26570866675802995,
+      "best_candidate_mission_end_mean_variance": 0.26570866675802995,
+      "margin": -0.08773005899400885,
+      "status": "no_candidate_forecast_reaches_target",
+      "remaining_time_s": 8.0,
+      "remaining_sample_epochs": 4,
+      "forecast_covers_mission_end": true,
+      "continuation": "hold_final_positions_for_every_remaining_epoch",
+      "claim_limits": [
+        "upper candidate from an executable plan, not an attainability floor",
+        "a missed target here reflects this bounded candidate set, not impossibility",
+        "approximate SOGP forecasts carry no bound property"
+      ]
+    }
+  },
+  {
+    "time_s": 12.5,
+    "plan_id": "p-000007-a64762c6a361",
+    "selected_candidate_id": "retained-plan",
+    "best_forecast": 0.26570395849173356,
+    "retained_forecast": 0.26570395849173356,
+    "crosses_target": false,
+    "override_needed": false,
+    "decision": {
+      "action": "retained",
+      "trigger": "control_intervention",
+      "reason": "retained_plan_within_switch_margin_of_the_best_candidate",
+      "retained_candidate_id": "retained-plan",
+      "retained_mission_end_mean_variance": 0.26570395849173356,
+      "selected_mission_end_mean_variance": 0.26570395849173356,
+      "expected_gain": 0.0,
+      "switch_margin_variance": 0.00343138171042997,
+      "candidates_evaluated": 6,
+      "candidates_rejected": 0,
+      "candidates_not_evaluated": 0
+    },
+    "target_risk": {
+      "target_mean_variance": 0.1779786077640211,
+      "selected_mission_end_mean_variance": 0.26570395849173356,
+      "best_candidate_mission_end_mean_variance": 0.26570395849173356,
+      "margin": -0.08772535072771245,
+      "status": "no_candidate_forecast_reaches_target",
+      "remaining_time_s": 7.5,
+      "remaining_sample_epochs": 4,
+      "forecast_covers_mission_end": true,
+      "continuation": "hold_final_positions_for_every_remaining_epoch",
+      "claim_limits": [
+        "upper candidate from an executable plan, not an attainability floor",
+        "a missed target here reflects this bounded candidate set, not impossibility",
+        "approximate SOGP forecasts carry no bound property"
+      ]
+    }
+  },
+  {
+    "time_s": 13.0,
+    "plan_id": "p-000008-ef7477fb5245",
+    "selected_candidate_id": "retained-plan",
+    "best_forecast": 0.2667894850512163,
+    "retained_forecast": 0.2667894850512163,
+    "crosses_target": false,
+    "override_needed": false,
+    "decision": {
+      "action": "retained",
+      "trigger": "control_intervention",
+      "reason": "retained_plan_within_switch_margin_of_the_best_candidate",
+      "retained_candidate_id": "retained-plan",
+      "retained_mission_end_mean_variance": 0.2667894850512163,
+      "selected_mission_end_mean_variance": 0.2667894850512163,
+      "expected_gain": 0.0,
+      "switch_margin_variance": 0.00343138171042997,
+      "candidates_evaluated": 6,
+      "candidates_rejected": 0,
+      "candidates_not_evaluated": 0
+    },
+    "target_risk": {
+      "target_mean_variance": 0.1779786077640211,
+      "selected_mission_end_mean_variance": 0.2667894850512163,
+      "best_candidate_mission_end_mean_variance": 0.2667894850512163,
+      "margin": -0.0888108772871952,
+      "status": "no_candidate_forecast_reaches_target",
+      "remaining_time_s": 7.0,
+      "remaining_sample_epochs": 4,
+      "forecast_covers_mission_end": true,
+      "continuation": "hold_final_positions_for_every_remaining_epoch",
+      "claim_limits": [
+        "upper candidate from an executable plan, not an attainability floor",
+        "a missed target here reflects this bounded candidate set, not impossibility",
+        "approximate SOGP forecasts carry no bound property"
+      ]
+    }
+  },
+  {
+    "time_s": 14.0,
+    "plan_id": "p-000009-124822337f98",
+    "selected_candidate_id": "bellman-order-0",
+    "best_forecast": 0.2611120688459245,
+    "retained_forecast": 0.2687585363976234,
+    "crosses_target": false,
+    "override_needed": false,
+    "decision": {
+      "action": "replaced",
+      "trigger": "periodic_sampling_epoch",
+      "reason": "candidate_improves_mission_forecast_beyond_switch_margin",
+      "retained_candidate_id": "retained-plan",
+      "retained_mission_end_mean_variance": 0.2687585363976234,
+      "selected_mission_end_mean_variance": 0.2611120688459245,
+      "expected_gain": 0.007646467551698899,
+      "switch_margin_variance": 0.0031151565102114503,
+      "candidates_evaluated": 6,
+      "candidates_rejected": 0,
+      "candidates_not_evaluated": 0
+    },
+    "target_risk": {
+      "target_mean_variance": 0.1779786077640211,
+      "selected_mission_end_mean_variance": 0.2611120688459245,
+      "best_candidate_mission_end_mean_variance": 0.2611120688459245,
+      "margin": -0.08313346108190342,
+      "status": "no_candidate_forecast_reaches_target",
+      "remaining_time_s": 6.0,
+      "remaining_sample_epochs": 3,
+      "forecast_covers_mission_end": true,
+      "continuation": "hold_final_positions_for_every_remaining_epoch",
+      "claim_limits": [
+        "upper candidate from an executable plan, not an attainability floor",
+        "a missed target here reflects this bounded candidate set, not impossibility",
+        "approximate SOGP forecasts carry no bound property"
+      ]
+    }
+  },
+  {
+    "time_s": 16.0,
+    "plan_id": "p-000010-0de69765053f",
+    "selected_candidate_id": "bellman-order-0",
+    "best_forecast": 0.2294480834975989,
+    "retained_forecast": 0.2622825712481243,
+    "crosses_target": false,
+    "override_needed": false,
+    "decision": {
+      "action": "replaced",
+      "trigger": "periodic_sampling_epoch",
+      "reason": "candidate_improves_mission_forecast_beyond_switch_margin",
+      "retained_candidate_id": "retained-plan",
+      "retained_mission_end_mean_variance": 0.2622825712481243,
+      "selected_mission_end_mean_variance": 0.2294480834975989,
+      "expected_gain": 0.032834487750525415,
+      "switch_margin_variance": 0.003006376457442095,
+      "candidates_evaluated": 6,
+      "candidates_rejected": 0,
+      "candidates_not_evaluated": 0
+    },
+    "target_risk": {
+      "target_mean_variance": 0.1779786077640211,
+      "selected_mission_end_mean_variance": 0.2294480834975989,
+      "best_candidate_mission_end_mean_variance": 0.2294480834975989,
+      "margin": -0.051469475733577796,
+      "status": "no_candidate_forecast_reaches_target",
+      "remaining_time_s": 4.0,
+      "remaining_sample_epochs": 2,
+      "forecast_covers_mission_end": true,
+      "continuation": "hold_final_positions_for_every_remaining_epoch",
+      "claim_limits": [
+        "upper candidate from an executable plan, not an attainability floor",
+        "a missed target here reflects this bounded candidate set, not impossibility",
+        "approximate SOGP forecasts carry no bound property"
+      ]
+    }
+  },
+  {
+    "time_s": 16.5,
+    "plan_id": "p-000011-533a05635d53",
+    "selected_candidate_id": "retained-plan",
+    "best_forecast": 0.23016770278091192,
+    "retained_forecast": 0.23016770278091192,
+    "crosses_target": false,
+    "override_needed": false,
+    "decision": {
+      "action": "retained",
+      "trigger": "control_intervention",
+      "reason": "retained_plan_within_switch_margin_of_the_best_candidate",
+      "retained_candidate_id": "retained-plan",
+      "retained_mission_end_mean_variance": 0.23016770278091192,
+      "selected_mission_end_mean_variance": 0.23016770278091192,
+      "expected_gain": 0.0,
+      "switch_margin_variance": 0.003006376457442095,
+      "candidates_evaluated": 6,
+      "candidates_rejected": 0,
+      "candidates_not_evaluated": 0
+    },
+    "target_risk": {
+      "target_mean_variance": 0.1779786077640211,
+      "selected_mission_end_mean_variance": 0.23016770278091192,
+      "best_candidate_mission_end_mean_variance": 0.23016770278091192,
+      "margin": -0.05218909501689081,
+      "status": "no_candidate_forecast_reaches_target",
+      "remaining_time_s": 3.5,
+      "remaining_sample_epochs": 2,
+      "forecast_covers_mission_end": true,
+      "continuation": "hold_final_positions_for_every_remaining_epoch",
+      "claim_limits": [
+        "upper candidate from an executable plan, not an attainability floor",
+        "a missed target here reflects this bounded candidate set, not impossibility",
+        "approximate SOGP forecasts carry no bound property"
+      ]
+    }
+  },
+  {
+    "time_s": 17.0,
+    "plan_id": "p-000012-7f6551702569",
+    "selected_candidate_id": "retained-plan",
+    "best_forecast": 0.2331205328839914,
+    "retained_forecast": 0.2331205328839914,
+    "crosses_target": false,
+    "override_needed": false,
+    "decision": {
+      "action": "retained",
+      "trigger": "control_intervention",
+      "reason": "retained_plan_within_switch_margin_of_the_best_candidate",
+      "retained_candidate_id": "retained-plan",
+      "retained_mission_end_mean_variance": 0.2331205328839914,
+      "selected_mission_end_mean_variance": 0.2331205328839914,
+      "expected_gain": 0.0,
+      "switch_margin_variance": 0.003006376457442095,
+      "candidates_evaluated": 6,
+      "candidates_rejected": 0,
+      "candidates_not_evaluated": 0
+    },
+    "target_risk": {
+      "target_mean_variance": 0.1779786077640211,
+      "selected_mission_end_mean_variance": 0.2331205328839914,
+      "best_candidate_mission_end_mean_variance": 0.2331205328839914,
+      "margin": -0.05514192511997029,
+      "status": "no_candidate_forecast_reaches_target",
+      "remaining_time_s": 3.0,
+      "remaining_sample_epochs": 2,
+      "forecast_covers_mission_end": true,
+      "continuation": "hold_final_positions_for_every_remaining_epoch",
+      "claim_limits": [
+        "upper candidate from an executable plan, not an attainability floor",
+        "a missed target here reflects this bounded candidate set, not impossibility",
+        "approximate SOGP forecasts carry no bound property"
+      ]
+    }
+  },
+  {
+    "time_s": 17.5,
+    "plan_id": "p-000013-25427c93c413",
+    "selected_candidate_id": "retained-plan",
+    "best_forecast": 0.24046790236301682,
+    "retained_forecast": 0.24046790236301682,
+    "crosses_target": false,
+    "override_needed": false,
+    "decision": {
+      "action": "retained",
+      "trigger": "control_intervention",
+      "reason": "retained_plan_within_switch_margin_of_the_best_candidate",
+      "retained_candidate_id": "retained-plan",
+      "retained_mission_end_mean_variance": 0.24046790236301682,
+      "selected_mission_end_mean_variance": 0.24046790236301682,
+      "expected_gain": 0.0,
+      "switch_margin_variance": 0.003006376457442095,
+      "candidates_evaluated": 6,
+      "candidates_rejected": 0,
+      "candidates_not_evaluated": 0
+    },
+    "target_risk": {
+      "target_mean_variance": 0.1779786077640211,
+      "selected_mission_end_mean_variance": 0.24046790236301682,
+      "best_candidate_mission_end_mean_variance": 0.24046790236301682,
+      "margin": -0.062489294598995715,
+      "status": "no_candidate_forecast_reaches_target",
+      "remaining_time_s": 2.5,
+      "remaining_sample_epochs": 2,
+      "forecast_covers_mission_end": true,
+      "continuation": "hold_final_positions_for_every_remaining_epoch",
+      "claim_limits": [
+        "upper candidate from an executable plan, not an attainability floor",
+        "a missed target here reflects this bounded candidate set, not impossibility",
+        "approximate SOGP forecasts carry no bound property"
+      ]
+    }
+  },
+  {
+    "time_s": 18.0,
+    "plan_id": "p-000014-ab7514f0e43f",
+    "selected_candidate_id": "retained-plan",
+    "best_forecast": 0.24965445100152017,
+    "retained_forecast": 0.24965445100152017,
+    "crosses_target": false,
+    "override_needed": false,
+    "decision": {
+      "action": "retained",
+      "trigger": "periodic_sampling_epoch",
+      "reason": "retained_plan_within_switch_margin_of_the_best_candidate",
+      "retained_candidate_id": "retained-plan",
+      "retained_mission_end_mean_variance": 0.24965445100152017,
+      "selected_mission_end_mean_variance": 0.24965445100152017,
+      "expected_gain": 0.0,
+      "switch_margin_variance": 0.002903793033567927,
+      "candidates_evaluated": 6,
+      "candidates_rejected": 0,
+      "candidates_not_evaluated": 0
+    },
+    "target_risk": {
+      "target_mean_variance": 0.1779786077640211,
+      "selected_mission_end_mean_variance": 0.24965445100152017,
+      "best_candidate_mission_end_mean_variance": 0.24965445100152017,
+      "margin": -0.07167584323749907,
+      "status": "no_candidate_forecast_reaches_target",
+      "remaining_time_s": 2.0,
+      "remaining_sample_epochs": 1,
+      "forecast_covers_mission_end": true,
+      "continuation": "hold_final_positions_for_every_remaining_epoch",
+      "claim_limits": [
+        "upper candidate from an executable plan, not an attainability floor",
+        "a missed target here reflects this bounded candidate set, not impossibility",
+        "approximate SOGP forecasts carry no bound property"
+      ]
+    }
+  },
+  {
+    "time_s": 18.5,
+    "plan_id": "p-000015-225f590e6b39",
+    "selected_candidate_id": "retained-plan",
+    "best_forecast": 0.2575117800033817,
+    "retained_forecast": 0.2575117800033817,
+    "crosses_target": false,
+    "override_needed": false,
+    "decision": {
+      "action": "retained",
+      "trigger": "control_intervention",
+      "reason": "retained_plan_within_switch_margin_of_the_best_candidate",
+      "retained_candidate_id": "retained-plan",
+      "retained_mission_end_mean_variance": 0.2575117800033817,
+      "selected_mission_end_mean_variance": 0.2575117800033817,
+      "expected_gain": 0.0,
+      "switch_margin_variance": 0.002903793033567927,
+      "candidates_evaluated": 6,
+      "candidates_rejected": 0,
+      "candidates_not_evaluated": 0
+    },
+    "target_risk": {
+      "target_mean_variance": 0.1779786077640211,
+      "selected_mission_end_mean_variance": 0.2575117800033817,
+      "best_candidate_mission_end_mean_variance": 0.2575117800033817,
+      "margin": -0.0795331722393606,
+      "status": "no_candidate_forecast_reaches_target",
+      "remaining_time_s": 1.5,
+      "remaining_sample_epochs": 1,
+      "forecast_covers_mission_end": true,
+      "continuation": "hold_final_positions_for_every_remaining_epoch",
+      "claim_limits": [
+        "upper candidate from an executable plan, not an attainability floor",
+        "a missed target here reflects this bounded candidate set, not impossibility",
+        "approximate SOGP forecasts carry no bound property"
+      ]
+    }
+  },
+  {
+    "time_s": 19.0,
+    "plan_id": "p-000016-38cb553ae416",
+    "selected_candidate_id": "retained-plan",
+    "best_forecast": 0.26676347920347,
+    "retained_forecast": 0.26676347920347,
+    "crosses_target": false,
+    "override_needed": false,
+    "decision": {
+      "action": "retained",
+      "trigger": "control_intervention",
+      "reason": "retained_plan_within_switch_margin_of_the_best_candidate",
+      "retained_candidate_id": "retained-plan",
+      "retained_mission_end_mean_variance": 0.26676347920347,
+      "selected_mission_end_mean_variance": 0.26676347920347,
+      "expected_gain": 0.0,
+      "switch_margin_variance": 0.002903793033567927,
+      "candidates_evaluated": 6,
+      "candidates_rejected": 0,
+      "candidates_not_evaluated": 0
+    },
+    "target_risk": {
+      "target_mean_variance": 0.1779786077640211,
+      "selected_mission_end_mean_variance": 0.26676347920347,
+      "best_candidate_mission_end_mean_variance": 0.26676347920347,
+      "margin": -0.08878487143944888,
+      "status": "no_candidate_forecast_reaches_target",
+      "remaining_time_s": 1.0,
+      "remaining_sample_epochs": 1,
+      "forecast_covers_mission_end": true,
+      "continuation": "hold_final_positions_for_every_remaining_epoch",
+      "claim_limits": [
+        "upper candidate from an executable plan, not an attainability floor",
+        "a missed target here reflects this bounded candidate set, not impossibility",
+        "approximate SOGP forecasts carry no bound property"
+      ]
+    }
+  },
+  {
+    "time_s": 19.5,
+    "plan_id": "p-000017-941c277078fd",
+    "selected_candidate_id": "retained-plan",
+    "best_forecast": 0.2673270531497502,
+    "retained_forecast": 0.2673270531497502,
+    "crosses_target": false,
+    "override_needed": false,
+    "decision": {
+      "action": "retained",
+      "trigger": "execution_deviation",
+      "reason": "retained_plan_within_switch_margin_of_the_best_candidate",
+      "retained_candidate_id": "retained-plan",
+      "retained_mission_end_mean_variance": 0.2673270531497502,
+      "selected_mission_end_mean_variance": 0.2673270531497502,
+      "expected_gain": 0.0,
+      "switch_margin_variance": 0.002903793033567927,
+      "candidates_evaluated": 6,
+      "candidates_rejected": 0,
+      "candidates_not_evaluated": 0
+    },
+    "target_risk": {
+      "target_mean_variance": 0.1779786077640211,
+      "selected_mission_end_mean_variance": 0.2673270531497502,
+      "best_candidate_mission_end_mean_variance": 0.2673270531497502,
+      "margin": -0.08934844538572909,
+      "status": "no_candidate_forecast_reaches_target",
+      "remaining_time_s": 0.5,
+      "remaining_sample_epochs": 1,
+      "forecast_covers_mission_end": true,
+      "continuation": "hold_final_positions_for_every_remaining_epoch",
+      "claim_limits": [
+        "upper candidate from an executable plan, not an attainability floor",
+        "a missed target here reflects this bounded candidate set, not impossibility",
+        "approximate SOGP forecasts carry no bound property"
+      ]
+    }
+  }
+]

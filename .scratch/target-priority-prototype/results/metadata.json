@@ -1,0 +1,63 @@
+{
+  "scope": "predeclared development pilot; no held-out evidence; no charged delay",
+  "python": "3.11.16 (main, Aug 25 2026, 13:59:19) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "base_config": {
+    "domain": [
+      20.0,
+      14.0
+    ],
+    "robot_count": 2,
+    "duration_s": 20.0,
+    "dt": 0.5,
+    "sample_period_s": 2.0,
+    "grid_shape": [
+      12,
+      8
+    ],
+    "seed": 7,
+    "noise_std": 0.15,
+    "dropout_prob": 0.0,
+    "drift_strength": 0.0,
+    "max_speed": 2.0,
+    "min_separation": 2.0,
+    "model": "holonomic",
+    "max_turn_rate": 0.45,
+    "length_scale": 3.0,
+    "signal_variance": 1.0,
+    "controller": "filter",
+    "qp_alpha": 1.0,
+    "qp_polygon_sides": 16,
+    "qp_max_iter": 10000,
+    "qp_acceptance_tol": 1e-07,
+    "dp_horizon_steps": 2,
+    "dp_grid_shape": [
+      5,
+      4
+    ],
+    "dp_travel_weight": 0.01,
+    "dp_motion_primitives": true,
+    "p_controller_rollout": true,
+    "p_retain_plan": true,
+    "p_event_triggers": true,
+    "p_deviation_trigger_m": 1.5,
+    "p_intervention_trigger_mps": 0.25,
+    "p_switch_margin": 0.01,
+    "p_max_rollout_candidates": 6,
+    "target_mean_variance": null,
+    "gp_backend": "exact",
+    "sogp_max_basis": 64,
+    "sogp_novelty_tolerance": 1e-06
+  },
+  "module_paths": {
+    "mapping": "C:\\Users\\Lenovo\\Desktop\\GP Attainability\\tmp\\recovery-prototype\\src\\attain_sampling\\sim\\mapping.py",
+    "policy": "C:\\Users\\Lenovo\\Desktop\\GP Attainability\\tmp\\recovery-prototype\\src\\attain_sampling\\attainability\\policy.py"
+  },
+  "source_hashes": {
+    "mapping": "033c38c2a679143a25409d7ccce5b901d4dc83a37334516ce64f8fb84c0ca014",
+    "policy": "67735e12e15f780bb1a1a56430255b0ba05488fd02d3dddab1a0a3a878afc08e",
+    "legacy_policy": "492d7d00d4c1b57eb11e0bb129ceda5d047aa8b5b26ef24fbd1b21884c8d195f",
+    "pilot": "85e2acb6391693b549ff65ad3e9a5888bd304e5186eff0edcab51ec6fe2f8c20",
+    "protocol": "b672f1e3fd57b3a161208afeef9b47badc51e74e0a9e8b80725267ee15cb2989"
+  }
+}

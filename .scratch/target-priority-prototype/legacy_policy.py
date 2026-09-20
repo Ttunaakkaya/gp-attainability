@@ -413,15 +413,7 @@ def manage_plan(
         reason = "candidate_improves_mission_forecast_beyond_switch_margin"
     if retained is not None:
         gain = retained["mission_end_mean_variance"] - best["mission_end_mean_variance"]
-        target_crossing = (
-            settings.target_mean_variance is not None
-            and best["mission_end_mean_variance"]
-            <= settings.target_mean_variance
-            < retained["mission_end_mean_variance"]
-        )
-        if target_crossing:
-            reason = "candidate_reaches_target_while_retained_plan_misses"
-        elif gain <= margin:
+        if gain <= margin:
             chosen, action = retained, "retained"
             reason = "retained_plan_within_switch_margin_of_the_best_candidate"
     chosen["selected"] = True

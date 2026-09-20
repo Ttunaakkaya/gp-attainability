@@ -1,0 +1,128 @@
+[
+  {
+    "batch": "results",
+    "arm": "B2",
+    "path_length_m": 78.41135313155357,
+    "unique_receipt_sites": 22,
+    "initial_targets": null
+  },
+  {
+    "batch": "results",
+    "arm": "B3",
+    "path_length_m": 6.732362983457671,
+    "unique_receipt_sites": 4,
+    "initial_targets": [
+      [
+        [
+          5.0,
+          4.666666666666667
+        ],
+        [
+          5.0,
+          9.333333333333334
+        ]
+      ],
+      [
+        [
+          5.0,
+          4.666666666666667
+        ],
+        [
+          5.0,
+          9.333333333333334
+        ]
+      ]
+    ]
+  },
+  {
+    "batch": "results",
+    "arm": "historical_P",
+    "path_length_m": 6.732362983457671,
+    "unique_receipt_sites": 4,
+    "initial_targets": [
+      [
+        [
+          5.0,
+          4.666666666666667
+        ],
+        [
+          5.0,
+          9.333333333333334
+        ]
+      ],
+      [
+        [
+          5.0,
+          4.666666666666667
+        ],
+        [
+          5.0,
+          9.333333333333334
+        ]
+      ]
+    ]
+  },
+  {
+    "batch": "results-grid7x5",
+    "arm": "B2",
+    "path_length_m": 78.41135313155357,
+    "unique_receipt_sites": 22,
+    "initial_targets": null
+  },
+  {
+    "batch": "results-grid7x5",
+    "arm": "B3",
+    "path_length_m": 63.727609561207416,
+    "unique_receipt_sites": 22,
+    "initial_targets": [
+      [
+        [
+          3.3333333333333335,
+          3.5
+        ],
+        [
+          3.3333333333333335,
+          10.5
+        ]
+      ],
+      [
+        [
+          6.666666666666667,
+          3.5
+        ],
+        [
+          6.666666666666667,
+          10.5
+        ]
+      ]
+    ]
+  },
+  {
+    "batch": "results-grid7x5",
+    "arm": "historical_P",
+    "path_length_m": 63.727609561207416,
+    "unique_receipt_sites": 22,
+    "initial_targets": [
+      [
+        [
+          3.3333333333333335,
+          3.5
+        ],
+        [
+          3.3333333333333335,
+          10.5
+        ]
+      ],
+      [
+        [
+          6.666666666666667,
+          3.5
+        ],
+        [
+          6.666666666666667,
+          10.5
+        ]
+      ]
+    ]
+  }
+]

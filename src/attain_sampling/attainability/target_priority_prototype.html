@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fixed target or switching margin?</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#18322e;background:#f3f7f5}body{max-width:950px;margin:auto;padding:40px 24px}h1{font-size:2.2rem;letter-spacing:-.04em;margin-bottom:12px}p{line-height:1.6}.label{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:#42675e}.card{background:white;border:1px solid #d6e3dc;border-radius:14px;padding:24px;margin:20px 0}dl{display:grid;grid-template-columns:1fr 1fr;margin:0;gap:9px}dt{color:#52665e}dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}.results{display:grid;grid-template-columns:1fr 1fr;gap:18px}.results h3{font-size:1rem;margin:4px 0 10px}.result{background:#f0f6f2;padding:16px;border-radius:9px}button{font:inherit;cursor:pointer;padding:10px 14px;margin:4px;border:1px solid #bdd2c6;border-radius:7px;background:white;color:#193d2e}button:hover,button[aria-selected=true]{background:#165b43;color:white}button:disabled{opacity:.45;cursor:default}.muted{color:#52665e;font-size:.9rem}.banner{border-left:4px solid #27825b;padding-left:14px}.tabs{display:flex;flex-wrap:wrap}.value{font-size:1.35rem;font-weight:650}#change{min-height:28px;font-weight:600;color:#165b43}@media(max-width:650px){.results{grid-template-columns:1fr}body{padding:22px 15px}dl{font-size:.9rem}}
+</style>
+<p class="label">Throwaway logic prototype · illustrative values</p>
+<h1>Fixed target or switching margin?</h1>
+<p>When the current plan predicts missing the mission target, should an already evaluated, feasible route that reaches it take priority over the usual preference to keep the route? This demo isolates that choice.</p>
+<p class="banner">These numbers are invented for explanation. This is <strong>not research evidence</strong> or a recovery guarantee. Every forecast here describes a route followed by holding at its end, under nominal motion. It does not predict the ordinary adaptive planner's future decisions.</p>
+<section class="card"><h2>Current decision state</h2><div id="change" role="status"></div><dl id="state"></dl><hr><div class="results"><div class="result"><h3>Historical switching rule</h3><div class="value" id="oldChoice"></div><p id="oldReason"></p></div><div class="result"><h3>Give the fixed target priority</h3><div class="value" id="newChoice"></div><p id="newReason"></p></div></div><p class="muted">Original deadline, two robots, sensing schedule, speed and safety constraints remain fixed. This choice adds no candidates or extra scoring. A feasible nominal route can still miss its forecast under disturbance.</p></section>
+<section class="card"><h2>Free play</h2><p>Change the forecast or whether the alternative passed its feasibility checks. See the full state update after every action.</p><div id="actions"></div></section>
+<section class="card"><h2>Guided walkthroughs</h2><div class="tabs" role="tablist" id="tabs"></div><p id="story"></p><div id="steps"></div></section>
+<footer class="muted">Open this one HTML file directly. No server, network, persistence or simulator connection. The separate Python pilot preserves measured results, including cases with no benefit.</footer>
+<script>
+// Portable pure selection logic: no DOM, mutation, simulator, clock or persistence.
+const TargetPriority = (() => {
+  const initial = () => ({current:.5,target:.2,retained:.19,alternative:.185,feasible:true,switchFraction:.03});
+  function select(state,priority){
+    const best=state.feasible?Math.min(state.retained,state.alternative):state.retained;
+    const gain=state.retained-best,margin=state.switchFraction*state.current;
+    const crossing=best<=state.target&&state.target<state.retained;
+    const replace=(priority&&crossing)||gain>margin;
+    return {replace,selected:replace?best:state.retained,best,gain,margin,crossing,
+      reason:priority&&crossing?'The feasible alternative reaches the fixed target while the current route misses.':replace?'The alternative improves the forecast by more than the switching margin.':!state.feasible?'The alternative failed feasibility checks and cannot be selected.':'Keep the current route: the improvement is within the switching margin.'};
+  }
+  function reduce(state,action){
+    const next={...state};
+    if(action==='reset')return initial();
+    if(action==='nominal')return {...initial(),retained:.19,alternative:.185};
+    if(action==='crossing')return {...initial(),retained:.205,alternative:.195};
+    if(action==='unrecoverable')return {...initial(),retained:.235,alternative:.23};
+    if(action==='invalidate')next.feasible=false;
+    if(action==='validate')next.feasible=true;
+    if(action==='improve')next.alternative=Math.max(0,next.alternative-.005);
+    if(action==='worsen')next.retained+=.005;
+    if(action==='boundary')next.alternative=next.target;
+    return next;
+  }
+  return {initial,select,reduce};
+})();
+</script>
+<script>
+let state=TargetPriority.initial(),scenario=0,step=0;
+const descriptions={reset:'Reset to the nominal state.',nominal:'Both routes predict reaching the fixed target.',crossing:'Only the feasible alternative predicts reaching the target.',unrecoverable:'Neither scored route predicts reaching the target.',invalidate:'The alternative failed its feasibility check.',validate:'The alternative passed its feasibility check.',improve:'The alternative forecast fell by 0.005.',worsen:'The current route forecast rose by 0.005.',boundary:'The alternative forecast equals the target exactly.'};
+const scenarios=[{title:'Nominal',text:'Both forecasts already meet the target. Retaining the current route avoids switching for a small improvement.',steps:[['Set nominal forecasts','nominal'],['Improve the alternative slightly','improve']]},{title:'Target crossing',text:'The improvement is smaller than the usual switching margin, but it crosses the fixed mission target. Then check the inclusive target boundary.',steps:[['Set a missed target with a feasible alternative','crossing'],['Make the alternative exactly meet the target','boundary'],['Reject that alternative as infeasible','invalidate']]},{title:'No observed recovery',text:'A bounded search that misses the target does not prove impossibility. The rule keeps hysteresis when both forecasts miss. It also never selects a rejected route.',steps:[['Set two forecasts above the target','unrecoverable'],['Reject the alternative','invalidate'],['Restore its feasibility','validate']]}];
+function button(label,action){const b=document.createElement('button');b.textContent=label;b.onclick=action;return b;}
+function act(action){state=TargetPriority.reduce(state,action);render(descriptions[action]);}
+function render(message='Initial nominal state.'){
+  const old=TargetPriority.select(state,false),next=TargetPriority.select(state,true),fmt=n=>n.toFixed(3);
+  document.querySelector('#change').textContent=message;
+  const fields=[['Current mean latent variance',fmt(state.current)],['Fixed deadline target',fmt(state.target)],['Current route + hold forecast',fmt(state.retained)],['Alternative route + hold forecast',fmt(state.alternative)],['Alternative feasible?',state.feasible?'Yes':'No'],['Switching fraction',`${state.switchFraction*100}%`],['Absolute switching margin',fmt(next.margin)],['Best feasible improvement',fmt(next.gain)],['Best feasible forecast crosses target?',next.crossing?'Yes':'No'],['Historical selected target margin',fmt(state.target-old.selected)],['Priority selected target margin',fmt(state.target-next.selected)]];
+  const dl=document.querySelector('#state');dl.replaceChildren();for(const [key,value]of fields){const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=key;dd.textContent=value;dl.append(dt,dd);}
+  for(const [prefix,result]of [['old',old],['new',next]]){document.querySelector(`#${prefix}Choice`).textContent=result.replace?'Choose the alternative':'Keep the current route';document.querySelector(`#${prefix}Reason`).textContent=result.reason;}
+  const tabs=document.querySelector('#tabs');tabs.replaceChildren();scenarios.forEach((s,i)=>{const b=button(s.title,()=>{scenario=i;step=0;state=TargetPriority.initial();render('Walkthrough reset to its known starting state.');});b.setAttribute('role','tab');b.setAttribute('aria-selected',i===scenario);tabs.append(b);});
+  document.querySelector('#story').textContent=scenarios[scenario].text;
+  const steps=document.querySelector('#steps');steps.replaceChildren();scenarios[scenario].steps.forEach(([label,action],i)=>{const b=button(`${i+1}. ${label}`,()=>{step=i+1;act(action);});b.disabled=i!==step;steps.append(b);});
+}
+for(const [label,action]of [['Reset','reset'],['Current route gets worse','worsen'],['Alternative gets better','improve'],['Reject alternative','invalidate'],['Accept alternative','validate'],['Alternative exactly meets target','boundary']])document.querySelector('#actions').append(button(label,()=>act(action)));
+render();
+</script></html>
