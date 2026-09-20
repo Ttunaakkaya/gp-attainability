@@ -1,0 +1,304 @@
+{
+  "case": "dp_sogp_pruning",
+  "changed_fields": 34,
+  "all_changes_numeric": true,
+  "maximum_absolute_difference": 2.1094237467877974e-15,
+  "largest_changes": [
+    {
+      "path": "$.frames[2].std[0][0]",
+      "before": 0.10505106666152803,
+      "after": 0.10505106666152592,
+      "kind": "numeric",
+      "absolute_difference": 2.1094237467877974e-15
+    },
+    {
+      "path": "$.frames[2].error[0][0]",
+      "before": -0.05947117697148025,
+      "after": -0.05947117697147881,
+      "kind": "numeric",
+      "absolute_difference": 1.4432899320127035e-15
+    },
+    {
+      "path": "$.frames[2].mean[0][0]",
+      "before": -0.04912396821838384,
+      "after": -0.0491239682183824,
+      "kind": "numeric",
+      "absolute_difference": 1.4432899320127035e-15
+    },
+    {
+      "path": "$.frames[2].mean[0][1]",
+      "before": 0.04269117137938781,
+      "after": 0.04269117137938821,
+      "kind": "numeric",
+      "absolute_difference": 3.95516952522712e-16
+    },
+    {
+      "path": "$.frames[2].error[0][1]",
+      "before": -0.3025915112859189,
+      "after": -0.3025915112859185,
+      "kind": "numeric",
+      "absolute_difference": 3.885780586188048e-16
+    },
+    {
+      "path": "$.gp_updates[4].gamma_raw",
+      "before": 1.1102230246251565e-16,
+      "after": -2.220446049250313e-16,
+      "kind": "numeric",
+      "absolute_difference": 3.3306690738754696e-16
+    },
+    {
+      "path": "$.frames[2].error[1][0]",
+      "before": 0.1611949025625384,
+      "after": 0.16119490256253854,
+      "kind": "numeric",
+      "absolute_difference": 1.3877787807814457e-16
+    },
+    {
+      "path": "$.frames[2].mean[1][0]",
+      "before": 0.18452137211364864,
+      "after": 0.18452137211364877,
+      "kind": "numeric",
+      "absolute_difference": 1.3877787807814457e-16
+    }
+  ],
+  "changes": [
+    {
+      "path": "$.frames[2].error[0][0]",
+      "before": -0.05947117697148025,
+      "after": -0.05947117697147881,
+      "kind": "numeric",
+      "absolute_difference": 1.4432899320127035e-15
+    },
+    {
+      "path": "$.frames[2].error[0][1]",
+      "before": -0.3025915112859189,
+      "after": -0.3025915112859185,
+      "kind": "numeric",
+      "absolute_difference": 3.885780586188048e-16
+    },
+    {
+      "path": "$.frames[2].error[1][0]",
+      "before": 0.1611949025625384,
+      "after": 0.16119490256253854,
+      "kind": "numeric",
+      "absolute_difference": 1.3877787807814457e-16
+    },
+    {
+      "path": "$.frames[2].error[1][1]",
+      "before": -0.03161314170514505,
+      "after": -0.03161314170514508,
+      "kind": "numeric",
+      "absolute_difference": 2.7755575615628914e-17
+    },
+    {
+      "path": "$.frames[2].error[2][0]",
+      "before": 0.09829717149902086,
+      "after": 0.09829717149902084,
+      "kind": "numeric",
+      "absolute_difference": 1.3877787807814457e-17
+    },
+    {
+      "path": "$.frames[2].mean[0][0]",
+      "before": -0.04912396821838384,
+      "after": -0.0491239682183824,
+      "kind": "numeric",
+      "absolute_difference": 1.4432899320127035e-15
+    },
+    {
+      "path": "$.frames[2].mean[0][1]",
+      "before": 0.04269117137938781,
+      "after": 0.04269117137938821,
+      "kind": "numeric",
+      "absolute_difference": 3.95516952522712e-16
+    },
+    {
+      "path": "$.frames[2].mean[0][2]",
+      "before": 0.004982380577170214,
+      "after": 0.004982380577170224,
+      "kind": "numeric",
+      "absolute_difference": 9.540979117872439e-18
+    },
+    {
+      "path": "$.frames[2].mean[0][3]",
+      "before": 4.025979989968726e-05,
+      "after": 4.025979989968727e-05,
+      "kind": "numeric",
+      "absolute_difference": 6.776263578034403e-21
+    },
+    {
+      "path": "$.frames[2].mean[0][4]",
+      "before": 3.017497803034314e-08,
+      "after": 3.017497803034312e-08,
+      "kind": "numeric",
+      "absolute_difference": 1.9852334701272664e-23
+    },
+    {
+      "path": "$.frames[2].mean[0][5]",
+      "before": 2.254654781948894e-12,
+      "after": 2.2546547819488925e-12,
+      "kind": "numeric",
+      "absolute_difference": 1.6155871338926322e-27
+    },
+    {
+      "path": "$.frames[2].mean[1][0]",
+      "before": 0.18452137211364864,
+      "after": 0.18452137211364877,
+      "kind": "numeric",
+      "absolute_difference": 1.3877787807814457e-16
+    },
+    {
+      "path": "$.frames[2].mean[1][1]",
+      "before": 0.12276161317621577,
+      "after": 0.12276161317621574,
+      "kind": "numeric",
+      "absolute_difference": 2.7755575615628914e-17
+    },
+    {
+      "path": "$.frames[2].mean[1][2]",
+      "before": 0.007975485291468869,
+      "after": 0.007975485291468864,
+      "kind": "numeric",
+      "absolute_difference": 5.204170427930421e-18
+    },
+    {
+      "path": "$.frames[2].mean[1][3]",
+      "before": 5.265758894474576e-05,
+      "after": 5.2657588944745715e-05,
+      "kind": "numeric",
+      "absolute_difference": 4.743384504624082e-20
+    },
+    {
+      "path": "$.frames[2].mean[1][4]",
+      "before": 3.595715205570396e-08,
+      "after": 3.595715205570393e-08,
+      "kind": "numeric",
+      "absolute_difference": 3.3087224502121107e-23
+    },
+    {
+      "path": "$.frames[2].mean[1][5]",
+      "before": 2.5615171582083387e-12,
+      "after": 2.561517158208336e-12,
+      "kind": "numeric",
+      "absolute_difference": 2.8272774843121063e-27
+    },
+    {
+      "path": "$.frames[2].mean[2][0]",
+      "before": 0.01597511486556533,
+      "after": 0.015975114865565316,
+      "kind": "numeric",
+      "absolute_difference": 1.3877787807814457e-17
+    },
+    {
+      "path": "$.frames[2].mean[2][1]",
+      "before": 0.009375593811802214,
+      "after": 0.009375593811802205,
+      "kind": "numeric",
+      "absolute_difference": 8.673617379884035e-18
+    },
+    {
+      "path": "$.frames[2].mean[2][2]",
+      "before": 0.0005723981961266117,
+      "after": 0.000572398196126611,
+      "kind": "numeric",
+      "absolute_difference": 6.505213034913027e-19
+    },
+    {
+      "path": "$.frames[2].mean[2][3]",
+      "before": 3.6568391425382888e-06,
+      "after": 3.6568391425382845e-06,
+      "kind": "numeric",
+      "absolute_difference": 4.235164736271502e-21
+    },
+    {
+      "path": "$.frames[2].mean[2][4]",
+      "before": 2.4524681204882022e-09,
+      "after": 2.4524681204881993e-09,
+      "kind": "numeric",
+      "absolute_difference": 2.895132143935597e-24
+    },
+    {
+      "path": "$.frames[2].mean[2][5]",
+      "before": 1.7296325489167973e-13,
+      "after": 1.7296325489167953e-13,
+      "kind": "numeric",
+      "absolute_difference": 2.0194839173657902e-28
+    },
+    {
+      "path": "$.frames[2].mean[3][0]",
+      "before": 6.974443330690697e-05,
+      "after": 6.97444333069069e-05,
+      "kind": "numeric",
+      "absolute_difference": 6.776263578034403e-20
+    },
+    {
+      "path": "$.frames[2].mean[3][1]",
+      "before": 4.000258440569935e-05,
+      "after": 4.00025844056993e-05,
+      "kind": "numeric",
+      "absolute_difference": 4.743384504624082e-20
+    },
+    {
+      "path": "$.frames[2].mean[3][2]",
+      "before": 2.4113551170671194e-06,
+      "after": 2.4113551170671164e-06,
+      "kind": "numeric",
+      "absolute_difference": 2.964615315390051e-21
+    },
+    {
+      "path": "$.frames[2].mean[3][3]",
+      "before": 1.5295698344739044e-08,
+      "after": 1.5295698344739025e-08,
+      "kind": "numeric",
+      "absolute_difference": 1.9852334701272664e-23
+    },
+    {
+      "path": "$.frames[2].mean[3][4]",
+      "before": 1.0216837481262092e-11,
+      "after": 1.0216837481262081e-11,
+      "kind": "numeric",
+      "absolute_difference": 1.1309109937248425e-26
+    },
+    {
+      "path": "$.frames[2].mean[3][5]",
+      "before": 7.189102584136131e-16,
+      "after": 7.189102584136122e-16,
+      "kind": "numeric",
+      "absolute_difference": 8.874685183736383e-31
+    },
+    {
+      "path": "$.frames[2].std[0][0]",
+      "before": 0.10505106666152803,
+      "after": 0.10505106666152592,
+      "kind": "numeric",
+      "absolute_difference": 2.1094237467877974e-15
+    },
+    {
+      "path": "$.frames[2].std[1][0]",
+      "before": 0.7046943244536674,
+      "after": 0.7046943244536673,
+      "kind": "numeric",
+      "absolute_difference": 1.1102230246251565e-16
+    },
+    {
+      "path": "$.gp_updates[4].gamma",
+      "before": 1.1102230246251565e-16,
+      "after": 0.0,
+      "kind": "numeric",
+      "absolute_difference": 1.1102230246251565e-16
+    },
+    {
+      "path": "$.gp_updates[4].gamma_raw",
+      "before": 1.1102230246251565e-16,
+      "after": -2.220446049250313e-16,
+      "kind": "numeric",
+      "absolute_difference": 3.3306690738754696e-16
+    },
+    {
+      "path": "$.gp_updates[5].removal_score",
+      "before": 0.020011442229061226,
+      "after": 0.020011442229061253,
+      "kind": "numeric",
+      "absolute_difference": 2.7755575615628914e-17
+    }
+  ]
+}

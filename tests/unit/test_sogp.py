@@ -264,6 +264,101 @@ def test_prolonged_dense_stream_remains_finite_psd_and_bounded() -> None:
     assert gp.projected_count > 100
 
 
+def test_dense_dictionary_novelty_remains_nonnegative_before_pruning() -> None:
+    # Minimized from a real dense stream: each retained row is needed to reproduce
+    # cancellation in the recursive inverse on the development float64 backend.
+    indices = [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        8,
+        11,
+        12,
+        16,
+        17,
+        18,
+        19,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        29,
+        30,
+        31,
+        32,
+        35,
+        36,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        49,
+        51,
+        53,
+        54,
+        55,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        64,
+        65,
+        68,
+        69,
+        70,
+        71,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        98,
+        99,
+        101,
+        102,
+    ]
+    points = np.random.default_rng(4).uniform([0, 0], [60, 40], (103, 2))[indices]
+    gp = SparseOnlineGP(max_basis=128)
+    gp.update(points, np.zeros(len(points)))
+
+    assert gp.observation_count == len(points)
+    assert gp.pruned_count == 0
+    assert gp.last_update_events[-1]["update_kind"] == "projected"
+    assert all(event["gamma"] >= 0 for event in gp.last_update_events)
+    covariance = gp.posterior_covariance(points)
+    assert np.linalg.eigvalsh(covariance).min() > -1e-8
+    assert np.all(np.isfinite(gp.predict(points, variance="latent").mean))
+
+
 def test_covariance_symmetry_cross_consistency_and_predictive_noise() -> None:
     rng = np.random.default_rng(31)
     gp = SparseOnlineGP(max_basis=8)

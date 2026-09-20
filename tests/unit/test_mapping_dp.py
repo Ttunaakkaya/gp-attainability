@@ -20,10 +20,12 @@ def _config(**kwargs: Any) -> MappingConfig:
 
 @pytest.mark.parametrize("robots", [2, 3, 4])
 @pytest.mark.parametrize("disturbed", [False, True])
+@pytest.mark.parametrize("seed", [2, 7])
 def test_dp_qp_loop_preserves_actual_measurements_and_geometry(
-    robots: int, disturbed: bool
+    robots: int, disturbed: bool, seed: int
 ) -> None:
     config = _config(
+        seed=seed,
         robot_count=robots,
         dropout_prob=0.3 if disturbed else 0,
         drift_strength=0.35 if disturbed else 0,
@@ -62,7 +64,14 @@ def test_dp_qp_loop_preserves_actual_measurements_and_geometry(
         else:
             plan = lookup[sample["plan_id"]]
             assert sample["time_s"] == plan["sample_times_s"][0]
-            assert sample["planned_position"] == plan["targets_by_epoch"][0][sample["robot_id"]]
+            # The geometric reference interpolates to this target; its arithmetic
+            # can leave a sub-picometre residual on different BLAS/platform builds.
+            np.testing.assert_allclose(
+                sample["planned_position"],
+                plan["targets_by_epoch"][0][sample["robot_id"]],
+                rtol=0,
+                atol=1e-12,
+            )
 
 
 def test_every_forecast_uses_received_actual_belief_and_one_joint_plan_prefix() -> None:

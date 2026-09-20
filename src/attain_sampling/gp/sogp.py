@@ -179,6 +179,23 @@ class SparseOnlineGP:
         ck = state.c @ kernel
         projection = state.q @ kernel
         raw_gamma = self.signal_variance - float(kernel @ projection)
+        # A dense dictionary can make k.T @ Q @ k subtract large cancelling
+        # terms. Resolve novelty near its float64 contraction error scale from
+        # the unregularized Gram factor instead of relaxing the variance guard.
+        roundoff = (
+            (2 * len(kernel) + 1)
+            * np.finfo(np.float64).eps
+            * (self.signal_variance + np.abs(kernel) @ (np.abs(state.q) @ np.abs(kernel)))
+        )
+        if len(kernel) and abs(raw_gamma) <= roundoff:
+            factor = np.asarray(
+                np.linalg.cholesky(self._kernel(state.basis, state.basis)), dtype=np.float64
+            )
+            whitened = _solve(factor, kernel)
+            projection = _solve(factor, whitened, transpose=True)
+            raw_gamma = self.signal_variance - float(whitened @ whitened)
+            inverse_factor = _solve(factor, np.eye(len(kernel)))
+            state.q = inverse_factor.T @ inverse_factor
         gamma = float(self._nonnegative(np.array([raw_gamma]))[0])
         variance = float(self._nonnegative(np.array([self.signal_variance + kernel @ ck]))[0])
         denominator = variance + self.noise_variance + self.jitter

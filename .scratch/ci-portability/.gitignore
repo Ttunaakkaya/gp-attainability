@@ -1,0 +1,7 @@
+# Retain comparison reports; full repeats are locally reproducible.
+*-reference/*
+!*-reference/report.json
+# The independently identified numerical checkpoint is retained in full.
+!numerical-reference/*
+# Preliminary comparison, superseded by final-reference.
+pre-fix-reference/
