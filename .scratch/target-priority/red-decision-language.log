@@ -1,0 +1,15 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+____________ test_every_recorded_decision_code_has_plain_language _____________
+
+    def test_every_recorded_decision_code_has_plain_language() -> None:
+        source = Path(policy.__file__).read_text(encoding="utf-8")
+        reasons = set(re.findall(r'reason = "([a-z_]+)"', source))
+>       assert len(reasons) == 6
+E       AssertionError: assert 7 == 6
+E        +  where 7 = len({'candidate_improves_mission_forecast_beyond_switch_margin', 'candidate_reaches_target_while_retained_plan_misses', 'n..._disabled_by_ablation', 'retained_plan_no_longer_executable_from_here', 'retained_plan_shares_no_remaining_epoch', ...})
+
+tests\integration\test_demo_showcases.py:166: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/integration/test_demo_showcases.py::test_every_recorded_decision_code_has_plain_language
+1 failed, 9 deselected in 0.73s

@@ -33,6 +33,7 @@ const REASONS = {
   retained_plan_shares_no_remaining_epoch: "the plan in force had no epochs left",
   retained_plan_no_longer_executable_from_here: "the plan in force was no longer executable from where the robots actually are",
   candidate_improves_mission_forecast_beyond_switch_margin: "a new candidate lowers the mission-end forecast by more than the switch margin",
+  candidate_reaches_target_while_retained_plan_misses: "the chosen route is predicted to meet the fixed target while the plan in force would miss it",
   retained_plan_within_switch_margin_of_the_best_candidate: "no candidate beats the plan in force by more than the switch margin",
 };
 const MODEL_LABELS = { holonomic: "Holonomic", usv: "USV v0", usv_curvature: "Turn-constrained USV" };

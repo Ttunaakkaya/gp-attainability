@@ -16,9 +16,16 @@ The second increment adds advancement through complete physical ticks, immutable
 diagnostic views and one-time finalization; see its
 [completion report](../mission-tick-execution/completion.md). The independently
 documented [CI numerical repair](../ci-portability/completion.md) precedes this
-refactor. Next, return to the bounded recovery mechanism and estimator/source
-questions. State copying, warning/recovery logic and charged planning delay remain
-later work; these structural changes establish no new scientific improvement claim.
+refactor. A third bounded increment isolates plan selection and gives the fixed
+target priority only when the retained forecast misses and an already-evaluated
+candidate meets it; see [implementation evidence](../target-priority/completion.md).
+A source-based ExactGP pilot with five arms, three drift levels and one separately
+declared grid diagnostic found no target-crossing opportunities or added successes.
+The [preserved result](../target-priority/pilot-summary.md) leaves the mechanism gate
+open and exposes candidate-grid reachability as a prerequisite to examine. Next,
+resolve candidate/action generation and the ordinary-continuation forecast with
+matched controls. State copying and charged planning delay remain later work; no
+recovery improvement is claimed.
 
 ## Purpose and research question
 

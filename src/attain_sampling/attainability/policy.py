@@ -11,6 +11,8 @@ three things masterplan v2 §9 asks for, and nothing else:
    re-checked from the *current* actual state and competes as a candidate. It is
    abandoned only when another candidate improves the mission-end forecast by more
    than an explicit margin, so the fleet does not oscillate between equal plans.
+   A configured fixed target takes priority: a retained miss cannot displace an
+   already-evaluated candidate whose deadline forecast meets that target.
 3. **Remaining-mission budget.** Every candidate is extended to the common deadline
    by an explicitly defined hold continuation, so all candidates are scored over the
    *same* remaining sensing epochs. A short horizon is never presented as a
@@ -180,6 +182,102 @@ def _retained_remainder(
     if not aligned:
         return None
     return np.asarray(aligned, dtype=np.float64)
+
+
+@dataclass(frozen=True, slots=True)
+class _PlanDecision:
+    """Scalar selection evidence; the input candidate records remain caller-owned."""
+
+    selected_index: int
+    action: str
+    reason: str
+    retained_id: str | None
+    retained_mean: float | None
+    selected_mean: float
+    best_mean: float
+    switch_margin: float
+    target_margin: float | None
+    target_status: str
+
+
+def _decide_plan(
+    evaluated: list[dict[str, Any]],
+    *,
+    current_mean_variance: float,
+    had_plan: bool,
+    retained_id: str | None,
+    settings: PolicySettings,
+) -> _PlanDecision:
+    """Rank the existing candidates and apply retention without mutating evidence.
+
+    The fixed target takes priority over hysteresis only for a forecast crossing.
+    Candidate-set risk remains distinct from the selected route's forecast.
+    """
+    accepted = [candidate for candidate in evaluated if candidate["status"] == "accepted"]
+    if not accepted:
+        raise FloatingPointError(
+            "no candidate survived execution-aware evaluation at this decision point"
+        )
+    # Equal remaining epochs for every candidate, so mission-end value is comparable.
+    best = min(
+        accepted,
+        key=lambda candidate: (
+            candidate["mission_end_mean_variance"],
+            candidate["travel_m"],
+            candidate["candidate_id"],
+        ),
+    )
+    retained = next(
+        (candidate for candidate in accepted if candidate["candidate_id"] == retained_id), None
+    )
+    margin = settings.switch_margin * current_mean_variance
+    chosen = best
+    action = "initial" if not had_plan else "replaced"
+    # The reason must say what actually happened, so an ablation that never compared
+    # against the plan in force cannot report that a candidate beat it.
+    if not had_plan:
+        reason = "no_plan_in_force"
+    elif not settings.retain_plan:
+        reason = "plan_retention_disabled_by_ablation"
+    elif retained_id is None:
+        reason = "retained_plan_shares_no_remaining_epoch"
+    elif retained is None:
+        reason = "retained_plan_no_longer_executable_from_here"
+    else:
+        reason = "candidate_improves_mission_forecast_beyond_switch_margin"
+    if retained is not None:
+        gain = retained["mission_end_mean_variance"] - best["mission_end_mean_variance"]
+        target = settings.target_mean_variance
+        if (
+            target is not None
+            and best["mission_end_mean_variance"] <= target < retained["mission_end_mean_variance"]
+        ):
+            reason = "candidate_reaches_target_while_retained_plan_misses"
+        elif gain <= margin:
+            chosen, action = retained, "retained"
+            reason = "retained_plan_within_switch_margin_of_the_best_candidate"
+    target = settings.target_mean_variance
+    best_mean = float(best["mission_end_mean_variance"])
+    if target is None:
+        target_status = "no_mission_target_configured"
+    elif best_mean <= target:
+        target_status = "forecast_attainable_in_candidate_set"
+    else:
+        target_status = "no_candidate_forecast_reaches_target"
+    return _PlanDecision(
+        selected_index=next(index for index, row in enumerate(evaluated) if row is chosen),
+        action=action,
+        reason=reason,
+        retained_id=retained_id if retained is not None else None,
+        retained_mean=(
+            float(retained["mission_end_mean_variance"]) if retained is not None else None
+        ),
+        selected_mean=float(chosen["mission_end_mean_variance"]),
+        best_mean=best_mean,
+        switch_margin=margin,
+        target_margin=None if target is None else target - best_mean,
+        target_status=target_status,
+    )
 
 
 def manage_plan(
@@ -378,44 +476,14 @@ def manage_plan(
         )
         evaluated.append(record)
 
-    accepted = [candidate for candidate in evaluated if candidate["status"] == "accepted"]
-    if not accepted:
-        raise FloatingPointError(
-            "no candidate survived execution-aware evaluation at this decision point"
-        )
-    # Equal remaining epochs for every candidate, so mission-end value is comparable.
-    best = min(
-        accepted,
-        key=lambda candidate: (
-            candidate["mission_end_mean_variance"],
-            candidate["travel_m"],
-            candidate["candidate_id"],
-        ),
+    selection = _decide_plan(
+        evaluated,
+        current_mean_variance=float(np.mean(gp.predict(queries, variance="latent").variance)),
+        had_plan=retained_plan is not None,
+        retained_id=retained_id,
+        settings=settings,
     )
-    retained = next(
-        (candidate for candidate in accepted if candidate["candidate_id"] == retained_id), None
-    )
-    current_mean = float(np.mean(gp.predict(queries, variance="latent").variance))
-    margin = settings.switch_margin * current_mean
-    chosen = best
-    action = "initial" if retained_plan is None else "replaced"
-    # The reason must say what actually happened, so an ablation that never compared
-    # against the plan in force cannot report that a candidate beat it.
-    if retained_plan is None:
-        reason = "no_plan_in_force"
-    elif not settings.retain_plan:
-        reason = "plan_retention_disabled_by_ablation"
-    elif retained_targets is None:
-        reason = "retained_plan_shares_no_remaining_epoch"
-    elif retained is None:
-        reason = "retained_plan_no_longer_executable_from_here"
-    else:
-        reason = "candidate_improves_mission_forecast_beyond_switch_margin"
-    if retained is not None:
-        gain = retained["mission_end_mean_variance"] - best["mission_end_mean_variance"]
-        if gain <= margin:
-            chosen, action = retained, "retained"
-            reason = "retained_plan_within_switch_margin_of_the_best_candidate"
+    chosen = evaluated[selection.selected_index]
     chosen["selected"] = True
     # Execution steers toward the commanded cells; the forecast is computed at the
     # positions the rollout says the controller would actually reach.
@@ -425,20 +493,13 @@ def manage_plan(
     forecast = _prefix_forecast(gp, queries, selected_sites, selected_times, budget.now_s)
 
     target = settings.target_mean_variance
-    mission_end_mean = chosen["mission_end_mean_variance"]
-    best_available = min(candidate["mission_end_mean_variance"] for candidate in accepted)
-    if target is None:
-        target_status = "no_mission_target_configured"
-    elif best_available <= target:
-        target_status = "forecast_attainable_in_candidate_set"
-    else:
-        target_status = "no_candidate_forecast_reaches_target"
+    mission_end_mean = selection.selected_mean
     target_risk = {
         "target_mean_variance": target,
         "selected_mission_end_mean_variance": mission_end_mean,
-        "best_candidate_mission_end_mean_variance": best_available,
-        "margin": None if target is None else target - best_available,
-        "status": target_status,
+        "best_candidate_mission_end_mean_variance": selection.best_mean,
+        "margin": selection.target_margin,
+        "status": selection.target_status,
         "remaining_time_s": budget.remaining_time_s,
         "remaining_sample_epochs": budget.remaining_sample_epochs,
         "forecast_covers_mission_end": True,
@@ -478,20 +539,18 @@ def manage_plan(
         "nominal_checks": dp_plan.get("nominal_checks"),
         "budget": budget.as_dict(),
         "decision": {
-            "action": action,
+            "action": selection.action,
             "trigger": trigger,
-            "reason": reason,
-            "retained_candidate_id": retained_id if retained is not None else None,
-            "retained_mission_end_mean_variance": (
-                retained["mission_end_mean_variance"] if retained is not None else None
-            ),
+            "reason": selection.reason,
+            "retained_candidate_id": selection.retained_id,
+            "retained_mission_end_mean_variance": selection.retained_mean,
             "selected_mission_end_mean_variance": mission_end_mean,
             "expected_gain": (
-                retained["mission_end_mean_variance"] - mission_end_mean
-                if retained is not None
+                selection.retained_mean - mission_end_mean
+                if selection.retained_mean is not None
                 else None
             ),
-            "switch_margin_variance": margin,
+            "switch_margin_variance": selection.switch_margin,
             # Capped routes were never evaluated; they are not failed rollouts.
             "candidates_evaluated": sum(
                 candidate["status"] in {"accepted", "rejected"} for candidate in evaluated

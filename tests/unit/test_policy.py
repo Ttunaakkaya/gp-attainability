@@ -313,3 +313,113 @@ def test_invalid_policy_settings_are_rejected(settings):
 def test_an_undeclared_trigger_is_rejected():
     with pytest.raises(ValueError):
         decide(trigger="because_i_felt_like_it")
+
+
+@pytest.fixture
+def slightly_worse_retained_plan():
+    stale = copy.deepcopy(decide())
+    targets = np.asarray(stale["targets_by_epoch"], dtype=float)
+    targets[:, :, 0] = np.maximum(0.0, targets[:, :, 0] - 0.1)
+    stale["targets_by_epoch"] = targets.tolist()
+    return stale
+
+
+def test_fixed_target_takes_priority_over_retaining_a_route_that_misses_it(
+    slightly_worse_retained_plan,
+):
+    stale = slightly_worse_retained_plan
+    # Real-GP development fixture: best ~= .76409138, retained ~= .76411325.
+    # This fixed target lies between them; the gain is below the 1% switch margin.
+    plan = decide(
+        retained_plan=stale,
+        trigger="periodic_sampling_epoch",
+        plan_version=1,
+        settings=PolicySettings(target_mean_variance=0.76410),
+    )
+
+    assert plan["decision"]["action"] == "replaced"
+    assert plan["selected_candidate_id"] != "retained-plan"
+    assert plan["decision"]["reason"] == "candidate_reaches_target_while_retained_plan_misses"
+    assert plan["decision"]["retained_mission_end_mean_variance"] > 0.76410
+    assert plan["mission_end_forecast"]["mean_variance"] <= 0.76410
+    assert 0 < plan["decision"]["expected_gain"] < plan["decision"]["switch_margin_variance"]
+    assert plan["decision"]["candidates_evaluated"] == 6
+
+
+@pytest.mark.parametrize("target", [None, 0.75, 0.78])
+def test_retention_margin_still_applies_without_a_target_crossing(
+    slightly_worse_retained_plan, target
+):
+    plan = decide(
+        retained_plan=slightly_worse_retained_plan,
+        settings=PolicySettings(target_mean_variance=target),
+    )
+
+    assert plan["decision"]["action"] == "retained"
+    assert plan["decision"]["reason"] == "retained_plan_within_switch_margin_of_the_best_candidate"
+    assert plan["selected_candidate_id"] == "retained-plan"
+    risk = plan["target_risk"]
+    assert (
+        risk["selected_mission_end_mean_variance"]
+        > risk["best_candidate_mission_end_mean_variance"]
+    )
+    if target is None:
+        assert risk["margin"] is None
+        assert risk["status"] == "no_mission_target_configured"
+    elif target == 0.75:
+        assert risk["margin"] < 0
+        assert risk["status"] == "no_candidate_forecast_reaches_target"
+    else:
+        assert risk["margin"] > target - risk["selected_mission_end_mean_variance"] > 0
+        assert risk["status"] == "forecast_attainable_in_candidate_set"
+
+
+@pytest.mark.parametrize("boundary,action", [("best", "replaced"), ("retained", "retained")])
+def test_equality_meets_the_fixed_target_without_relaxing_it(
+    slightly_worse_retained_plan, boundary, action
+):
+    # Obtain the real fixture's candidate values first, then put the given target
+    # exactly on one boundary. The expected action follows the fixed-target contract.
+    before = decide(retained_plan=slightly_worse_retained_plan)
+    target = (
+        before["target_risk"]["best_candidate_mission_end_mean_variance"]
+        if boundary == "best"
+        else before["decision"]["retained_mission_end_mean_variance"]
+    )
+    plan = decide(
+        retained_plan=slightly_worse_retained_plan,
+        settings=PolicySettings(target_mean_variance=target),
+    )
+
+    assert plan["decision"]["action"] == action
+    assert plan["mission_end_forecast"]["mean_variance"] == target
+
+
+def test_target_priority_cannot_select_a_route_rejected_by_execution(
+    slightly_worse_retained_plan,
+):
+    plan = decide(
+        retained_plan=slightly_worse_retained_plan,
+        stepper=hold_only_stepper(),
+        settings=PolicySettings(target_mean_variance=0.76410),
+    )
+
+    assert plan["selected_candidate_id"] == "nominal-hold"
+    assert plan["decision"]["reason"] == "retained_plan_no_longer_executable_from_here"
+    assert plan["target_risk"]["status"] == "no_candidate_forecast_reaches_target"
+    assert len(accepted(plan)) == 1
+
+
+def test_configured_target_preserves_the_explicit_retention_ablation(
+    slightly_worse_retained_plan,
+):
+    plan = decide(
+        retained_plan=slightly_worse_retained_plan,
+        settings=PolicySettings(retain_plan=False, target_mean_variance=0.76410),
+    )
+
+    assert plan["decision"]["action"] == "replaced"
+    assert plan["decision"]["reason"] == "plan_retention_disabled_by_ablation"
+    assert plan["decision"]["retained_candidate_id"] is None
+    assert all(row["source"] != "retained" for row in plan["candidates"])
+    assert plan["mission_end_forecast"]["mean_variance"] <= 0.76410

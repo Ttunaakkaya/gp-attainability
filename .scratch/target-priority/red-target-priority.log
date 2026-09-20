@@ -1,0 +1,29 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+___ test_fixed_target_takes_priority_over_retaining_a_route_that_misses_it ____
+
+    def test_fixed_target_takes_priority_over_retaining_a_route_that_misses_it():
+        first = decide()
+        stale = copy.deepcopy(first)
+        targets = np.asarray(stale["targets_by_epoch"], dtype=float)
+        targets[:, :, 0] = np.maximum(0.0, targets[:, :, 0] - 0.1)
+        stale["targets_by_epoch"] = targets.tolist()
+        # Real-GP development fixture: best ~= .76409138, retained ~= .76411325.
+        # This fixed target lies between them; the gain is below the 1% switch margin.
+        plan = decide(
+            retained_plan=stale,
+            trigger="periodic_sampling_epoch",
+            plan_version=1,
+            settings=PolicySettings(target_mean_variance=0.76410),
+        )
+    
+>       assert plan["decision"]["action"] == "replaced"
+E       AssertionError: assert 'retained' == 'replaced'
+E         
+E         - replaced
+E         + retained
+
+tests\unit\test_policy.py:333: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/unit/test_policy.py::test_fixed_target_takes_priority_over_retaining_a_route_that_misses_it
+1 failed, 23 deselected in 0.43s

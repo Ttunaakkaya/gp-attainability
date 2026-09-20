@@ -163,7 +163,7 @@ def _load_script(name: str) -> ModuleType:
 def test_every_recorded_decision_code_has_plain_language() -> None:
     source = Path(policy.__file__).read_text(encoding="utf-8")
     reasons = set(re.findall(r'reason = "([a-z_]+)"', source))
-    assert len(reasons) == 6
+    assert len(reasons) == 7
     dashboard = (ROOT / "src" / "attain_sampling" / "demo" / "static" / "app.js").read_text(
         encoding="utf-8"
     )

@@ -251,3 +251,24 @@ No repeated grilling or individual skill invocation is needed. Return to the
 bounded recovery mechanism and estimator/source questions before expanding the
 architecture. Predecision copying, recovery benefit and charged planning delay
 remain to be established; the existing mission contract is unchanged.
+
+
+## Recovery pilot and selection correction - 20 September 2026
+
+The user requested continuing with the needed skills and improving the existing
+code. Research, a throwaway prototype and a bounded plan-selection refactor followed.
+The fixed-target exception to retention is implemented and recorded as D063; it does
+not change the original mission resources or relabel historical evidence. Selection
+and its explanations now have one private pure implementation.
+
+The real-GP logic regression reproduced a retained miss despite an evaluated route
+meeting the target. The separate 30-mission development pilot (five arms, three
+drift levels, original and diagnostic grids) found no target-crossing opportunities
+and no added recovery successes. B2 remains a necessary comparator. Preserve this
+negative result and the grid-reachability diagnosis; no further target/grid/seed
+search was performed. The pilot is not held-out or a planning-delay experiment.
+
+See the [pilot verdict](../target-priority/pilot-summary.md) and
+[completion evidence](../target-priority/completion.md). Next resolve candidate
+generation and a named ordinary continuation before expanding execution architecture.
+The prior research choices remain in force; repeat grilling is unnecessary.

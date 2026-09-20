@@ -5,6 +5,12 @@ M2 timed candidate search and M3 belief backends. This is the proposed policy **
 not an ECC2025 reproduction and not evidence that P is better than B3. See the
 [M4 development report](../reports/m4_results_2026-09-15.md) for measured evidence.
 
+20 September 2026 update: the selection section below records the fixed-target
+priority correction. Earlier implementation descriptions and measured results
+remain historical evidence; the correction does not rerun or replace them. See
+[the current spec](../.scratch/target-priority/spec.md) and
+[the bounded mechanism investigation](research/recovery_mechanism_pilot_2026-09-20.md).
+
 ## What P adds to B3
 
 B3 replans periodically from the real posterior and scores each candidate on the
@@ -98,11 +104,32 @@ it carries no bound property at all.
 
 ## Selection and retention
 
+**Historical rule, 15 September 2026 (D025).**
 Selection is by mission-end mean latent variance over those equal epochs, then
 travel, then candidate id. The plan in force is kept unless another candidate
 improves that value by more than `p_switch_margin` times the current mean variance
 (default 1%), which stops the fleet oscillating between equivalent plans. The margin,
 the retained value, the selected value and the expected gain are all recorded.
+
+**Current rule, 20 September 2026 (D063).** The fixed mission target takes priority
+over retention only when `best_mean <= target < retained_mean`, where both values
+come from accepted candidates under the same remaining-budget forecast. Choose the
+already-evaluated best candidate in this case, even if the improvement is within
+the switching margin, and record the target-crossing reason. Equality meets the
+target; no additional numerical tolerance relaxes it. With no configured target,
+both candidates meeting it, or both missing it, the previous switching margin,
+tie breaks and selection behavior remain unchanged.
+
+This is a source-versioned fixed-target contract correction: D063 supersedes D025
+only for that case. It changes no candidate search, execution constraints, sensing
+budget, target or deadline. Historical P artifacts retain the old rule and must
+not be relabeled as evidence for the corrected version. The small prototype
+separately compares the decision with historical P and zero-margin P; passing a
+decision test or observing a candidate forecast crossing establishes neither
+empirical recovery nor superiority over ordinary adaptive replanning. In particular,
+the route-plus-hold forecast is not an ordinary-policy continuation forecast, and
+this correction does not establish warning lead time or benefit after planning
+delay.
 
 `switch_margin`, `deviation_trigger_m` and `intervention_trigger_mps` are development
 settings chosen against physical scales — a fraction of the per-interval reachable
@@ -136,8 +163,9 @@ without a separate code path:
 ```
 
 `--target-mean-variance` sets the fixed mission target the risk record is measured
-against. It is chosen before a run and shared by every method; it is not a threshold
-the policy may relax.
+against and, from the 20 September correction, the target-priority exception above.
+It is chosen before a run and shared by every method; it is not a threshold the
+policy may relax.
 
 ## Evidence contract
 
@@ -152,7 +180,11 @@ the policy may relax.
   former, so a plan record never silently commands a predicted landing point.
 - `plans[].mission_end_forecast`: value, continuation epochs and scope.
 - `plans[].target_risk`: configured target, best candidate value, margin, status and
-  claim limits.
+  claim limits. `margin` remains target minus the best accepted candidate's forecast;
+  `status` likewise assesses the candidate set. The separate
+  `selected_mission_end_mean_variance` records the selected candidate. These fields
+  keep their historical meanings; a candidate-set assessment is not a forecast of
+  the ordinary policy's adaptive continuation.
 - `plan_events`: one row per decision, mirroring the plan and adding the measured
   deviation and control correction that triggered it.
 

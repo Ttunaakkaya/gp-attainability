@@ -64,6 +64,10 @@ REASONS = {
     "candidate_improves_mission_forecast_beyond_switch_margin": (
         "a new candidate lowers the mission-end forecast by more than the switch margin"
     ),
+    "candidate_reaches_target_while_retained_plan_misses": (
+        "the chosen route is predicted to meet the fixed target "
+        "while the plan in force would miss it"
+    ),
     "retained_plan_within_switch_margin_of_the_best_candidate": (
         "no candidate beats the plan in force by more than the switch margin"
     ),

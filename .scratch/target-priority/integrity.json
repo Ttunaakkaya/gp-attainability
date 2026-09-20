@@ -1,0 +1,11 @@
+{
+  "base": "bf6bdf3",
+  "prototype_commit": "f54435a4629135df3277aa5a6a942dbf99ae2f84",
+  "sha256": {
+    "src/attain_sampling/attainability/policy.py": "fdf3db4b0fefa205b60e521ae22e8ad38ff13d33326bae116331a5b0b84ab9b5",
+    "tests/unit/test_policy.py": "7d9d07696cdd3091251bd6118b1c0bc885944d4da4c40c7923c47f11cd216783",
+    "src/attain_sampling/demo/static/app.js": "101f0787b978796b55734718812ef1d82a798b53b8f8179af7cd9e228582dbcc",
+    "scripts/make_showcases.py": "f3500da99a68c1bbe81d83c8f4a6f02b5a5b4c10e3a6d530f3cb80808b4a5d02",
+    "tests/integration/test_demo_showcases.py": "209480a7e9e649aacefc31517481fd51312dc97cec3e4912c602ec6a4b18a616"
+  }
+}
