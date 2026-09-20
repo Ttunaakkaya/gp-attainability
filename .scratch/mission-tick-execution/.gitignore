@@ -1,0 +1,4 @@
+# Reproducible raw runs stay local; preserve reports and validation logs.
+*-reference/**
+!*-reference/**/
+!*-reference/**/report.json

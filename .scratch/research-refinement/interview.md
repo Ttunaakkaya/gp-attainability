@@ -2,7 +2,7 @@
 
 Status: research direction confirmed; `AGENTS.md` setup applied. The algorithm
 and implementation design remain open.
-Updated: 18 September 2026.
+Updated: 20 September 2026.
 
 This note records the current user's answers. It is not an implementation spec or
 a replacement masterplan. Existing experiments, reports, and negative results remain
@@ -232,3 +232,22 @@ See [the completion report](../mission-execution-ownership/completion.md) for ev
 The next bounded engineering increment is advancement through complete physical
 ticks. Paired state copying, recovery choices and charged planning delay remain
 later increments, and no recovery benefit is claimed by this refactor.
+
+## Continued implementation — 20 September 2026
+
+The user requested continuing the tests and restructuring, then explicitly approved
+reading mission state, advancing one complete physical tick and finishing through
+the same execution path. The next engineering increment is now implemented and
+locally validated: 1,057 tests, 94.61% coverage, static checks, 11 independent GP
+diagnostics and zero findings in separate standards/spec reviews.
+
+The [complete-tick report](../mission-tick-execution/completion.md) records the 27
+new interface tests and exact comparisons against 14 expected cases. A preceding,
+separate [CI numerical repair](../ci-portability/completion.md) fixed the Ubuntu
+failures and passed both remote platforms. Its tiny SOGP output delta is explicit;
+the original frozen evidence remains unchanged.
+
+No repeated grilling or individual skill invocation is needed. Return to the
+bounded recovery mechanism and estimator/source questions before expanding the
+architecture. Predecision copying, recovery benefit and charged planning delay
+remain to be established; the existing mission contract is unchanged.

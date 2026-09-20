@@ -1,14 +1,14 @@
 # Stabilize unresolved SOGP dictionary novelty
 
 Status: ready-for-agent
-Execution: in-progress
+Execution: complete
 Parent: [CI portability spec](../spec.md)
 
 - [x] Reproduce negative novelty using an unmodified public dense-stream update.
 - [x] Diagnose the error using an independent factorization of the same kernel.
 - [x] Correct the supported numerical mechanism without weakening variance guards.
 - [x] Validate covariance/PSD/accuracy, transactionality and runtime impact.
-- [ ] Compare frozen mission references and pass complete quality checks and CI.
+- [x] Compare frozen mission references and pass complete quality checks and CI.
 
 ## Comments
 
@@ -19,3 +19,5 @@ until the reference comparison and full checks finish.
 
 Local implementation and checks passed; see [completion evidence](../completion.md).
 Final two-platform CI remains the closure gate.
+
+Both Ubuntu and Windows CI passed for 8314727. The closure gate is satisfied.

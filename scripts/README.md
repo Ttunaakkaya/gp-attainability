@@ -47,3 +47,14 @@ Working experiment entry points are package CLI commands: `simulate`, `benchmark
 for runnable examples. The old planned
 `run_sweep.py`/`make_figures.py`/`make_report.py` files do not exist and are not required
 for the current demo. Future work follows masterplan v2.0, not this historical scaffold.
+
+Refinement preservation checks:
+
+- `mission_reference.py check --reference <frozen-directory> --output <new-directory>`:
+  compares whole missions with the hash-verified historical evidence. The existing
+  harness and its runtime-only normalization are frozen.
+- `check_mission_execution.py --output <new-directory>`: exercises the approved
+  complete-tick interface against all 14 preserved cases. It retains comparison
+  with the original baseline and separately identifies the one SOGP case affected
+  by the documented numerical repair. The combined comparison is exact; the script
+  never replaces frozen references. Use the original capture environment.

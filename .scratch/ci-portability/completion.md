@@ -1,6 +1,6 @@
 # CI portability repair
 
-20 September 2026. Local validation complete; pushed two-platform CI is the final gate.
+20 September 2026. Complete. Local validation and both GitHub platforms pass.
 
 ## Original failure and correction
 
@@ -48,7 +48,7 @@ the 13 unaffected historical cases; this is not permission to relax comparison.
 - Ruff lint and format: passed; Mypy: 44 source files passed.
 - Independent exact-GP diagnostic: 11 passed.
 - Independent Standards review against c256bac: 0 findings.
-- Independent Spec review against c256bac: 0 implementation findings; remote CI pending.
+- Independent Spec review against c256bac: 0 implementation findings; remote CI passed afterward.
 
 The reviews checked only `gp/sogp.py`, `test_sogp.py` and `test_mapping_dp.py` against
 [the repair spec](spec.md). The reviewed production correction uses the same
@@ -57,3 +57,9 @@ unregularized Gram matrix, bounded state and transactional error handling.
 Evidence: `full-tests.log`, `full-tests-status.json`, `static-status.json`, the
 comparison reports and numerical-delta report. No tick-execution production change
 belongs to this repair commit.
+
+## Remote validation
+
+Commit `8314727` passed the complete quality workflow on both Ubuntu and Windows:
+[verified CI run](https://github.com/Ttunaakkaya/gp-attainability/actions/runs/35513324191).
+This closes the two original CI failures before the tick-execution refactor.

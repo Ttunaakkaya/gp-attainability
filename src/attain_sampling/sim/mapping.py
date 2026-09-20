@@ -9,8 +9,9 @@ from __future__ import annotations
 
 import math
 import time
+from copy import deepcopy
 from dataclasses import asdict, dataclass
-from typing import Any
+from typing import Any, Literal
 
 import numpy as np
 from numpy.typing import NDArray
@@ -966,11 +967,33 @@ def _managed_plan(
 
 def run_mapping(config: MappingConfig, method: str) -> dict[str, Any]:
     """Run a mission; rejected controls produce explicit partial failure evidence."""
-    return _MissionExecution(config, method).run()
+    return _MissionExecution(config, method).finish()
+
+
+@dataclass(frozen=True, slots=True)
+class _MissionView:
+    """Immutable observation of a fully processed physical tick, not a checkpoint."""
+
+    status: Literal["running", "completed", "failed"]
+    tick: int
+    time_s: float
+    positions: tuple[tuple[float, ...], ...]
+    headings: tuple[float, ...]
+    active_plan_id: str | None
+    samples_attempted: int
+    samples_received: int
+    samples_assimilated: int
 
 
 class _MissionExecution:
-    """Own one whole mission's state, ordering and partial failure evidence."""
+    """Own mission state and expose only complete physical ticks to diagnostic callers.
+
+    Construction closes tick zero. ``read`` observes without predicting or planning,
+    ``advance`` closes the next physical tick, and ``finish`` completes the same
+    execution path. Views cannot mutate state; artifacts are independent copies.
+    Caller pauses while running count in wall runtime, never in simulated time.
+    Terminal processing freezes the outcome, including its timing fields.
+    """
 
     def __init__(self, config: MappingConfig, method: str) -> None:
         self.config = config
@@ -979,18 +1002,63 @@ class _MissionExecution:
         self.samples: list[dict[str, Any]] = []
         self.frames: list[dict[str, Any]] = []
         self.motion: list[dict[str, Any]] = []
+        self.received = self.attempted = 0
         self.planning_started: float | None = None
         self.active_plan_id: str | None = None
         self.active_plan: dict[str, Any] | None = None
-
-    def run(self) -> dict[str, Any]:
+        self.reached_tick = 0
+        self.status: Literal["running", "completed", "failed"] = "running"
+        self._result: dict[str, Any] | None = None
         try:
-            result = self._execute()
+            self._start()
+            self._process_epoch(0)
         except ControlFailure as exc:
-            if self.planning_started is not None:
-                self.planning_s += time.perf_counter() - self.planning_started
-                self.planning_started = None
-            result = self._failed(exc)
+            self._finish_failure(exc)
+
+    def read(self) -> _MissionView:
+        """Read immutable diagnostic values without predicting or planning."""
+        return _MissionView(
+            status=self.status,
+            tick=self.reached_tick,
+            time_s=self.reached_tick * self.config.dt,
+            positions=tuple(tuple(float(value) for value in point) for point in self.positions),
+            headings=tuple(float(value) for value in self.headings),
+            active_plan_id=self.active_plan_id,
+            samples_attempted=self.attempted,
+            samples_received=self.received,
+            samples_assimilated=self.actual_gp.observation_count,
+        )
+
+    def advance(self) -> _MissionView:
+        """Execute one physical transition and all existing work due at its tick."""
+        if self.status != "running":
+            return self.read()
+        try:
+            self._move()
+            if self.reached_tick == self.end_tick:
+                if self.reached_tick % self.sample_ticks == 0:
+                    self._collect(self.reached_tick, self.segment_path[-1])
+                self._process_epoch(self.epoch + 1)
+            if self.reached_tick == self.total_ticks:
+                self._finalize(self._completed())
+        except ControlFailure as exc:
+            self._finish_failure(exc)
+        return self.read()
+
+    def finish(self) -> dict[str, Any]:
+        """Complete once and return an independent copy of the terminal artifact."""
+        while self.status == "running":
+            self.advance()
+        assert self._result is not None
+        return deepcopy(self._result)
+
+    def _finish_failure(self, failure: ControlFailure) -> None:
+        if self.planning_started is not None:
+            self.planning_s += time.perf_counter() - self.planning_started
+            self.planning_started = None
+        self._finalize(self._failed(failure))
+
+    def _finalize(self, result: dict[str, Any]) -> None:
         result["summary"].update(_control_summary(result["controls"]))
         plans = result.get("plans", [])
         plan_times = [plan["planning_wall_s"] for plan in plans]
@@ -1009,7 +1077,8 @@ class _MissionExecution:
                 ),
             }
         )
-        return result
+        self.status = result["status"]
+        self._result = result
 
     def _failed(self, failure: ControlFailure) -> dict[str, Any]:
         """Keep the last actually reached state, never pad a failed mission to its horizon."""
@@ -1245,8 +1314,8 @@ class _MissionExecution:
             else self.positions.copy()
         )
 
-    def _execute(self) -> dict[str, Any]:
-        """Execute one deterministic paired scenario and return a JSON-safe demo artifact."""
+    def _start(self) -> None:
+        """Initialize the mission and receive the original tick-zero observations."""
 
         if self.method not in AVAILABLE_METHODS:
             raise ValueError(f"method must be one of {AVAILABLE_METHODS}")
@@ -1354,278 +1423,271 @@ class _MissionExecution:
             self.planning_s += time.perf_counter() - self.planning_started
             self.planning_started = None
 
-        self.received = self.attempted = self.interventions = 0
+        self.interventions = 0
         self.distance_travelled = np.zeros(self.config.robot_count)
         self.minimum_separation = segment_min_separation(self.positions, self.positions)
         self.max_speed_observed = self.max_turn_observed = 0.0
         self.previous_targets = self.positions.copy()
 
         self._collect(0, self.positions)
-        for epoch, tick in enumerate(self.boundaries):
-            self.epoch, self.tick = epoch, tick
-            gp_started = time.perf_counter()
-            prediction = self.actual_gp.predict(self.grid, variance="latent")
-            self.gp_s += time.perf_counter() - gp_started
-            variance = np.maximum(prediction.variance, 0)
-            error = prediction.mean - self.truth
-            rmse = float(np.sqrt(np.mean(error**2)))
-            self.segment_path: list[FloatArray] = []
-            self.segment_goals: list[FloatArray] = []
-            if self.epoch < len(self.boundaries) - 1:
-                self.end_tick = self.boundaries[self.epoch + 1]
-                steps = self.end_tick - self.tick
-                if self.method in PLANNING_METHODS:
-                    self.planning_started = time.perf_counter()
-                    if self.method == "p":
-                        epoch_time = self.tick * self.config.dt
-                        lost_here = any(
-                            not sample["received"]
-                            and math.isclose(sample["time_s"], epoch_time, rel_tol=0, abs_tol=1e-9)
-                            for sample in self.samples
-                        )
-                        trigger = (
-                            "initial"
-                            if self.active_plan is None
-                            else "missed_measurement"
-                            if lost_here
-                            else "periodic_sampling_epoch"
-                        )
-                        plan, self.plan_budget = _managed_plan(
-                            self.actual_gp,
-                            self.positions,
-                            self.headings,
-                            self.grid,
-                            self.config,
-                            self.tick,
-                            len(self.plans),
-                            self.planning_failures,
-                            retained_plan=self.active_plan,
-                            trigger=trigger,
-                            controls=self.controls,
-                            previous_budget=self.plan_budget,
-                        )
-                    else:
-                        plan = _timed_dp_plan(
-                            self.actual_gp,
-                            self.positions,
-                            self.headings,
-                            self.grid,
-                            self.config,
-                            self.tick,
-                            len(self.plans),
-                            self.planning_failures,
-                        )
-                        plan["replacement_reason"] = "periodic_sampling_epoch"
-                    targets = self._activate_plan(plan, self.tick)
-                    # Both planners execute the geometric schedule toward the commanded
-                    # cell. Only P *scores* candidates at rolled-out arrival positions;
-                    # the actual QP and disturbance can still miss either.
-                    self.segment_path = _reference_path(
-                        self.positions, self.headings, targets, steps, self.config
+
+    def _process_epoch(self, epoch: int) -> None:
+        """Close prediction, outgoing planning, and frame recording at a boundary."""
+        nx, ny = self.config.grid_shape
+        self.epoch, self.tick = epoch, self.boundaries[epoch]
+        gp_started = time.perf_counter()
+        prediction = self.actual_gp.predict(self.grid, variance="latent")
+        self.gp_s += time.perf_counter() - gp_started
+        variance = np.maximum(prediction.variance, 0)
+        error = prediction.mean - self.truth
+        rmse = float(np.sqrt(np.mean(error**2)))
+        self.segment_path: list[FloatArray] = []
+        self.segment_goals: list[FloatArray] = []
+        if self.epoch < len(self.boundaries) - 1:
+            self.end_tick = self.boundaries[self.epoch + 1]
+            steps = self.end_tick - self.tick
+            if self.method in PLANNING_METHODS:
+                self.planning_started = time.perf_counter()
+                if self.method == "p":
+                    epoch_time = self.tick * self.config.dt
+                    lost_here = any(
+                        not sample["received"]
+                        and math.isclose(sample["time_s"], epoch_time, rel_tol=0, abs_tol=1e-9)
+                        for sample in self.samples
                     )
-                    self.segment_goals = [targets.copy() for _ in range(steps)]
-                    self.expected_variance[self.end_tick] = (
-                        float(plan["forecast"][1]["mean_variance"])
-                        if plan["sample_times_s"]
-                        else float(np.mean(variance))
+                    trigger = (
+                        "initial"
+                        if self.active_plan is None
+                        else "missed_measurement"
+                        if lost_here
+                        else "periodic_sampling_epoch"
                     )
-                    if plan["sample_times_s"]:
-                        self.forecast_plan_ids[self.end_tick] = plan["plan_id"]
-                    self.planning_s += time.perf_counter() - self.planning_started
-                    self.planning_started = None
-                elif self.method == "adaptive":
-                    self.planning_started = time.perf_counter()
-                    targets = _select_targets(
-                        self.actual_gp, self.positions, self.headings, self.grid, self.config, steps
-                    )
-                    self.segment_path, self.segment_goals, _ = _preview(
+                    plan, self.plan_budget = _managed_plan(
+                        self.actual_gp,
                         self.positions,
                         self.headings,
-                        targets,
+                        self.grid,
                         self.config,
                         self.tick,
-                        steps,
-                        control_events=self.controls,
+                        len(self.plans),
+                        self.planning_failures,
+                        retained_plan=self.active_plan,
+                        trigger=trigger,
+                        controls=self.controls,
+                        previous_budget=self.plan_budget,
                     )
-                    if self.end_tick % self.sample_ticks == 0:
-                        self.expected_variance[self.end_tick] = float(
-                            np.mean(
-                                self.actual_gp.fantasy_variance(self.grid, self.segment_path[-1])
-                            )
-                        )
-                    else:
-                        self.expected_variance[self.end_tick] = float(np.mean(variance))
-                    self.planning_s += time.perf_counter() - self.planning_started
-                    self.planning_started = None
                 else:
-                    self.segment_path = [
-                        self.static_paths[t] for t in range(self.tick, self.end_tick + 1)
-                    ]
-                    self.segment_goals = [
-                        self.static_goals[t] for t in range(self.tick, self.end_tick)
-                    ]
-                self.previous_targets = self.segment_goals[0]
-            self.frames.append(
-                {
-                    "time_s": self.tick * self.config.dt,
-                    "positions": self.positions.tolist(),
-                    "targets": self.previous_targets.tolist(),
-                    "headings": self.headings.tolist(),
-                    "mean": prediction.mean.reshape(ny, nx).tolist(),
-                    "std": np.sqrt(variance).reshape(ny, nx).tolist(),
-                    "error": error.reshape(ny, nx).tolist(),
-                    "rmse": rmse,
-                    "mean_variance": float(np.mean(variance)),
-                    "path_length": float(np.sum(self.distance_travelled)),
-                    "samples_received": self.received,
-                    "samples_attempted": self.attempted,
-                    "min_separation": self.minimum_separation,
-                    "planned_mean_variance": self.expected_variance.get(
-                        self.tick, float(np.mean(variance))
-                    ),
-                    "plan_id": self.active_plan_id,
-                    "forecast_plan_id": self.forecast_plan_ids.get(self.tick),
-                    "gp_telemetry": _gp_telemetry(self.actual_gp),
-                }
-            )
-            if self.tick == 0:
-                self.motion.append(
-                    {
-                        "time_s": 0.0,
-                        "planned_positions": self.starts.tolist(),
-                        "positions": self.positions.tolist(),
-                        "targets": self.previous_targets.tolist(),
-                        "headings": self.headings.tolist(),
-                        "speeds": [0.0] * self.config.robot_count,
-                        "turn_rates": [0.0] * self.config.robot_count,
-                        "safety_intervention": False,
-                        "segment_min_separation": self.minimum_separation,
-                        "control_event_index": None,
-                        "plan_id": None,
-                    }
+                    plan = _timed_dp_plan(
+                        self.actual_gp,
+                        self.positions,
+                        self.headings,
+                        self.grid,
+                        self.config,
+                        self.tick,
+                        len(self.plans),
+                        self.planning_failures,
+                    )
+                    plan["replacement_reason"] = "periodic_sampling_epoch"
+                targets = self._activate_plan(plan, self.tick)
+                # Both planners execute the geometric schedule toward the commanded
+                # cell. Only P *scores* candidates at rolled-out arrival positions;
+                # the actual QP and disturbance can still miss either.
+                self.segment_path = _reference_path(
+                    self.positions, self.headings, targets, steps, self.config
                 )
-            for offset, targets in enumerate(self.segment_goals):
-                self.next_tick = self.tick + offset + 1
-                next_positions, next_headings, intervention, separation, turn_rates = _advance(
+                self.segment_goals = [targets.copy() for _ in range(steps)]
+                self.expected_variance[self.end_tick] = (
+                    float(plan["forecast"][1]["mean_variance"])
+                    if plan["sample_times_s"]
+                    else float(np.mean(variance))
+                )
+                if plan["sample_times_s"]:
+                    self.forecast_plan_ids[self.end_tick] = plan["plan_id"]
+                self.planning_s += time.perf_counter() - self.planning_started
+                self.planning_started = None
+            elif self.method == "adaptive":
+                self.planning_started = time.perf_counter()
+                targets = _select_targets(
+                    self.actual_gp, self.positions, self.headings, self.grid, self.config, steps
+                )
+                self.segment_path, self.segment_goals, _ = _preview(
                     self.positions,
                     self.headings,
                     targets,
                     self.config,
-                    self.next_tick,
-                    disturbed=True,
+                    self.tick,
+                    steps,
                     control_events=self.controls,
-                    phase="execution",
-                    tracking_time_s=(
-                        (self.end_tick - self.next_tick + 1) * self.config.dt
-                        if self.method in PLANNING_METHODS
-                        else None
-                    ),
-                    plan_id=self.active_plan_id,
                 )
-                movement = np.linalg.norm(next_positions - self.positions, axis=1)
-                self.distance_travelled += movement
-                speeds = movement / self.config.dt
-                self.max_speed_observed = max(self.max_speed_observed, float(np.max(speeds)))
-                self.max_turn_observed = max(
-                    self.max_turn_observed, float(np.max(np.abs(turn_rates)))
-                )
-                self.minimum_separation = min(self.minimum_separation, separation)
-                self.interventions += int(intervention)
-                self.positions, self.headings = next_positions, next_headings
-                self.motion.append(
-                    {
-                        "time_s": self.next_tick * self.config.dt,
-                        "planned_positions": self.segment_path[offset + 1].tolist(),
-                        "positions": self.positions.tolist(),
-                        "targets": targets.tolist(),
-                        "headings": self.headings.tolist(),
-                        "speeds": speeds.tolist(),
-                        "turn_rates": turn_rates.tolist(),
-                        "safety_intervention": intervention,
-                        "segment_min_separation": separation,
-                        "control_event_index": len(self.controls) - 1,
-                        "plan_id": self.active_plan_id,
-                    }
-                )
-                # Event-triggered management (§9.3): re-decide inside the interval when
-                # execution has already diverged, instead of waiting for the next epoch.
-                if (
-                    self.method == "p"
-                    and self.config.p_event_triggers
-                    and self.next_tick < self.end_tick
-                ):
-                    deviation = float(
-                        np.max(
-                            np.linalg.norm(self.positions - self.segment_path[offset + 1], axis=1)
-                        )
+                if self.end_tick % self.sample_ticks == 0:
+                    self.expected_variance[self.end_tick] = float(
+                        np.mean(self.actual_gp.fantasy_variance(self.grid, self.segment_path[-1]))
                     )
-                    # A *significant* intervention, not any constraint-layer adjustment:
-                    # the QP nudges almost every command, so the boolean flag would
-                    # re-decide on numerical noise rather than on real execution loss.
-                    applied = self.controls[-1]["applied_velocity"]
-                    correction = (
-                        float(
-                            np.max(
-                                np.linalg.norm(
-                                    np.asarray(applied, dtype=float)
-                                    - np.asarray(
-                                        self.controls[-1]["requested_velocity"], dtype=float
-                                    ),
-                                    axis=1,
-                                )
-                            )
-                        )
-                        if applied is not None
-                        else 0.0
-                    )
-                    event_trigger = (
-                        "control_intervention"
-                        if correction > self.config.p_intervention_trigger_mps
-                        else "execution_deviation"
-                        if deviation > self.config.p_deviation_trigger_m
-                        else None
-                    )
-                    if event_trigger is not None:
-                        self.planning_started = time.perf_counter()
-                        plan, self.plan_budget = _managed_plan(
-                            self.actual_gp,
-                            self.positions,
-                            self.headings,
-                            self.grid,
-                            self.config,
-                            self.next_tick,
-                            len(self.plans),
-                            self.planning_failures,
-                            retained_plan=self.active_plan,
-                            trigger=event_trigger,
-                            controls=self.controls,
-                            previous_budget=self.plan_budget,
-                        )
-                        new_targets = self._activate_plan(
-                            plan,
-                            self.next_tick,
-                            execution_metrics={
-                                "deviation_m": deviation,
-                                "control_correction_mps": correction,
-                            },
-                        )
-                        remaining_steps = self.end_tick - self.next_tick
-                        reference = _reference_path(
-                            self.positions, self.headings, new_targets, remaining_steps, self.config
-                        )
-                        for index in range(remaining_steps):
-                            self.segment_goals[offset + 1 + index] = new_targets.copy()
-                            self.segment_path[offset + 2 + index] = reference[index + 1]
-                        if plan["sample_times_s"]:
-                            self.expected_variance[self.end_tick] = float(
-                                plan["forecast"][1]["mean_variance"]
-                            )
-                            self.forecast_plan_ids[self.end_tick] = plan["plan_id"]
-                        self.planning_s += time.perf_counter() - self.planning_started
-                        self.planning_started = None
-            if self.segment_goals and self.boundaries[self.epoch + 1] % self.sample_ticks == 0:
-                self._collect(self.boundaries[self.epoch + 1], self.segment_path[-1])
+                else:
+                    self.expected_variance[self.end_tick] = float(np.mean(variance))
+                self.planning_s += time.perf_counter() - self.planning_started
+                self.planning_started = None
+            else:
+                self.segment_path = [
+                    self.static_paths[t] for t in range(self.tick, self.end_tick + 1)
+                ]
+                self.segment_goals = [self.static_goals[t] for t in range(self.tick, self.end_tick)]
+            self.previous_targets = self.segment_goals[0]
+        self.frames.append(
+            {
+                "time_s": self.tick * self.config.dt,
+                "positions": self.positions.tolist(),
+                "targets": self.previous_targets.tolist(),
+                "headings": self.headings.tolist(),
+                "mean": prediction.mean.reshape(ny, nx).tolist(),
+                "std": np.sqrt(variance).reshape(ny, nx).tolist(),
+                "error": error.reshape(ny, nx).tolist(),
+                "rmse": rmse,
+                "mean_variance": float(np.mean(variance)),
+                "path_length": float(np.sum(self.distance_travelled)),
+                "samples_received": self.received,
+                "samples_attempted": self.attempted,
+                "min_separation": self.minimum_separation,
+                "planned_mean_variance": self.expected_variance.get(
+                    self.tick, float(np.mean(variance))
+                ),
+                "plan_id": self.active_plan_id,
+                "forecast_plan_id": self.forecast_plan_ids.get(self.tick),
+                "gp_telemetry": _gp_telemetry(self.actual_gp),
+            }
+        )
+        if self.tick == 0:
+            self.motion.append(
+                {
+                    "time_s": 0.0,
+                    "planned_positions": self.starts.tolist(),
+                    "positions": self.positions.tolist(),
+                    "targets": self.previous_targets.tolist(),
+                    "headings": self.headings.tolist(),
+                    "speeds": [0.0] * self.config.robot_count,
+                    "turn_rates": [0.0] * self.config.robot_count,
+                    "safety_intervention": False,
+                    "segment_min_separation": self.minimum_separation,
+                    "control_event_index": None,
+                    "plan_id": None,
+                }
+            )
 
+    def _move(self) -> None:
+        """Record accepted motion before any existing interior P decision."""
+        offset = self.reached_tick - self.tick
+        targets = self.segment_goals[offset]
+        self.next_tick = self.reached_tick + 1
+        next_positions, next_headings, intervention, separation, turn_rates = _advance(
+            self.positions,
+            self.headings,
+            targets,
+            self.config,
+            self.next_tick,
+            disturbed=True,
+            control_events=self.controls,
+            phase="execution",
+            tracking_time_s=(
+                (self.end_tick - self.next_tick + 1) * self.config.dt
+                if self.method in PLANNING_METHODS
+                else None
+            ),
+            plan_id=self.active_plan_id,
+        )
+        movement = np.linalg.norm(next_positions - self.positions, axis=1)
+        self.distance_travelled += movement
+        speeds = movement / self.config.dt
+        self.max_speed_observed = max(self.max_speed_observed, float(np.max(speeds)))
+        self.max_turn_observed = max(self.max_turn_observed, float(np.max(np.abs(turn_rates))))
+        self.minimum_separation = min(self.minimum_separation, separation)
+        self.interventions += int(intervention)
+        self.positions, self.headings = next_positions, next_headings
+        self.reached_tick = self.next_tick
+        self.motion.append(
+            {
+                "time_s": self.next_tick * self.config.dt,
+                "planned_positions": self.segment_path[offset + 1].tolist(),
+                "positions": self.positions.tolist(),
+                "targets": targets.tolist(),
+                "headings": self.headings.tolist(),
+                "speeds": speeds.tolist(),
+                "turn_rates": turn_rates.tolist(),
+                "safety_intervention": intervention,
+                "segment_min_separation": separation,
+                "control_event_index": len(self.controls) - 1,
+                "plan_id": self.active_plan_id,
+            }
+        )
+        # Event-triggered management (§9.3): re-decide inside the interval when
+        # execution has already diverged, instead of waiting for the next epoch.
+        if self.method == "p" and self.config.p_event_triggers and self.next_tick < self.end_tick:
+            deviation = float(
+                np.max(np.linalg.norm(self.positions - self.segment_path[offset + 1], axis=1))
+            )
+            # A *significant* intervention, not any constraint-layer adjustment:
+            # the QP nudges almost every command, so the boolean flag would
+            # re-decide on numerical noise rather than on real execution loss.
+            applied = self.controls[-1]["applied_velocity"]
+            correction = (
+                float(
+                    np.max(
+                        np.linalg.norm(
+                            np.asarray(applied, dtype=float)
+                            - np.asarray(self.controls[-1]["requested_velocity"], dtype=float),
+                            axis=1,
+                        )
+                    )
+                )
+                if applied is not None
+                else 0.0
+            )
+            event_trigger = (
+                "control_intervention"
+                if correction > self.config.p_intervention_trigger_mps
+                else "execution_deviation"
+                if deviation > self.config.p_deviation_trigger_m
+                else None
+            )
+            if event_trigger is not None:
+                self.planning_started = time.perf_counter()
+                plan, self.plan_budget = _managed_plan(
+                    self.actual_gp,
+                    self.positions,
+                    self.headings,
+                    self.grid,
+                    self.config,
+                    self.next_tick,
+                    len(self.plans),
+                    self.planning_failures,
+                    retained_plan=self.active_plan,
+                    trigger=event_trigger,
+                    controls=self.controls,
+                    previous_budget=self.plan_budget,
+                )
+                new_targets = self._activate_plan(
+                    plan,
+                    self.next_tick,
+                    execution_metrics={
+                        "deviation_m": deviation,
+                        "control_correction_mps": correction,
+                    },
+                )
+                remaining_steps = self.end_tick - self.next_tick
+                reference = _reference_path(
+                    self.positions, self.headings, new_targets, remaining_steps, self.config
+                )
+                for index in range(remaining_steps):
+                    self.segment_goals[offset + 1 + index] = new_targets.copy()
+                    self.segment_path[offset + 2 + index] = reference[index + 1]
+                if plan["sample_times_s"]:
+                    self.expected_variance[self.end_tick] = float(
+                        plan["forecast"][1]["mean_variance"]
+                    )
+                    self.forecast_plan_ids[self.end_tick] = plan["plan_id"]
+                self.planning_s += time.perf_counter() - self.planning_started
+                self.planning_started = None
+
+    def _completed(self) -> dict[str, Any]:
         final = self.frames[-1]
         final_variance = np.square(np.asarray(final["std"]))
         sample_errors = [
@@ -1659,11 +1721,7 @@ class _MissionExecution:
             "failure": None,
             "method": self.method,
             "config": asdict(self.config),
-            "field": {
-                "x": x.tolist(),
-                "y": y.tolist(),
-                "truth": self.truth.reshape(ny, nx).tolist(),
-            },
+            "field": self.field,
             "initial_positions": self.starts.tolist(),
             "frames": self.frames,
             "motion": self.motion,

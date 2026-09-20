@@ -12,9 +12,13 @@ plan-activation bookkeeping. All three approved tickets passed their preservatio
 checks; the [completion report](../mission-execution-ownership/completion.md)
 records the 14 frozen comparisons, full tests and independent reviews.
 
-The next bounded engineering step is advancement through complete physical ticks.
-State copying, warning/recovery logic and charged planning delay remain later work;
-this structural refactor establishes no new scientific improvement claim.
+The second increment adds advancement through complete physical ticks, immutable
+diagnostic views and one-time finalization; see its
+[completion report](../mission-tick-execution/completion.md). The independently
+documented [CI numerical repair](../ci-portability/completion.md) precedes this
+refactor. Next, return to the bounded recovery mechanism and estimator/source
+questions. State copying, warning/recovery logic and charged planning delay remain
+later work; these structural changes establish no new scientific improvement claim.
 
 ## Purpose and research question
 

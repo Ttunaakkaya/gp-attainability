@@ -17,6 +17,12 @@ qualitative comparison.
 All nine milestones of [masterplan v2.0](GP_Attainability_Masterplan_TR.md) are
 complete (M0–M8, 18 September 2026).
 
+The current refinement builds on those milestones toward earlier warnings and
+recovery within the original mission resources. The [approved research direction](.scratch/research-refinement/research-brief.md)
+separates that future claim from the historical results below. Engineering work
+first establishes reliable continuation of the existing simulator; see the
+[complete-tick execution spec](.scratch/mission-tick-execution/spec.md).
+
 **Technical note (8 pages, PDF):**
 [docs/technical_note/FIELDWORK_technical_note.pdf](docs/technical_note/FIELDWORK_technical_note.pdf)
 

@@ -1,0 +1,11 @@
+{
+  "scientific_definitions_ast_identical": 22,
+  "comparison_commit": "8314727",
+  "sha256": {
+    "src/attain_sampling/sim/mapping.py": "033c38c2a679143a25409d7ccce5b901d4dc83a37334516ce64f8fb84c0ca014",
+    "tests/unit/test_mission_execution.py": "63c25cb32963c1da004782d07f46eee5a300fa9522a1c32907120531efda3f93",
+    "scripts/check_mission_execution.py": "0e1a76cc8dba381ff0be4d06b0b8c29973aa795c5326460cca38f485390d0393",
+    "scripts/mission_reference.py": "bfdaa84e16a96608799d66b27ab4992708e5813cad70364d130f0087ae27504a",
+    ".scratch/mission-execution-ownership/reference/frozen-20260918/manifest.json": "176304312a59b1895be6cd86db4731b7005572756b86459ed94066960a683da8"
+  }
+}
